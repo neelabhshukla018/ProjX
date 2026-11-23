@@ -15,14 +15,30 @@ import StatCard from '../components/dashboard/StatCard';
 import { Zap, Clock, CheckCircle2, TrendingUp } from 'lucide-react';
 import { monthlyVelocityTrend, teamWorkloadData } from '../utils/mockData';
 
+const CustomAnalyticsTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-[#0F0F0F] text-[#FFFFFF] text-xs rounded-lg p-2.5 shadow-xl border border-[#2C2C2C]">
+        <p className="font-semibold text-[#FFFFFF] mb-1">{label}</p>
+        {payload.map((entry, index) => (
+          <p key={`item-${index}`} className="text-[#B0B0B0]">
+            {entry.name}: <span className="font-bold text-white">{entry.value}</span>
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
 export const AnalyticsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
           Engineering & Product Analytics
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
           Deep telemetry into team velocity, cycle times, throughput, and capacity distribution.
         </p>
       </div>
@@ -37,7 +53,7 @@ export const AnalyticsPage = () => {
           isPositive={true}
           subtitle="vs previous cycle"
           icon={TrendingUp}
-          iconColor="text-brand-600 bg-brand-50 border-brand-200/60"
+          iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
           title="Average Cycle Time"
@@ -47,7 +63,7 @@ export const AnalyticsPage = () => {
           isPositive={true}
           subtitle="lead-time to shipping"
           icon={Clock}
-          iconColor="text-emerald-600 bg-emerald-50 border-emerald-200/60"
+          iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
           title="On-Time Delivery"
@@ -57,7 +73,7 @@ export const AnalyticsPage = () => {
           isPositive={true}
           subtitle="milestone adherence"
           icon={CheckCircle2}
-          iconColor="text-violetAccent-600 bg-violetAccent-50 border-violetAccent-200/60"
+          iconColor="bg-[#2C2C2C] text-[#FFFFFF] border-[#3F3F3F]"
         />
         <StatCard
           title="Active Capacity"
@@ -67,7 +83,7 @@ export const AnalyticsPage = () => {
           isPositive={true}
           subtitle="across 4 teams"
           icon={Zap}
-          iconColor="text-sky-600 bg-sky-50 border-sky-200/60"
+          iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
       </div>
 
@@ -82,19 +98,19 @@ export const AnalyticsPage = () => {
             <AreaChart data={monthlyVelocityTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="velocityGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#4f46e5" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#0F0F0F" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="#0F0F0F" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="month" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />
+              <XAxis dataKey="month" stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
+              <Tooltip content={<CustomAnalyticsTooltip />} />
               <Area
                 type="monotone"
                 dataKey="velocity"
-                stroke="#4f46e5"
-                strokeWidth={2.5}
+                stroke="#0F0F0F"
+                strokeWidth={2}
                 fill="url(#velocityGrad)"
                 name="Velocity Points"
               />
@@ -112,13 +128,13 @@ export const AnalyticsPage = () => {
         <div className="w-full h-72">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={teamWorkloadData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-              <Tooltip />
-              <Bar dataKey="completed" fill="#10b981" radius={[4, 4, 0, 0]} name="Completed Tasks" />
-              <Bar dataKey="inProgress" fill="#4f46e5" radius={[4, 4, 0, 0]} name="In Progress" />
-              <Bar dataKey="assigned" fill="#cbd5e1" radius={[4, 4, 0, 0]} name="Total Assigned" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />
+              <XAxis dataKey="name" stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
+              <Tooltip content={<CustomAnalyticsTooltip />} />
+              <Bar dataKey="completed" fill="#0F0F0F" radius={[3, 3, 0, 0]} name="Completed Tasks" />
+              <Bar dataKey="inProgress" fill="#5A5A5A" radius={[3, 3, 0, 0]} name="In Progress" />
+              <Bar dataKey="assigned" fill="#B0B0B0" radius={[3, 3, 0, 0]} name="Total Assigned" />
             </BarChart>
           </ResponsiveContainer>
         </div>

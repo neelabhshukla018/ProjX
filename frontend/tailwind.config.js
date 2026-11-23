@@ -8,45 +8,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5', // Electric indigo primary accent
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+        // Pure Minimal Luxury Monochrome Palette (No Gold Tint)
+        jet: {
+          DEFAULT: '#0F0F0F',
+          surface: '#171717',
+          hover: '#222222',
+          border: '#2A2A2A',
         },
-        violetAccent: {
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          200: '#ddd6fe',
-          300: '#c4b5fd',
-          400: '#a78bfa',
-          500: '#8b5cf6', // Soft violet secondary accent
-          600: '#7c3aed',
-          700: '#6d28d9',
-          800: '#5b21b6',
-          900: '#4c1d95',
+        white: '#FFFFFF',
+        silver: {
+          DEFAULT: '#B0B0B0',
+          light: '#D4D4D4',
+          subtle: '#E8E8E8',
+          border: '#DEDEDE',
+          muted: '#808080',
+          dark: '#5A5A5A',
+        },
+        neutral: {
+          DEFAULT: '#2C2C2C',
+          hover: '#383838',
+          light: '#424242',
+          border: '#3F3F3F',
+        },
+        soft: {
+          DEFAULT: '#F5F5F5',
+          alt: '#EFEFEF',
+          card: '#FFFFFF',
         },
         sidebar: {
-          DEFAULT: '#0b0f19', // Deep charcoal / navy
-          hover: '#131926',
-          active: '#1e2638',
-          border: '#1f293d',
-          text: '#94a3b8',
-          textHover: '#f8fafc',
+          DEFAULT: '#0F0F0F',
+          surface: '#161616',
+          hover: '#222222',
+          active: '#2C2C2C',
+          border: '#222222',
+          text: '#B0B0B0',
+          textActive: '#FFFFFF',
         },
-        surface: {
-          DEFAULT: '#ffffff',
-          subtle: '#f8fafc',
-          muted: '#f1f5f9',
-          border: '#e2e8f0',
-        }
       },
       fontFamily: {
         sans: [
@@ -55,15 +52,14 @@ export default {
           'BlinkMacSystemFont',
           '"Segoe UI"',
           'Roboto',
-          '"Helvetica Neue"',
           'sans-serif',
         ],
       },
       boxShadow: {
-        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'card': '0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04)',
-        'elevated': '0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
-        'dropdown': '0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 4px 6px -2px rgba(15, 23, 42, 0.04)',
+        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03)',
+        'elevated': '0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+        'dropdown': '0 14px 35px -4px rgba(0, 0, 0, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
       },
     },
   },

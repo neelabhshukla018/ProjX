@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   FolderKanban,
   Clock,
@@ -17,38 +17,38 @@ import QuickActionsBar from '../components/dashboard/QuickActionsBar';
 export const DashboardPage = () => {
   const { user, stats, projects, activities } = useWorkspace();
 
-  const currentDate = useMemo(() => {
+  const [currentDate] = useState(() => {
     return new Date().toLocaleDateString('en-US', {
-      weekday: 'long',
+      weekday: 'short',
       month: 'short',
       day: 'numeric',
       year: 'numeric',
     });
-  }, []);
+  });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 sm:space-y-6">
       {/* Personalized Welcome Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight flex items-center gap-2">
-            Welcome back, {user.name.split(' ')[0]} 👋
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
+            Welcome back, {user.name.split(' ')[0]}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {currentDate} • Here is a breakdown of your team's project velocity today.
+          <p className="text-xs sm:text-sm text-[#5A5A5A] mt-0.5">
+            {currentDate} • High-velocity project telemetry and sprint throughput.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-200/80">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Workspace Healthy
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0F0F0F] text-[#FFFFFF] text-xs font-semibold border border-[#2C2C2C] shadow-subtle">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FFFFFF] animate-pulse" />
+            Workspace Nominal
           </span>
         </div>
       </div>
 
       {/* 4 Stat Cards with Animated Counters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
         <StatCard
           title="Total Projects"
           value={stats.totalProjects}
@@ -56,7 +56,7 @@ export const DashboardPage = () => {
           isPositive={true}
           subtitle="across 4 teams"
           icon={FolderKanban}
-          iconColor="text-brand-600 bg-brand-50 border-brand-200/60"
+          iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
           title="Active Projects"
@@ -65,7 +65,7 @@ export const DashboardPage = () => {
           isPositive={true}
           subtitle="94% velocity"
           icon={TrendingUp}
-          iconColor="text-violetAccent-600 bg-violetAccent-50 border-violetAccent-200/60"
+          iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
           title="Assigned Tasks"
@@ -74,7 +74,7 @@ export const DashboardPage = () => {
           isPositive={false}
           subtitle="due this sprint"
           icon={Clock}
-          iconColor="text-amber-600 bg-amber-50 border-amber-200/60"
+          iconColor="bg-[#2C2C2C] text-[#FFFFFF] border-[#3F3F3F]"
         />
         <StatCard
           title="Completed Tasks"
@@ -83,7 +83,7 @@ export const DashboardPage = () => {
           isPositive={true}
           subtitle="this milestone"
           icon={CheckCircle2}
-          iconColor="text-emerald-600 bg-emerald-50 border-emerald-200/60"
+          iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
       </div>
 
@@ -91,13 +91,13 @@ export const DashboardPage = () => {
       <QuickActionsBar />
 
       {/* Main Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <ProjectProgressChart />
         <TaskCompletionChart />
       </div>
 
       {/* 3 Widgets Grid: Projects, Deadlines, Activities */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <RecentProjectsCard projects={projects} />
         <UpcomingDeadlinesCard />
         <ActivityFeedCard activities={activities} />

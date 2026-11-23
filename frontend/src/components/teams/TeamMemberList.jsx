@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Shield, CheckCircle2, FolderKanban } from 'lucide-react';
+import { CheckCircle2, FolderKanban } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import Badge from '../common/Badge';
 import toast from 'react-hot-toast';
@@ -9,12 +9,12 @@ export const TeamMemberList = ({ members = [] }) => {
     switch (role?.toLowerCase()) {
       case 'workspace admin':
       case 'admin':
-        return 'danger';
+        return 'dark';
       case 'lead':
       case 'design lead':
       case 'devops lead':
       case 'lead architect':
-        return 'primary';
+        return 'dark';
       case 'contributor':
       default:
         return 'default';
@@ -30,7 +30,7 @@ export const TeamMemberList = ({ members = [] }) => {
       {members.map((member) => (
         <div
           key={member.id}
-          className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-subtle hover:shadow-card hover:border-brand-200 transition-all flex flex-col justify-between"
+          className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle hover:shadow-card hover:border-[#B0B0B0] transition-all flex flex-col justify-between"
         >
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-center gap-3">
@@ -41,10 +41,10 @@ export const TeamMemberList = ({ members = [] }) => {
                 status={member.status || 'online'}
               />
               <div>
-                <h4 className="text-sm font-semibold text-slate-900 leading-tight">
+                <h4 className="text-sm font-semibold text-[#0F0F0F] leading-tight">
                   {member.name}
                 </h4>
-                <p className="text-xs text-slate-500">{member.role}</p>
+                <p className="text-xs text-[#5A5A5A]">{member.role}</p>
               </div>
             </div>
             <Badge variant={getRoleVariant(member.role)} size="sm">
@@ -52,18 +52,18 @@ export const TeamMemberList = ({ members = [] }) => {
             </Badge>
           </div>
 
-          <div className="text-[11px] text-slate-500 mb-3 truncate">
+          <div className="text-[11px] text-[#5A5A5A] mb-3 truncate">
             {member.email}
           </div>
 
-          <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-3 text-slate-500 text-[11px]">
+          <div className="pt-3 border-t border-[#EFEFEF] flex items-center justify-between text-xs">
+            <div className="flex items-center gap-3 text-[#5A5A5A] text-[11px]">
               <span className="flex items-center gap-1 font-medium">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#0F0F0F]" />
                 {member.tasksCount || 0} tasks
               </span>
               <span className="flex items-center gap-1 font-medium">
-                <FolderKanban className="w-3.5 h-3.5 text-brand-500" />
+                <FolderKanban className="w-3.5 h-3.5 text-[#0F0F0F]" />
                 {member.projectsCount || 0} projects
               </span>
             </div>
@@ -71,10 +71,9 @@ export const TeamMemberList = ({ members = [] }) => {
             <button
               type="button"
               onClick={() => handleContact(member.email)}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-brand-600 hover:bg-brand-50 transition-colors"
-              title={`Email ${member.name}`}
+              className="text-xs font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors"
             >
-              <Mail className="w-4 h-4" />
+              Contact
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Plus, FolderPlus, Filter } from 'lucide-react';
+import { Search, FolderPlus } from 'lucide-react';
 import { useWorkspace } from '../hooks/useWorkspace';
 import ProjectCard from '../components/projects/ProjectCard';
 import Button from '../components/common/Button';
@@ -49,10 +49,10 @@ export const ProjectsPage = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
             Projects
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
             Track active initiatives, milestone progress, and cross-functional teams.
           </p>
         </div>
@@ -67,51 +67,50 @@ export const ProjectsPage = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-subtle space-y-3">
+      <div className="bg-[#FFFFFF] p-4 rounded-xl border border-[#E5E5E5] shadow-subtle space-y-3">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Search */}
           <div className="relative w-full sm:max-w-md">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#B0B0B0] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by project name or description..."
-              className="w-full text-xs sm:text-sm pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/20"
+              className="w-full text-xs sm:text-sm pl-9 pr-3 py-2 bg-[#F5F5F5] border border-[#D8D8D8] rounded-lg text-[#0F0F0F] placeholder-[#B0B0B0] outline-none focus:border-[#0F0F0F]"
             />
           </div>
 
-          {/* Category Dropdown */}
-          <div className="w-full sm:w-auto flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-medium">Category:</span>
+          {/* Status selector */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="text-xs bg-white border border-slate-200 rounded-lg py-2 px-3 outline-none text-slate-700 font-medium"
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="w-full sm:w-auto text-xs bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] rounded-lg py-2 px-3 outline-none focus:border-[#0F0F0F] font-medium"
             >
-              {categories.map((c) => (
-                <option key={c} value={c}>
-                  {c === 'all' ? 'All Categories' : c}
+              {statuses.map((s) => (
+                <option key={s.value} value={s.value}>
+                  {s.label}
                 </option>
               ))}
             </select>
           </div>
         </div>
 
-        {/* Status Filter Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 pt-1 border-t border-slate-100">
-          {statuses.map((tab) => (
+        {/* Category Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+          {categories.map((cat) => (
             <button
-              key={tab.value}
+              key={cat}
               type="button"
-              onClick={() => setSelectedStatus(tab.value)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-                selectedStatus === tab.value
-                  ? 'bg-brand-50 text-brand-700 border border-brand-200/80'
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                selectedCategory === cat
+                  ? 'bg-[#0F0F0F] text-[#FFFFFF] font-semibold'
+                  : 'bg-[#F5F5F5] text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#EAEAEA]'
               }`}
             >
-              {tab.label}
+              {cat === 'all' ? 'All Categories' : cat}
             </button>
           ))}
         </div>
@@ -119,24 +118,18 @@ export const ProjectsPage = () => {
 
       {/* Projects Grid */}
       {filteredProjects.length === 0 ? (
-        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center max-w-md mx-auto my-8">
-          <FolderPlus className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <h3 className="text-base font-semibold text-slate-800 mb-1">
-            No projects found
-          </h3>
-          <p className="text-xs text-slate-500 mb-4">
-            Try adjusting your search query or filter tags to discover other projects.
+        <div className="bg-[#FFFFFF] border border-dashed border-[#D8D8D8] rounded-2xl p-12 text-center max-w-lg mx-auto">
+          <FolderPlus className="w-10 h-10 text-[#B0B0B0] mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-[#0F0F0F]">No matching projects found</h3>
+          <p className="text-xs text-[#5A5A5A] mt-1 mb-4">
+            Try adjusting your search criteria or create a new initiative.
           </p>
           <Button
             size="sm"
-            variant="outline"
-            onClick={() => {
-              setSearchQuery('');
-              setSelectedStatus('all');
-              setSelectedCategory('all');
-            }}
+            variant="primary"
+            onClick={() => setIsNewProjectModalOpen(true)}
           >
-            Clear Filters
+            Create New Project
           </Button>
         </div>
       ) : (

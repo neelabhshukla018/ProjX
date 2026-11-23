@@ -27,9 +27,17 @@ export const Sidebar = () => {
     activeWorkspace,
     setActiveWorkspace,
     stats,
+    setIsMobileNavOpen,
   } = useWorkspace();
   const [showWorkspaceMenu, setShowWorkspaceMenu] = useState(false);
   const location = useLocation();
+
+  const handleNavClick = () => {
+    // Close mobile nav when clicking a link
+    if (setIsMobileNavOpen) {
+      setIsMobileNavOpen(false);
+    }
+  };
 
   const navSections = [
     {
@@ -41,14 +49,14 @@ export const Sidebar = () => {
           to: '/app/tasks',
           icon: CheckSquare,
           badge: stats.assignedTasks > 0 ? stats.assignedTasks : null,
-          badgeColor: 'bg-brand-500/20 text-brand-300 border border-brand-500/30',
+          badgeColor: 'bg-[#2C2C2C] text-[#FFFFFF] border border-[#3A3A3A]',
         },
         {
           label: 'Projects',
           to: '/app/projects',
           icon: FolderKanban,
           badge: stats.totalProjects,
-          badgeColor: 'bg-slate-800 text-slate-300 border border-slate-700',
+          badgeColor: 'bg-[#2C2C2C] text-[#FFFFFF] border border-[#3A3A3A]',
         },
         { label: 'Teams', to: '/app/teams', icon: Users },
         { label: 'Calendar', to: '/app/calendar', icon: Calendar },
@@ -73,40 +81,40 @@ export const Sidebar = () => {
   return (
     <aside
       className={`
-        relative bg-[#0b0f19] border-r border-[#1a2336] text-slate-300 flex flex-col justify-between
-        transition-all duration-300 ease-in-out z-30 select-none
+        relative bg-[#0F0F0F] border-r border-[#222222] text-[#B0B0B0] flex flex-col justify-between
+        transition-all duration-300 ease-in-out z-30 select-none h-full
         ${sidebarCollapsed ? 'w-20' : 'w-64'}
       `}
     >
-      {/* Header & Workspace Switcher */}
+      {/* Header & Logo & Workspace Switcher */}
       <div>
-        <div className="h-16 px-4 flex items-center justify-between border-b border-[#1a2336]">
+        <div className="h-16 px-4 flex items-center justify-between border-b border-[#222222]">
           {!sidebarCollapsed ? (
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-violetAccent-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-                <Layers className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-lg bg-[#1A1A1A] border border-[#2C2C2C] flex items-center justify-center text-white shadow-sm">
+                <Layers className="w-5 h-5 text-white" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-white text-base tracking-tight leading-tight flex items-center gap-1.5">
+                <span className="font-bold text-[#FFFFFF] text-base tracking-tight leading-tight flex items-center gap-1.5">
                   ProjX
-                  <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">
+                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#2C2C2C] text-[#FFFFFF] border border-[#3A3A3A]">
                     Pro
                   </span>
                 </span>
-                <span className="text-[11px] text-slate-400 font-medium">Enterprise Hub</span>
+                <span className="text-[11px] text-[#B0B0B0] font-medium">Enterprise Hub</span>
               </div>
             </div>
           ) : (
-            <div className="mx-auto w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-violetAccent-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-              <Layers className="w-5 h-5" />
+            <div className="mx-auto w-9 h-9 rounded-lg bg-[#1A1A1A] border border-[#2C2C2C] flex items-center justify-center text-white shadow-sm">
+              <Layers className="w-5 h-5 text-white" />
             </div>
           )}
 
-          {/* Sidebar collapse button */}
+          {/* Sidebar collapse button (desktop only) */}
           <button
             type="button"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
+            className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg text-[#B0B0B0] hover:text-[#FFFFFF] hover:bg-[#2C2C2C] transition-colors"
             title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {sidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -115,27 +123,27 @@ export const Sidebar = () => {
 
         {/* Workspace selector dropdown */}
         {!sidebarCollapsed && (
-          <div className="p-3 border-b border-[#1a2336] relative">
+          <div className="p-3 border-b border-[#222222] relative">
             <button
               type="button"
               onClick={() => setShowWorkspaceMenu(!showWorkspaceMenu)}
-              className="w-full px-3 py-2 rounded-lg bg-[#111726] hover:bg-[#161f33] border border-[#1e293f] flex items-center justify-between text-left transition-colors text-xs"
+              className="w-full px-3 py-2 rounded-lg bg-[#161616] hover:bg-[#222222] border border-[#2A2A2A] flex items-center justify-between text-left transition-colors text-xs"
             >
               <div className="flex items-center gap-2.5 overflow-hidden">
-                <div className="w-6 h-6 rounded bg-brand-600/30 border border-brand-500/40 flex items-center justify-center text-brand-400 font-bold text-[11px]">
+                <div className="w-6 h-6 rounded bg-[#2C2C2C] border border-[#3F3F3F] flex items-center justify-center text-[#FFFFFF] font-bold text-[11px]">
                   {activeWorkspace.name[0]}
                 </div>
                 <div className="truncate">
-                  <div className="font-semibold text-slate-200 truncate">{activeWorkspace.name}</div>
-                  <div className="text-[10px] text-slate-400">{activeWorkspace.role}</div>
+                  <div className="font-semibold text-[#FFFFFF] truncate">{activeWorkspace.name}</div>
+                  <div className="text-[10px] text-[#B0B0B0]">{activeWorkspace.role}</div>
                 </div>
               </div>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <ChevronDown className="w-3.5 h-3.5 text-[#B0B0B0] shrink-0" />
             </button>
 
             {showWorkspaceMenu && (
-              <div className="absolute top-full left-3 right-3 mt-1 bg-[#111726] border border-[#1e293f] rounded-xl shadow-dropdown py-1.5 z-40">
-                <div className="px-3 py-1 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+              <div className="absolute top-full left-3 right-3 mt-1 bg-[#161616] border border-[#2A2A2A] rounded-xl shadow-dropdown py-1.5 z-40">
+                <div className="px-3 py-1 text-[10px] font-semibold text-[#B0B0B0] uppercase tracking-wider">
                   Switch Workspace
                 </div>
                 {workspaces.map((ws) => (
@@ -148,12 +156,12 @@ export const Sidebar = () => {
                     }}
                     className={`w-full px-3 py-2 text-left text-xs flex items-center justify-between transition-colors ${
                       ws.id === activeWorkspace.id
-                        ? 'bg-brand-600/20 text-brand-300 font-semibold'
-                        : 'text-slate-300 hover:bg-slate-800/60'
+                        ? 'bg-[#2C2C2C] text-[#FFFFFF] font-semibold'
+                        : 'text-[#B0B0B0] hover:bg-[#222222] hover:text-[#FFFFFF]'
                     }`}
                   >
                     <span>{ws.name}</span>
-                    <span className="text-[10px] text-slate-400">{ws.membersCount} members</span>
+                    <span className="text-[10px] text-[#B0B0B0]">{ws.membersCount} members</span>
                   </button>
                 ))}
               </div>
@@ -162,15 +170,15 @@ export const Sidebar = () => {
         )}
 
         {/* Navigation items */}
-        <div className="px-3 py-4 space-y-6 overflow-y-auto max-h-[calc(100vh-230px)]">
+        <div className="px-3 py-4 space-y-5 overflow-y-auto max-h-[calc(100vh-220px)] no-scrollbar">
           {navSections.map((section) => (
             <div key={section.title}>
               {!sidebarCollapsed ? (
-                <div className="px-3 mb-2 text-[11px] font-semibold text-slate-400 tracking-wider">
+                <div className="px-3 mb-2 text-[10px] font-bold text-[#808080] tracking-wider uppercase">
                   {section.title}
                 </div>
               ) : (
-                <div className="h-4 border-b border-[#1a2336] mb-3 mx-2" />
+                <div className="h-4 border-b border-[#222222] mb-3 mx-2" />
               )}
               <div className="space-y-1">
                 {section.items.map((item) => {
@@ -183,24 +191,25 @@ export const Sidebar = () => {
                     <NavLink
                       key={item.to}
                       to={item.to}
+                      onClick={handleNavClick}
                       title={sidebarCollapsed ? item.label : undefined}
                       className={`
-                        flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 relative group
+                        flex items-center gap-3 px-3 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 relative group
                         ${
                           isActive
-                            ? 'bg-brand-600/20 text-white font-semibold shadow-sm'
-                            : 'text-slate-400 hover:text-slate-200 hover:bg-[#121929]'
+                            ? 'bg-[#2C2C2C] text-[#FFFFFF] font-semibold'
+                            : 'text-[#B0B0B0] hover:text-[#FFFFFF] hover:bg-[#1E1E1E]'
                         }
                         ${sidebarCollapsed ? 'justify-center px-0' : ''}
                       `}
                     >
-                      {/* Active indicator bar */}
+                      {/* Crisp Pure White active indicator bar */}
                       {isActive && (
-                        <span className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-brand-500 rounded-r-full" />
+                        <span className="absolute left-0 top-2 bottom-2 w-1 bg-[#FFFFFF] rounded-r" />
                       )}
                       <Icon
                         className={`w-4 h-4 shrink-0 transition-colors ${
-                          isActive ? 'text-brand-400' : 'text-slate-400 group-hover:text-slate-200'
+                          isActive ? 'text-[#FFFFFF]' : 'text-[#B0B0B0] group-hover:text-[#FFFFFF]'
                         }`}
                       />
                       {!sidebarCollapsed && (
@@ -208,8 +217,8 @@ export const Sidebar = () => {
                       )}
                       {!sidebarCollapsed && item.badge !== null && item.badge !== undefined && (
                         <span
-                          className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${
-                            item.badgeColor || 'bg-slate-800 text-slate-300'
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            item.badgeColor || 'bg-[#2C2C2C] text-[#FFFFFF]'
                           }`}
                         >
                           {item.badge}
@@ -224,26 +233,26 @@ export const Sidebar = () => {
         </div>
       </div>
 
-      {/* Footer Info Card & User Snippet */}
-      <div className="p-3 border-t border-[#1a2336] bg-[#090d16]">
+      {/* Footer Info Card & Luxury Badge */}
+      <div className="p-3 border-t border-[#222222] bg-[#0A0A0A]">
         {!sidebarCollapsed ? (
-          <div className="p-3 rounded-xl bg-gradient-to-b from-[#131b2e] to-[#0e1424] border border-[#1e2a44] text-xs">
-            <div className="flex items-center justify-between text-slate-200 font-semibold mb-1">
-              <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Enterprise Tier
+          <div className="p-3 rounded-lg bg-[#161616] border border-[#2A2A2A] text-xs">
+            <div className="flex items-center justify-between text-[#FFFFFF] font-semibold mb-1">
+              <span className="flex items-center gap-1.5 text-xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#FFFFFF]" /> Enterprise Plan
               </span>
-              <span className="text-[10px] text-brand-400 bg-brand-500/10 px-1.5 py-0.5 rounded border border-brand-500/20">
+              <span className="text-[10px] text-[#FFFFFF] bg-[#2C2C2C] px-1.5 py-0.5 rounded border border-[#3A3A3A]">
                 Active
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 mb-2">SOC-2 compliant workspace</p>
-            <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
-              <div className="bg-gradient-to-r from-brand-500 to-violetAccent-500 h-full w-3/4 rounded-full" />
+            <p className="text-[11px] text-[#B0B0B0] mb-2 font-normal">SOC-2 compliant workspace</p>
+            <div className="w-full bg-[#2C2C2C] rounded-full h-1.5 overflow-hidden">
+              <div className="bg-[#FFFFFF] h-full w-3/4 rounded-full" />
             </div>
           </div>
         ) : (
           <div className="flex justify-center py-2" title="Enterprise Tier">
-            <ShieldCheck className="w-5 h-5 text-brand-400" />
+            <ShieldCheck className="w-5 h-5 text-[#FFFFFF]" />
           </div>
         )}
       </div>

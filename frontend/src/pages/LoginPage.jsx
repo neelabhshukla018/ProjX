@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Layers, ArrowRight, Lock, Mail, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Layers, ArrowRight, Lock, Mail, Sparkles } from 'lucide-react';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
@@ -38,7 +38,7 @@ export const LoginPage = () => {
       setIsLoading(false);
       toast.success('Welcome back to ProjX!');
       navigate('/app');
-    }, 600);
+    }, 500);
   };
 
   const handleDemoLogin = () => {
@@ -54,25 +54,26 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-center py-12 sm:px-6 lg:px-8 selection:bg-brand-500 selection:text-white">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col justify-center py-12 sm:px-6 lg:px-8 selection:bg-[#0F0F0F] selection:text-[#FFFFFF]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         {/* Logo */}
-        <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-violetAccent-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <Layers className="w-5 h-5" />
+        <Link to="/" className="inline-flex items-center gap-2.5 mb-4 group">
+          <div className="w-10 h-10 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-sm relative">
+            <Layers className="w-5 h-5 text-white" />
+            <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#FFFFFF]" />
           </div>
-          <span className="font-bold text-2xl text-slate-900 tracking-tight">
-            Proj<span className="text-brand-600">X</span>
+          <span className="font-bold text-2xl text-[#0F0F0F] tracking-tight">
+            Proj<span className="text-[#0F0F0F]">X</span>
           </span>
         </Link>
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+        <h2 className="text-2xl font-bold text-[#0F0F0F] tracking-tight">
           Sign in to your workspace
         </h2>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
           Don't have an account yet?{' '}
           <Link
             to="/register"
-            className="font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+            className="font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors underline"
           >
             Create one for free
           </Link>
@@ -80,17 +81,17 @@ export const LoginPage = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
-        <div className="bg-white py-8 px-6 sm:px-8 border border-slate-200/90 rounded-2xl shadow-card">
+        <div className="bg-[#FFFFFF] py-8 px-6 sm:px-8 border border-[#E5E5E5] rounded-xl shadow-card">
           {/* Quick Demo Access Pill */}
-          <div className="mb-6 p-3 bg-brand-50/70 border border-brand-200/60 rounded-xl flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 text-brand-900">
-              <Sparkles className="w-4 h-4 text-brand-600 shrink-0" />
-              <span>Explore as Lead Architect</span>
+          <div className="mb-6 p-3 bg-[#0F0F0F] border border-[#2C2C2C] rounded-lg flex items-center justify-between text-xs text-white">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#FFFFFF] shrink-0" />
+              <span className="font-medium text-xs">Explore as Lead Architect</span>
             </div>
             <button
               type="button"
               onClick={handleDemoLogin}
-              className="font-semibold text-brand-600 hover:text-brand-800 bg-white px-2.5 py-1 rounded-md border border-brand-200 shadow-2xs transition-colors"
+              className="font-bold text-xs text-[#0F0F0F] bg-[#FFFFFF] hover:bg-[#E5E5E5] px-2.5 py-1 rounded transition-colors"
             >
               1-Click Demo
             </button>
@@ -128,12 +129,12 @@ export const LoginPage = () => {
             </div>
 
             <div className="flex items-center justify-between text-xs">
-              <label className="flex items-center gap-2 cursor-pointer text-slate-600">
+              <label className="flex items-center gap-2 cursor-pointer text-[#5A5A5A]">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                  className="rounded border-[#B0B0B0] text-[#0F0F0F] focus:ring-[#0F0F0F]"
                 />
                 <span>Remember me for 30 days</span>
               </label>
@@ -141,7 +142,7 @@ export const LoginPage = () => {
               <button
                 type="button"
                 onClick={handleForgotPassword}
-                className="font-medium text-brand-600 hover:text-brand-800 transition-colors"
+                className="font-medium text-[#2C2C2C] hover:text-[#0F0F0F] transition-colors"
               >
                 Forgot password?
               </button>
@@ -158,10 +159,10 @@ export const LoginPage = () => {
             </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-slate-100 text-center">
+          <div className="mt-6 pt-5 border-t border-[#EFEFEF] text-center">
             <Link
               to="/app"
-              className="text-xs text-slate-500 hover:text-slate-800 font-medium transition-colors"
+              className="text-xs text-[#5A5A5A] hover:text-[#0F0F0F] font-medium transition-colors"
             >
               Skip directly to Dashboard preview →
             </Link>

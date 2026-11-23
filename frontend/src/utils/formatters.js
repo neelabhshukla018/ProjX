@@ -1,5 +1,10 @@
 /**
- * Formatting utilities for dates, statuses, and numbers
+ * Formatting utilities strictly aligned with Pure Monochrome Luxury Design System
+ * - Jet Black: #0F0F0F
+ * - Pure White: #FFFFFF
+ * - Silver Gray: #B0B0B0
+ * - Neutral Gray: #2C2C2C
+ * - Soft White: #F5F5F5
  */
 
 export const formatDate = (dateString) => {
@@ -31,7 +36,7 @@ export const getDaysRemaining = (dueDate) => {
   today.setHours(0, 0, 0, 0);
   const due = new Date(dueDate);
   due.setHours(0, 0, 0, 0);
-  
+
   const diffTime = due - today;
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -51,14 +56,30 @@ export const getPriorityBadge = (priority) => {
   const p = (priority || 'medium').toLowerCase();
   switch (p) {
     case 'urgent':
-      return { label: 'Urgent', bg: 'bg-rose-50 text-rose-700 border-rose-200/80', dot: 'bg-rose-500' };
+      return {
+        label: 'Urgent',
+        bg: 'bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]',
+        dot: 'bg-[#FFFFFF]',
+      };
     case 'high':
-      return { label: 'High', bg: 'bg-amber-50 text-amber-700 border-amber-200/80', dot: 'bg-amber-500' };
+      return {
+        label: 'High',
+        bg: 'bg-[#2C2C2C] text-[#FFFFFF] border-[#3F3F3F]',
+        dot: 'bg-[#FFFFFF]',
+      };
     case 'medium':
-      return { label: 'Medium', bg: 'bg-blue-50 text-blue-700 border-blue-200/80', dot: 'bg-blue-500' };
+      return {
+        label: 'Medium',
+        bg: 'bg-[#F5F5F5] text-[#2C2C2C] border-[#D8D8D8]',
+        dot: 'bg-[#B0B0B0]',
+      };
     case 'low':
     default:
-      return { label: 'Low', bg: 'bg-slate-100 text-slate-700 border-slate-200', dot: 'bg-slate-400' };
+      return {
+        label: 'Low',
+        bg: 'bg-[#FFFFFF] text-[#5A5A5A] border-[#E5E5E5]',
+        dot: 'bg-[#D8D8D8]',
+      };
   }
 };
 
@@ -67,17 +88,31 @@ export const getStatusBadge = (status) => {
   switch (s) {
     case 'completed':
     case 'done':
-      return { label: 'Completed', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200/80', dot: 'bg-emerald-500' };
+      return {
+        label: 'Completed',
+        bg: 'bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]',
+        dot: 'bg-[#FFFFFF]',
+      };
     case 'inprogress':
-      return { label: 'In Progress', bg: 'bg-indigo-50 text-indigo-700 border-indigo-200/80', dot: 'bg-indigo-500' };
+      return {
+        label: 'In Progress',
+        bg: 'bg-[#2C2C2C] text-[#FFFFFF] border-[#3F3F3F]',
+        dot: 'bg-[#FFFFFF]',
+      };
     case 'review':
     case 'inreview':
-      return { label: 'In Review', bg: 'bg-purple-50 text-purple-700 border-purple-200/80', dot: 'bg-purple-500' };
-    case 'onhold':
-      return { label: 'On Hold', bg: 'bg-amber-50 text-amber-700 border-amber-200/80', dot: 'bg-amber-500' };
-    case 'todo':
+      return {
+        label: 'In Review',
+        bg: 'bg-[#F5F5F5] text-[#2C2C2C] border-[#B0B0B0]',
+        dot: 'bg-[#B0B0B0]',
+      };
     case 'planning':
+    case 'todo':
     default:
-      return { label: 'To Do', bg: 'bg-slate-100 text-slate-700 border-slate-200', dot: 'bg-slate-400' };
+      return {
+        label: 'To Do',
+        bg: 'bg-[#F5F5F5] text-[#5A5A5A] border-[#D8D8D8]',
+        dot: 'bg-[#B0B0B0]',
+      };
   }
 };

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useWorkspace } from '../../hooks/useWorkspace';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { UserPlus, Copy, Check } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export const InviteMemberModal = () => {
@@ -16,7 +16,9 @@ export const InviteMemberModal = () => {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
 
-  const shareableLink = `https://projx.io/join/${activeWorkspace.id}?ref=invite_token_${Math.random().toString(36).substring(2, 9)}`;
+  const shareableLink = useMemo(() => {
+    return `https://projx.io/join/${activeWorkspace.id}?ref=invite_token_sample`;
+  }, [activeWorkspace.id]);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareableLink);
@@ -63,72 +65,81 @@ export const InviteMemberModal = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
               Permission Role
             </label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full text-sm rounded-lg py-2.5 px-3 bg-white border border-slate-200 outline-none focus:border-brand-500"
+              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
               <option value="Admin">Admin (Full Control)</option>
               <option value="Lead">Lead (Project Management)</option>
-              <option value="Contributor">Contributor (Read/Write)</option>
-              <option value="Guest">Guest (Read Only)</option>
+              <option value="Contributor">Contributor (Standard Access)</option>
+              <option value="Viewer">Viewer (Read-Only)</option>
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-              Department
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+              Functional Department
             </label>
             <select
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
-              className="w-full text-sm rounded-lg py-2.5 px-3 bg-white border border-slate-200 outline-none focus:border-brand-500"
+              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
               <option value="Engineering">Engineering</option>
               <option value="Product & Design">Product & Design</option>
               <option value="AI & Data">AI & Data</option>
               <option value="Security">Security</option>
+              <option value="Marketing">Marketing</option>
             </select>
           </div>
         </div>
 
+        <div>
+          <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+            Personal Welcome Message (Optional)
+          </label>
+          <textarea
+            rows={2}
+            placeholder="Welcome to our workspace! Here's what we're working on..."
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            className="w-full rounded-lg text-xs sm:text-sm bg-[#FFFFFF] border border-[#D8D8D8] p-3 text-[#0F0F0F] placeholder-[#B0B0B0] outline-none hover:border-[#B0B0B0] focus:border-[#0F0F0F]"
+          />
+        </div>
+
         {/* Shareable Invite Link Box */}
-        <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1.5">
-            <span>Or share an instant invitation link</span>
-            <span className="text-[10px] text-brand-600 font-normal">Expires in 7 days</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              readOnly
-              value={shareableLink}
-              className="w-full text-xs bg-white border border-slate-200 rounded-lg py-1.5 px-2.5 text-slate-500 font-mono outline-none"
-            />
-            <Button
+        <div className="pt-2">
+          <label className="block text-xs font-semibold text-[#5A5A5A] mb-1">
+            Or share direct invite link
+          </label>
+          <div className="flex items-center gap-2 p-2 bg-[#F5F5F5] border border-[#D8D8D8] rounded-lg">
+            <span className="text-[11px] text-[#5A5A5A] truncate flex-1 font-mono">
+              {shareableLink}
+            </span>
+            <button
               type="button"
-              variant="outline"
-              size="sm"
               onClick={handleCopyLink}
-              leftIcon={copied ? Check : Copy}
+              className="p-1.5 text-xs font-semibold rounded bg-[#0F0F0F] text-white hover:bg-[#2C2C2C] flex items-center gap-1 transition-colors shrink-0"
             >
-              {copied ? 'Copied' : 'Copy'}
-            </Button>
+              {copied ? <Check className="w-3.5 h-3.5 text-[#FFFFFF]" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
+            </button>
           </div>
         </div>
 
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+        <div className="pt-4 border-t border-[#EFEFEF] flex items-center justify-end gap-3">
           <Button
-            variant="outline"
             type="button"
+            variant="ghost"
             onClick={() => setIsInviteModalOpen(false)}
           >
             Cancel
           </Button>
-          <Button variant="primary" type="submit" leftIcon={UserPlus}>
+          <Button type="submit" variant="primary">
             Send Invitation
           </Button>
         </div>

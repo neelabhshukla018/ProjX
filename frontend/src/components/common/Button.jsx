@@ -1,19 +1,26 @@
 import React from 'react';
 
+/**
+ * Pure Monochrome Minimal Button Component
+ * Primary: Jet-black background, white text, hover transition (#2C2C2C)
+ * Secondary: White background, black text, silver-gray border (#B0B0B0)
+ * Accent: Neutral dark surface (#2C2C2C), white text, hover (#171717)
+ */
 const variants = {
-  primary: 'bg-brand-600 text-white hover:bg-brand-700 shadow-sm border border-brand-700/20 focus:ring-brand-500/30',
-  secondary: 'bg-violetAccent-50 text-violetAccent-700 hover:bg-violetAccent-100 border border-violetAccent-200/60 focus:ring-violetAccent-500/30',
-  outline: 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 shadow-subtle hover:border-slate-300 focus:ring-slate-400/20',
-  ghost: 'bg-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 border border-transparent focus:ring-slate-400/20',
-  danger: 'bg-rose-600 text-white hover:bg-rose-700 shadow-sm border border-rose-700/20 focus:ring-rose-500/30',
-  dark: 'bg-slate-900 text-white hover:bg-slate-800 shadow-sm border border-slate-950 focus:ring-slate-600/30',
+  primary: 'bg-[#0F0F0F] text-[#FFFFFF] hover:bg-[#2C2C2C] border border-[#0F0F0F] shadow-sm focus:ring-[#0F0F0F]/30',
+  secondary: 'bg-[#FFFFFF] text-[#0F0F0F] hover:bg-[#F5F5F5] border border-[#B0B0B0] shadow-subtle focus:ring-[#B0B0B0]/30',
+  accent: 'bg-[#2C2C2C] text-[#FFFFFF] hover:bg-[#1A1A1A] border border-[#3A3A3A] shadow-sm focus:ring-[#2C2C2C]/30',
+  outline: 'bg-transparent text-[#0F0F0F] hover:bg-[#F5F5F5] border border-[#D4D4D4] focus:ring-[#B0B0B0]/20',
+  ghost: 'bg-transparent text-[#2C2C2C] hover:bg-[#EAEAEA] hover:text-[#0F0F0F] border border-transparent focus:ring-[#B0B0B0]/20',
+  dark: 'bg-[#171717] text-white hover:bg-[#2C2C2C] border border-[#2A2A2A] shadow-sm focus:ring-[#3F3F3F]',
+  danger: 'bg-[#1F1F1F] text-[#FFFFFF] hover:bg-[#2C2C2C] border border-[#404040] focus:ring-[#2C2C2C]/20',
 };
 
 const sizes = {
   xs: 'px-2.5 py-1 text-xs font-medium rounded-md gap-1.5',
-  sm: 'px-3 py-1.5 text-xs font-medium rounded-lg gap-2',
-  md: 'px-4 py-2 text-sm font-medium rounded-lg gap-2',
-  lg: 'px-5 py-2.5 text-base font-semibold rounded-xl gap-2.5',
+  sm: 'px-3 py-1.5 text-xs font-medium rounded-md gap-2',
+  md: 'px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-lg gap-2',
+  lg: 'px-4 sm:px-5 py-2.5 text-sm sm:text-base font-semibold rounded-lg gap-2.5',
 };
 
 export const Button = React.forwardRef(
@@ -43,7 +50,7 @@ export const Button = React.forwardRef(
           inline-flex items-center justify-center font-sans tracking-tight
           transition-all duration-150 ease-out select-none
           active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-1
-          disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100
+          disabled:opacity-40 disabled:pointer-events-none disabled:active:scale-100
           ${variants[variant] || variants.primary}
           ${sizes[size] || sizes.md}
           ${className}

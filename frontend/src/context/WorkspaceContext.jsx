@@ -71,7 +71,7 @@ export const WorkspaceProvider = ({ children }) => {
       members: [
         { id: user.id, name: user.name, avatar: user.avatar, role: 'Lead' },
       ],
-      color: '#4f46e5',
+      color: '#0F0F0F',
       ...projectData,
     };
     setProjects((prev) => [newProject, ...prev]);

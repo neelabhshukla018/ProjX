@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Users, UserPlus, Shield, Sparkles } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 import { useWorkspace } from '../hooks/useWorkspace';
 import TeamCard from '../components/teams/TeamCard';
 import TeamMemberList from '../components/teams/TeamMemberList';
@@ -41,10 +41,10 @@ export const TeamsPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
             Teams & Collaborators
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
             Manage organization members, functional departments, and role permissions.
           </p>
         </div>
@@ -60,33 +60,35 @@ export const TeamsPage = () => {
 
       {/* Summary Stat Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-subtle">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+        <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle">
+          <span className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider">
             Total Team Members
           </span>
-          <p className="text-2xl font-bold text-slate-900 mt-1">{totalMembersCount}</p>
-          <span className="text-[11px] text-emerald-600 font-medium">● 8 currently online</span>
+          <p className="text-2xl font-bold text-[#0F0F0F] mt-1">{totalMembersCount}</p>
+          <span className="text-[11px] text-[#0F0F0F] font-semibold flex items-center gap-1.5 mt-0.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F0F0F]" /> 8 currently online
+          </span>
         </div>
-        <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-subtle">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+        <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle">
+          <span className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider">
             Active Departments
           </span>
-          <p className="text-2xl font-bold text-slate-900 mt-1">{teams.length}</p>
-          <span className="text-[11px] text-slate-500">Cross-functional units</span>
+          <p className="text-2xl font-bold text-[#0F0F0F] mt-1">{teams.length}</p>
+          <span className="text-[11px] text-[#5A5A5A]">Cross-functional units</span>
         </div>
-        <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-subtle">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+        <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle">
+          <span className="text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider">
             Pending Invitations
           </span>
-          <p className="text-2xl font-bold text-slate-900 mt-1">2</p>
-          <span className="text-[11px] text-brand-600 font-medium">Invites expire in 7d</span>
+          <p className="text-2xl font-bold text-[#0F0F0F] mt-1">2</p>
+          <span className="text-[11px] text-[#5A5A5A]">Invited via secure tokens</span>
         </div>
       </div>
 
-      {/* Department Units Overview */}
+      {/* Functional Units */}
       <div>
-        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
-          Departments ({teams.length})
+        <h3 className="text-base font-semibold text-[#0F0F0F] mb-3">
+          Department Units
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {teams.map((team) => (
@@ -95,24 +97,23 @@ export const TeamsPage = () => {
         </div>
       </div>
 
-      {/* Members Directory */}
-      <div className="space-y-4 pt-4 border-t border-slate-200/80">
+      {/* Member Directory */}
+      <div className="space-y-4 pt-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <h3 className="text-base font-bold text-slate-900">
-            Team Directory ({filteredMembers.length})
+          <h3 className="text-base font-semibold text-[#0F0F0F]">
+            Member Directory ({filteredMembers.length})
           </h3>
 
-          {/* Department Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
             {departments.map((dept) => (
               <button
                 key={dept.value}
                 type="button"
                 onClick={() => setSelectedDept(dept.value)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-colors ${
                   selectedDept === dept.value
-                    ? 'bg-brand-50 text-brand-700 border border-brand-200/80'
-                    : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+                    ? 'bg-[#0F0F0F] text-[#FFFFFF] font-semibold'
+                    : 'bg-[#FFFFFF] text-[#5A5A5A] border border-[#E5E5E5] hover:text-[#0F0F0F] hover:bg-[#F5F5F5]'
                 }`}
               >
                 {dept.label}

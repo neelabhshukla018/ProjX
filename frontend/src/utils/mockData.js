@@ -38,7 +38,7 @@ export const initialProjects = [
     teamLead: 'Sarah Jenkins',
     totalTasks: 38,
     completedTasks: 28,
-    color: '#4f46e5',
+    color: '#0F0F0F',
     members: [
       { id: 'usr-1', name: 'Alex Morgan', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Architect' },
       { id: 'usr-2', name: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', role: 'Lead Designer' },
@@ -59,7 +59,7 @@ export const initialProjects = [
     teamLead: 'Marcus Vance',
     totalTasks: 45,
     completedTasks: 26,
-    color: '#0284c7',
+    color: '#2C2C2C',
     members: [
       { id: 'usr-5', name: 'Marcus Vance', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', role: 'DevOps Lead' },
       { id: 'usr-1', name: 'Alex Morgan', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Lead Architect' },
@@ -79,7 +79,7 @@ export const initialProjects = [
     teamLead: 'Jessica Chen',
     totalTasks: 52,
     completedTasks: 46,
-    color: '#8b5cf6',
+    color: '#171717',
     members: [
       { id: 'usr-7', name: 'Jessica Chen', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80', role: 'Mobile Lead' },
       { id: 'usr-8', name: 'Liam Wilson', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80', role: 'React Native Dev' },
@@ -99,7 +99,7 @@ export const initialProjects = [
     teamLead: 'Dr. Aaron Patel',
     totalTasks: 30,
     completedTasks: 13,
-    color: '#6366f1',
+    color: '#0F0F0F',
     members: [
       { id: 'usr-9', name: 'Dr. Aaron Patel', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop&q=80', role: 'AI Researcher' },
       { id: 'usr-1', name: 'Alex Morgan', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80', role: 'Architect' },
@@ -119,7 +119,7 @@ export const initialProjects = [
     teamLead: 'Sarah Jenkins',
     totalTasks: 25,
     completedTasks: 25,
-    color: '#10b981',
+    color: '#2C2C2C',
     members: [
       { id: 'usr-2', name: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', role: 'Lead Designer' },
       { id: 'usr-11', name: 'Tomás Rivera', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80', role: 'Full Stack Dev' },
@@ -138,7 +138,7 @@ export const initialProjects = [
     teamLead: 'Priya Sharma',
     totalTasks: 20,
     completedTasks: 4,
-    color: '#f59e0b',
+    color: '#5A5A5A',
     members: [
       { id: 'usr-6', name: 'Priya Sharma', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80', role: 'Security Engineer' },
       { id: 'usr-5', name: 'Marcus Vance', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80', role: 'DevOps Lead' },

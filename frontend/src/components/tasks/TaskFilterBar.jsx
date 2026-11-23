@@ -1,6 +1,5 @@
 import React from 'react';
-import { Search, Kanban, List, Filter } from 'lucide-react';
-import Button from '../common/Button';
+import { Search, Kanban, List } from 'lucide-react';
 
 export const TaskFilterBar = ({
   searchQuery,
@@ -14,16 +13,16 @@ export const TaskFilterBar = ({
   projects = [],
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-subtle mb-6">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5] shadow-subtle mb-6">
       {/* Search Bar */}
       <div className="relative flex-1 max-w-sm">
-        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-[#B0B0B0] absolute left-3 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Filter tasks by name or tag..."
-          className="w-full text-xs sm:text-sm pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/20"
+          className="w-full text-xs sm:text-sm pl-9 pr-3 py-2 bg-[#F5F5F5] border border-[#D8D8D8] text-[#0F0F0F] placeholder-[#B0B0B0] rounded-lg outline-none focus:border-[#0F0F0F]"
         />
       </div>
 
@@ -33,7 +32,7 @@ export const TaskFilterBar = ({
         <select
           value={selectedProject}
           onChange={(e) => onProjectChange(e.target.value)}
-          className="text-xs bg-white border border-slate-200 rounded-lg py-2 px-3 outline-none text-slate-700 font-medium"
+          className="text-xs bg-[#FFFFFF] border border-[#D8D8D8] rounded-lg py-2 px-3 outline-none text-[#0F0F0F] font-medium focus:border-[#0F0F0F]"
         >
           <option value="all">All Projects</option>
           {projects.map((p) => (
@@ -47,7 +46,7 @@ export const TaskFilterBar = ({
         <select
           value={selectedPriority}
           onChange={(e) => onPriorityChange(e.target.value)}
-          className="text-xs bg-white border border-slate-200 rounded-lg py-2 px-3 outline-none text-slate-700 font-medium"
+          className="text-xs bg-[#FFFFFF] border border-[#D8D8D8] rounded-lg py-2 px-3 outline-none text-[#0F0F0F] font-medium focus:border-[#0F0F0F]"
         >
           <option value="all">All Priorities</option>
           <option value="urgent">Urgent</option>
@@ -57,14 +56,14 @@ export const TaskFilterBar = ({
         </select>
 
         {/* Kanban vs List Switcher */}
-        <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200">
+        <div className="flex items-center bg-[#F5F5F5] p-0.5 rounded-lg border border-[#D8D8D8]">
           <button
             type="button"
             onClick={() => onViewModeChange('kanban')}
             className={`flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all ${
               viewMode === 'kanban'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
+                : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
             }`}
           >
             <Kanban className="w-3.5 h-3.5" />
@@ -75,8 +74,8 @@ export const TaskFilterBar = ({
             onClick={() => onViewModeChange('list')}
             className={`flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all ${
               viewMode === 'list'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
+                : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
             }`}
           >
             <List className="w-3.5 h-3.5" />

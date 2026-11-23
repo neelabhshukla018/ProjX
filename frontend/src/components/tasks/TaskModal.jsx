@@ -3,7 +3,6 @@ import { useWorkspace } from '../../hooks/useWorkspace';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { CheckCircle2 } from 'lucide-react';
 
 export const TaskModal = () => {
   const { isNewTaskModalOpen, setIsNewTaskModalOpen, addTask, projects, user } = useWorkspace();
@@ -82,105 +81,92 @@ export const TaskModal = () => {
           label="Task Title"
           placeholder="e.g. Audit WCAG AA compliance across dark & light themes"
           value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          onChange={(e) => {
+            setFormData({ ...formData, title: e.target.value });
+            if (errors.title) setErrors({ ...errors, title: null });
+          }}
           error={errors.title}
           required
         />
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-            Associated Project <span className="text-rose-500">*</span>
-          </label>
-          <select
-            value={formData.projectId}
-            onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
-            className={`
-              w-full text-sm rounded-lg py-2.5 px-3 bg-white border outline-none
-              ${errors.projectId ? 'border-rose-400' : 'border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20'}
-            `}
-          >
-            {projects.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-          </select>
-          {errors.projectId && (
-            <p className="text-xs text-rose-600 mt-1">{errors.projectId}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-            Description
+          <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+            Task Description
           </label>
           <textarea
-            rows={2}
+            rows={3}
+            placeholder="Details, technical criteria, reproduction steps, or references..."
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            placeholder="Details, acceptance criteria, or links..."
-            className="w-full text-sm rounded-lg p-3 bg-white border border-slate-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+            className="w-full rounded-lg text-xs sm:text-sm bg-[#FFFFFF] border border-[#D8D8D8] p-3 text-[#0F0F0F] placeholder-[#B0B0B0] transition-colors duration-150 outline-none hover:border-[#B0B0B0] focus:border-[#0F0F0F]"
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-              Status Column
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+              Associated Project <span className="text-[#0F0F0F] font-bold">*</span>
             </label>
             <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full text-sm rounded-lg py-2 px-2.5 bg-white border border-slate-200 outline-none"
+              value={formData.projectId}
+              onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
+              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
-              <option value="todo">To Do</option>
-              <option value="in_progress">In Progress</option>
-              <option value="done">Done</option>
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-              Priority
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+              Priority Tier
             </label>
             <select
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="w-full text-sm rounded-lg py-2 px-2.5 bg-white border border-slate-200 outline-none"
+              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
               <option value="urgent">Urgent</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
             </select>
           </div>
+        </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
-            label="Due Date"
+            label="Target Due Date"
             type="date"
             value={formData.dueDate}
-            onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+            onChange={(e) => {
+              setFormData({ ...formData, dueDate: e.target.value });
+              if (errors.dueDate) setErrors({ ...errors, dueDate: null });
+            }}
             error={errors.dueDate}
             required
           />
+
+          <Input
+            label="Tags (comma-separated)"
+            placeholder="e.g. Design, Frontend, Accessibility"
+            value={formData.tags}
+            onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+          />
         </div>
 
-        <Input
-          label="Tags (comma-separated)"
-          placeholder="Frontend, Accessibility, Urgent"
-          value={formData.tags}
-          onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-        />
-
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+        <div className="pt-4 border-t border-[#EFEFEF] flex items-center justify-end gap-3">
           <Button
-            variant="outline"
             type="button"
+            variant="ghost"
             onClick={() => setIsNewTaskModalOpen(false)}
           >
             Cancel
           </Button>
-          <Button variant="primary" type="submit" leftIcon={CheckCircle2}>
+          <Button type="submit" variant="primary">
             Create Task
           </Button>
         </div>

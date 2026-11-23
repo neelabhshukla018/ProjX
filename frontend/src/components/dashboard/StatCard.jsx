@@ -11,7 +11,7 @@ export const StatCard = ({
   isPositive = true,
   subtitle = 'vs last month',
   icon: Icon,
-  iconColor = 'text-brand-600 bg-brand-50 border-brand-200/60',
+  iconColor = 'bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]',
 }) => {
   const numberRef = useRef(null);
 
@@ -22,24 +22,24 @@ export const StatCard = ({
   }, [value, prefix, suffix]);
 
   return (
-    <div className="bg-white border border-slate-200/80 rounded-xl p-5 shadow-card hover:shadow-elevated transition-all duration-200">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+    <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 sm:p-5 shadow-card hover:border-[#B0B0B0]/60 hover:shadow-elevated transition-all duration-200">
+      <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+        <span className="text-[11px] sm:text-xs font-semibold text-[#5A5A5A] uppercase tracking-wider">
           {title}
         </span>
         {Icon && (
           <div
-            className={`w-9 h-9 rounded-xl flex items-center justify-center border shrink-0 ${iconColor}`}
+            className={`w-8 sm:w-9 h-8 sm:h-9 rounded-lg flex items-center justify-center border shrink-0 ${iconColor}`}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
           </div>
         )}
       </div>
 
-      <div className="flex items-baseline gap-2 mb-2">
+      <div className="flex items-baseline gap-2 mb-1.5 sm:mb-2">
         <h3
           ref={numberRef}
-          className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight"
+          className="text-2xl sm:text-3xl font-bold text-[#0F0F0F] tracking-tight"
         >
           {prefix}
           {value}
@@ -50,17 +50,17 @@ export const StatCard = ({
       <div className="flex items-center gap-1.5 text-xs">
         <span
           className={`inline-flex items-center font-semibold ${
-            isPositive ? 'text-emerald-600' : 'text-rose-600'
+            isPositive ? 'text-[#0F0F0F]' : 'text-[#5A5A5A]'
           }`}
         >
           {isPositive ? (
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#0F0F0F]" />
           ) : (
-            <ArrowDownRight className="w-3.5 h-3.5" />
+            <ArrowDownRight className="w-3.5 h-3.5 text-[#5A5A5A]" />
           )}
           {trend}
         </span>
-        <span className="text-slate-400 font-normal">{subtitle}</span>
+        <span className="text-[#B0B0B0] font-normal truncate">{subtitle}</span>
       </div>
     </div>
   );

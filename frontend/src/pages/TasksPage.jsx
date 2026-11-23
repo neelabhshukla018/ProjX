@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, CheckSquare } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useWorkspace } from '../hooks/useWorkspace';
 import TaskKanban from '../components/tasks/TaskKanban';
 import TaskList from '../components/tasks/TaskList';
@@ -7,8 +7,8 @@ import TaskFilterBar from '../components/tasks/TaskFilterBar';
 import Button from '../components/common/Button';
 
 export const TasksPage = () => {
-  const { tasks, updateTaskStatus, toggleSubtask, projects, setIsNewTaskModalOpen } = useWorkspace();
-  const [viewMode, setViewMode] = useState('kanban'); // 'kanban' | 'list'
+  const { tasks, updateTaskStatus, projects, setIsNewTaskModalOpen } = useWorkspace();
+  const [viewMode, setViewMode] = useState('kanban');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('all');
   const [selectedProject, setSelectedProject] = useState('all');
@@ -39,10 +39,10 @@ export const TasksPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
             My Tasks
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
             Prioritize and manage your actionable work items across active sprints.
           </p>
         </div>
@@ -79,7 +79,6 @@ export const TasksPage = () => {
         <TaskList
           tasks={filteredTasks}
           onMoveStatus={updateTaskStatus}
-          onToggleComplete={toggleSubtask}
         />
       )}
     </div>

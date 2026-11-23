@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, CheckCircle2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Card from '../components/common/Card';
 import Badge from '../components/common/Badge';
-import { useWorkspace } from '../hooks/useWorkspace';
-import { formatDate } from '../utils/formatters';
 
 export const CalendarPage = () => {
-  const { tasks, projects } = useWorkspace();
-  const [currentMonth, setCurrentMonth] = useState('November 2026');
+  const [currentMonth] = useState('November 2026');
   const [selectedDay, setSelectedDay] = useState(26);
 
-  // November 2026 days representation
   const daysInMonth = Array.from({ length: 30 }, (_, i) => i + 1);
 
-  // Deadlines map
   const taskDeadlines = {
     19: ['Publish automated release notes generator'],
     20: ['Integrate biometrics FaceID / TouchID'],
@@ -28,25 +23,25 @@ export const CalendarPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
             Sprint & Deadline Calendar
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
             Visual milestone timeline and scheduled task commitments.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl p-1 shadow-subtle">
+        <div className="flex items-center gap-2 bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-1 shadow-subtle">
           <button
             type="button"
-            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-1.5 rounded-lg text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="text-xs font-semibold px-2 text-slate-800">{currentMonth}</span>
+          <span className="text-xs font-semibold px-2 text-[#0F0F0F]">{currentMonth}</span>
           <button
             type="button"
-            className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-1.5 rounded-lg text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -55,8 +50,8 @@ export const CalendarPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Calendar Grid */}
-        <div className="lg:col-span-2 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-card">
-          <div className="grid grid-cols-7 gap-1 text-center font-semibold text-xs text-slate-400 mb-3 uppercase tracking-wider">
+        <div className="lg:col-span-2 bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-5 shadow-card">
+          <div className="grid grid-cols-7 gap-1 text-center font-bold text-[11px] text-[#B0B0B0] mb-3 uppercase tracking-wider">
             <span>Sun</span>
             <span>Mon</span>
             <span>Tue</span>
@@ -66,8 +61,7 @@ export const CalendarPage = () => {
             <span>Sat</span>
           </div>
 
-          <div className="grid grid-cols-7 gap-2">
-            {/* Pad starting day (Nov 1, 2026 starts on Sun) */}
+          <div className="grid grid-cols-7 gap-1 sm:gap-2">
             {daysInMonth.map((day) => {
               const hasEvents = taskDeadlines[day];
               const isSelected = day === selectedDay;
@@ -79,11 +73,11 @@ export const CalendarPage = () => {
                   type="button"
                   onClick={() => setSelectedDay(day)}
                   className={`
-                    min-h-[68px] sm:min-h-[80px] p-2 rounded-xl border text-left flex flex-col justify-between transition-all
+                    min-h-[52px] sm:min-h-[80px] p-1.5 sm:p-2 rounded-xl border text-left flex flex-col justify-between transition-all
                     ${
                       isSelected
-                        ? 'border-brand-500 bg-brand-50/40 ring-2 ring-brand-500/20'
-                        : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50/70 bg-white'
+                        ? 'border-[#0F0F0F] bg-[#F5F5F5] ring-2 ring-[#0F0F0F]/20'
+                        : 'border-[#E5E5E5] hover:border-[#B0B0B0] hover:bg-[#FAFAFA] bg-[#FFFFFF]'
                     }
                   `}
                 >
@@ -91,22 +85,22 @@ export const CalendarPage = () => {
                     <span
                       className={`text-xs font-bold ${
                         isToday
-                          ? 'w-5 h-5 rounded-full bg-brand-600 text-white flex items-center justify-center text-[10px]'
+                          ? 'w-5 h-5 rounded-full bg-[#0F0F0F] text-white flex items-center justify-center text-[10px]'
                           : isSelected
-                          ? 'text-brand-700'
-                          : 'text-slate-700'
+                          ? 'text-[#0F0F0F] font-extrabold'
+                          : 'text-[#2C2C2C]'
                       }`}
                     >
                       {day}
                     </span>
                     {hasEvents && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-600" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0F0F0F]" />
                     )}
                   </div>
 
                   {hasEvents && (
                     <div className="mt-1">
-                      <span className="block text-[9px] font-semibold text-brand-700 bg-brand-100/70 px-1.5 py-0.5 rounded truncate">
+                      <span className="block text-[9px] font-semibold text-[#0F0F0F] bg-[#F5F5F5] border border-[#D8D8D8] px-1.5 py-0.5 rounded truncate">
                         {hasEvents[0]}
                       </span>
                     </div>
@@ -121,12 +115,12 @@ export const CalendarPage = () => {
         <div className="space-y-4">
           <Card
             title={`Agenda for Nov ${selectedDay}, 2026`}
-            subtitle="Scheduled deliverables and sprint meetings"
+            subtitle="Scheduled deliverables and sprint commitments"
             headerBorder
           >
             {selectedDayTasks.length === 0 ? (
-              <div className="py-8 text-center text-xs text-slate-400">
-                <Clock className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+              <div className="py-8 text-center text-xs text-[#B0B0B0]">
+                <Clock className="w-8 h-8 text-[#D8D8D8] mx-auto mb-2" />
                 No tasks scheduled on this date.
               </div>
             ) : (
@@ -134,14 +128,14 @@ export const CalendarPage = () => {
                 {selectedDayTasks.map((t, idx) => (
                   <div
                     key={idx}
-                    className="p-3 bg-brand-50/50 border border-brand-200/60 rounded-xl"
+                    className="p-3 bg-[#F5F5F5] border border-[#D8D8D8] rounded-xl"
                   >
-                    <div className="flex items-center justify-between text-[10px] font-bold text-brand-700 mb-1">
-                      <span>SPRINT DEADLINE</span>
+                    <div className="flex items-center justify-between text-[10px] font-bold text-[#0F0F0F] mb-1">
+                      <span className="text-[#0F0F0F]">SPRINT COMMITMENT</span>
                       <span>HIGH PRIORITY</span>
                     </div>
-                    <h5 className="text-xs font-semibold text-slate-900">{t}</h5>
-                    <p className="text-[11px] text-slate-500 mt-1">Apollo Design System 2.0</p>
+                    <h5 className="text-xs font-semibold text-[#0F0F0F]">{t}</h5>
+                    <p className="text-[11px] text-[#5A5A5A] mt-1">Apollo Design System 2.0</p>
                   </div>
                 ))}
               </div>
@@ -150,19 +144,19 @@ export const CalendarPage = () => {
 
           <Card title="Upcoming Milestones">
             <div className="space-y-3 text-xs">
-              <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-[#F5F5F5] border border-[#E5E5E5]">
                 <div>
-                  <p className="font-semibold text-slate-800">Mobile App V3 Review</p>
-                  <p className="text-[10px] text-slate-400">Dec 05, 2026</p>
+                  <p className="font-semibold text-[#0F0F0F]">Mobile App V3 Review</p>
+                  <p className="text-[10px] text-[#5A5A5A]">Dec 05, 2026</p>
                 </div>
-                <Badge variant="purple" size="sm">Review</Badge>
+                <Badge variant="silver" size="sm">Review</Badge>
               </div>
-              <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-[#F5F5F5] border border-[#E5E5E5]">
                 <div>
-                  <p className="font-semibold text-slate-800">Apollo Design System 2.0</p>
-                  <p className="text-[10px] text-slate-400">Dec 15, 2026</p>
+                  <p className="font-semibold text-[#0F0F0F]">Apollo Design System 2.0</p>
+                  <p className="text-[10px] text-[#5A5A5A]">Dec 15, 2026</p>
                 </div>
-                <Badge variant="primary" size="sm">Sprint</Badge>
+                <Badge variant="dark" size="sm">Sprint</Badge>
               </div>
             </div>
           </Card>

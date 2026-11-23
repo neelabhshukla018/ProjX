@@ -42,38 +42,40 @@ export const TopNav = () => {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200/80 px-4 sm:px-6 flex items-center justify-between gap-4 sticky top-0 z-20">
-      {/* Left side: Hamburger & Breadcrumbs */}
-      <div className="flex items-center gap-3">
+    <header className="h-16 bg-[#FFFFFF] border-b border-[#E5E5E5] px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 sticky top-0 z-20 w-full min-w-0">
+      {/* Left side: Mobile Toggle & Breadcrumbs */}
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <button
           type="button"
           onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-          className="lg:hidden p-2 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+          className="lg:hidden p-2 rounded-lg text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
           aria-label="Toggle navigation menu"
         >
           {isMobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
 
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm">
-          <span className="text-slate-400 font-medium hidden sm:inline">Workspace</span>
-          <span className="text-slate-300 hidden sm:inline">/</span>
-          <span className="text-slate-900 font-semibold">{getBreadcrumb()}</span>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+          <span className="text-[#B0B0B0] font-medium hidden md:inline">Workspace</span>
+          <span className="text-[#D4D4D4] hidden md:inline">/</span>
+          <span className="text-[#0F0F0F] font-semibold truncate max-w-[120px] sm:max-w-none">
+            {getBreadcrumb()}
+          </span>
         </nav>
       </div>
 
-      {/* Center: Global Search Trigger */}
-      <div className="flex-1 max-w-md mx-2 sm:mx-4">
+      {/* Center: Minimal Global Search Trigger */}
+      <div className="flex-1 max-w-xs sm:max-w-md mx-1 sm:mx-4">
         <button
           type="button"
           onClick={() => setIsGlobalSearchOpen(true)}
-          className="w-full h-9 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-400 hover:text-slate-600 flex items-center justify-between text-xs transition-colors shadow-subtle group"
+          className="w-full h-9 px-2.5 sm:px-3 rounded-lg bg-[#F5F5F5] hover:bg-[#EAEAEA] border border-[#D8D8D8] text-[#5A5A5A] hover:text-[#0F0F0F] flex items-center justify-between text-xs transition-colors shadow-subtle group"
         >
-          <div className="flex items-center gap-2">
-            <Search className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600" />
-            <span className="hidden sm:inline">Search projects, tasks, or teammates...</span>
-            <span className="sm:hidden">Search...</span>
+          <div className="flex items-center gap-2 min-w-0">
+            <Search className="w-3.5 h-3.5 text-[#5A5A5A] group-hover:text-[#0F0F0F] shrink-0" />
+            <span className="hidden sm:inline truncate">Search projects, tasks, teammates...</span>
+            <span className="sm:hidden text-[11px]">Search...</span>
           </div>
-          <div className="flex items-center gap-1 font-mono text-[10px] bg-white border border-slate-200 text-slate-500 px-1.5 py-0.5 rounded shadow-xs">
+          <div className="hidden sm:flex items-center gap-1 font-mono text-[10px] bg-[#FFFFFF] border border-[#D8D8D8] text-[#2C2C2C] px-1.5 py-0.5 rounded shadow-xs shrink-0">
             <Command className="w-2.5 h-2.5" />
             <span>K</span>
           </div>
@@ -81,7 +83,7 @@ export const TopNav = () => {
       </div>
 
       {/* Right side: Quick Action "+ New", Notifications, User Dropdown */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
         {/* Quick Create Dropdown */}
         <div className="relative">
           <Button
@@ -96,30 +98,30 @@ export const TopNav = () => {
 
           {showQuickMenu && (
             <div
-              className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-dropdown border border-slate-200/90 z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100"
+              className="absolute right-0 mt-2 w-48 bg-[#FFFFFF] rounded-xl shadow-dropdown border border-[#E5E5E5] z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100"
               onMouseLeave={() => setShowQuickMenu(false)}
             >
               <button
                 type="button"
                 onClick={() => {
                   setShowQuickMenu(false);
-                  setIsNewTaskModalOpen(true);
+                  setIsNewProjectModalOpen(true);
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors text-left"
+                className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
               >
-                <CheckCircle2 className="w-4 h-4 text-brand-600" />
-                New Task
+                <FolderPlus className="w-4 h-4 text-[#0F0F0F]" />
+                <span>New Project</span>
               </button>
               <button
                 type="button"
                 onClick={() => {
                   setShowQuickMenu(false);
-                  setIsNewProjectModalOpen(true);
+                  setIsNewTaskModalOpen(true);
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors text-left"
+                className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
               >
-                <FolderPlus className="w-4 h-4 text-violetAccent-600" />
-                New Project
+                <CheckCircle2 className="w-4 h-4 text-[#0F0F0F]" />
+                <span>New Task</span>
               </button>
               <button
                 type="button"
@@ -127,17 +129,18 @@ export const TopNav = () => {
                   setShowQuickMenu(false);
                   setIsInviteModalOpen(true);
                 }}
-                className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-slate-900 font-medium transition-colors text-left"
+                className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
               >
-                <UserPlus className="w-4 h-4 text-emerald-600" />
-                Invite Member
+                <UserPlus className="w-4 h-4 text-[#0F0F0F]" />
+                <span>Invite Member</span>
               </button>
             </div>
           )}
         </div>
 
+        {/* Notifications & Profile */}
         <NotificationDropdown />
-        <div className="h-6 w-px bg-slate-200 mx-1 hidden sm:block" />
+        <div className="w-px h-6 bg-[#E5E5E5] hidden sm:block" />
         <UserDropdown />
       </div>
     </header>

@@ -3,7 +3,6 @@ import { useWorkspace } from '../../hooks/useWorkspace';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { FolderPlus } from 'lucide-react';
 
 export const ProjectModal = () => {
   const { isNewProjectModalOpen, setIsNewProjectModalOpen, addProject, user } = useWorkspace();
@@ -62,7 +61,6 @@ export const ProjectModal = () => {
       status: 'In Progress',
     });
 
-    // Reset & close
     setFormData({
       name: '',
       description: '',
@@ -88,93 +86,98 @@ export const ProjectModal = () => {
           label="Project Title"
           placeholder="e.g. Apollo Design System 2.0"
           value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onChange={(e) => {
+            setFormData({ ...formData, name: e.target.value });
+            if (errors.name) setErrors({ ...errors, name: null });
+          }}
           error={errors.name}
           required
         />
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-            Summary / Scope <span className="text-rose-500">*</span>
+          <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+            Project Description <span className="text-[#0F0F0F] font-bold">*</span>
           </label>
           <textarea
             rows={3}
+            placeholder="Briefly state the mission, deliverables, and strategic scope..."
             value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            placeholder="Outline objectives, deliverables, and team impact..."
+            onChange={(e) => {
+              setFormData({ ...formData, description: e.target.value });
+              if (errors.description) setErrors({ ...errors, description: null });
+            }}
             className={`
-              w-full text-sm rounded-lg p-3 bg-white border outline-none transition-colors
-              ${errors.description ? 'border-rose-400 focus:border-rose-500' : 'border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20'}
+              w-full rounded-lg text-xs sm:text-sm bg-[#FFFFFF] border p-3 text-[#0F0F0F] placeholder-[#B0B0B0]
+              transition-colors duration-150 outline-none
+              ${
+                errors.description
+                  ? 'border-[#2C2C2C] focus:border-[#0F0F0F]'
+                  : 'border-[#D8D8D8] hover:border-[#B0B0B0] focus:border-[#0F0F0F]'
+              }
             `}
           />
           {errors.description && (
-            <p className="text-xs text-rose-600 mt-1">{errors.description}</p>
+            <p className="mt-1 text-xs text-[#0F0F0F] font-medium">{errors.description}</p>
           )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-              Category
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+              Domain Category
             </label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full text-sm rounded-lg py-2.5 px-3 bg-white border border-slate-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
               Priority Tier
             </label>
             <select
               value={formData.priority}
               onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-              className="w-full text-sm rounded-lg py-2.5 px-3 bg-white border border-slate-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
               {priorities.map((p) => (
                 <option key={p} value={p}>
-                  {p}
+                  {p} Priority
                 </option>
               ))}
             </select>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Input
-            label="Target Due Date"
-            type="date"
-            value={formData.dueDate}
-            onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-            error={errors.dueDate}
-            required
-          />
+        <Input
+          label="Target Milestone Date"
+          type="date"
+          value={formData.dueDate}
+          onChange={(e) => {
+            setFormData({ ...formData, dueDate: e.target.value });
+            if (errors.dueDate) setErrors({ ...errors, dueDate: null });
+          }}
+          error={errors.dueDate}
+          required
+        />
 
-          <Input
-            label="Project Lead"
-            value={formData.teamLead}
-            onChange={(e) => setFormData({ ...formData, teamLead: e.target.value })}
-            placeholder="Assign Lead"
-          />
-        </div>
-
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+        <div className="pt-4 border-t border-[#EFEFEF] flex items-center justify-end gap-3">
           <Button
-            variant="outline"
             type="button"
+            variant="ghost"
             onClick={() => setIsNewProjectModalOpen(false)}
           >
             Cancel
           </Button>
-          <Button variant="primary" type="submit" leftIcon={FolderPlus}>
+          <Button type="submit" variant="primary">
             Create Project
           </Button>
         </div>

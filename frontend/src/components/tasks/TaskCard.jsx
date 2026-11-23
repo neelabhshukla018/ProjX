@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Clock,
-  ArrowRight,
-  ArrowLeft,
-  CheckSquare,
-} from 'lucide-react';
+import { Clock, ArrowRight, ArrowLeft, CheckSquare } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import { getPriorityBadge, getDaysRemaining } from '../../utils/formatters';
 
@@ -16,10 +11,10 @@ export const TaskCard = ({ task, onMoveStatus }) => {
   const totalSubtasks = (task.subtasks || []).length;
 
   return (
-    <div className="bg-white border border-slate-200/90 rounded-xl p-4 shadow-subtle hover:shadow-card hover:border-brand-300 transition-all duration-150 group">
+    <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle hover:shadow-card hover:border-[#B0B0B0] transition-all duration-150 group">
       {/* Top Project Tag & Priority */}
       <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded truncate max-w-[150px]">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#5A5A5A] bg-[#F5F5F5] border border-[#E5E5E5] px-2 py-0.5 rounded truncate max-w-[150px]">
           {task.projectName}
         </span>
         <span
@@ -30,27 +25,27 @@ export const TaskCard = ({ task, onMoveStatus }) => {
       </div>
 
       {/* Task Title */}
-      <h4 className="text-xs sm:text-sm font-semibold text-slate-900 group-hover:text-brand-600 transition-colors line-clamp-2 mb-1.5 leading-snug">
+      <h4 className="text-xs sm:text-sm font-semibold text-[#0F0F0F] group-hover:text-[#0F0F0F] transition-colors line-clamp-2 mb-1.5 leading-snug">
         {task.title}
       </h4>
 
       {/* Description if available */}
       {task.description && (
-        <p className="text-[11px] text-slate-500 line-clamp-2 mb-3">
+        <p className="text-[11px] text-[#5A5A5A] line-clamp-2 mb-3">
           {task.description}
         </p>
       )}
 
       {/* Subtasks Progress */}
       {totalSubtasks > 0 && (
-        <div className="flex items-center gap-2 mb-3 text-[11px] text-slate-500">
-          <CheckSquare className="w-3.5 h-3.5 text-brand-500" />
+        <div className="flex items-center gap-2 mb-3 text-[11px] text-[#5A5A5A]">
+          <CheckSquare className="w-3.5 h-3.5 text-[#0F0F0F]" />
           <span>
             {completedSubtasks}/{totalSubtasks} subtasks
           </span>
-          <div className="flex-1 bg-slate-100 rounded-full h-1 overflow-hidden">
+          <div className="flex-1 bg-[#EFEFEF] rounded-full h-1 overflow-hidden">
             <div
-              className="bg-brand-500 h-full rounded-full transition-all"
+              className="bg-[#0F0F0F] h-full rounded-full transition-all"
               style={{ width: `${(completedSubtasks / totalSubtasks) * 100}%` }}
             />
           </div>
@@ -58,23 +53,23 @@ export const TaskCard = ({ task, onMoveStatus }) => {
       )}
 
       {/* Footer Info: Assignee, Due Date & Quick Column Shifters */}
-      <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+      <div className="pt-2.5 border-t border-[#EFEFEF] flex items-center justify-between text-xs">
         <div className="flex items-center gap-2">
           {task.assignee && (
             <Avatar
               src={task.assignee.avatar}
               name={task.assignee.name}
               size="xs"
-              className="ring-1 ring-slate-200"
+              className="ring-1 ring-[#D8D8D8]"
             />
           )}
           <span
             className={`flex items-center gap-1 text-[11px] font-medium ${
               deadline.isOverdue
-                ? 'text-rose-600'
+                ? 'text-[#0F0F0F] font-bold'
                 : deadline.isUrgent
-                ? 'text-amber-600 font-semibold'
-                : 'text-slate-500'
+                ? 'text-[#0F0F0F] font-bold'
+                : 'text-[#5A5A5A]'
             }`}
           >
             <Clock className="w-3 h-3" />
@@ -93,8 +88,8 @@ export const TaskCard = ({ task, onMoveStatus }) => {
                   task.status === 'done' ? 'in_progress' : 'todo'
                 )
               }
-              title="Move left"
-              className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
+              title="Move backward"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
             </button>
@@ -109,8 +104,8 @@ export const TaskCard = ({ task, onMoveStatus }) => {
                   task.status === 'todo' ? 'in_progress' : 'done'
                 )
               }
-              title="Move right"
-              className="p-1 rounded text-slate-400 hover:text-brand-600 hover:bg-brand-50 transition-colors"
+              className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
+              title="Advance stage"
             >
               <ArrowRight className="w-3.5 h-3.5" />
             </button>

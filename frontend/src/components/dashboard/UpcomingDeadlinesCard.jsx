@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, ArrowRight, AlertCircle } from 'lucide-react';
+import { Clock, ArrowRight } from 'lucide-react';
 import Card from '../common/Card';
 import { upcomingDeadlines } from '../../utils/mockData';
 import { getPriorityBadge } from '../../utils/formatters';
@@ -13,14 +13,14 @@ export const UpcomingDeadlinesCard = () => {
       action={
         <Link
           to="/app/tasks"
-          className="text-xs font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1 transition-colors"
+          className="text-xs font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] flex items-center gap-1 transition-colors"
         >
           My tasks <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       }
       headerBorder
       className="h-full"
-      bodyClassName="p-0 divide-y divide-slate-100"
+      bodyClassName="p-0 divide-y divide-[#EFEFEF]"
     >
       {upcomingDeadlines.map((item) => {
         const priorityBadge = getPriorityBadge(item.priority);
@@ -28,34 +28,34 @@ export const UpcomingDeadlinesCard = () => {
         return (
           <div
             key={item.id}
-            className="p-4 hover:bg-slate-50/70 transition-colors flex items-center justify-between gap-3"
+            className="p-3.5 sm:p-4 hover:bg-[#F5F5F5] transition-colors flex items-center justify-between gap-3"
           >
-            <div className="flex-1 pr-2">
-              <h5 className="text-xs sm:text-sm font-semibold text-slate-900 line-clamp-1">
+            <div className="flex-1 min-w-0 pr-2">
+              <h5 className="text-xs sm:text-sm font-semibold text-[#0F0F0F] truncate">
                 {item.title}
               </h5>
-              <div className="flex items-center gap-2 mt-0.5 text-[11px] text-slate-500">
-                <span className="font-medium text-slate-700 truncate">{item.project}</span>
+              <div className="flex items-center gap-2 mt-0.5 text-[11px] text-[#5A5A5A] truncate">
+                <span className="font-medium text-[#2C2C2C] truncate">{item.project}</span>
                 <span>•</span>
-                <span>{item.assignee}</span>
+                <span className="truncate">{item.assignee}</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <span
                 className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${priorityBadge.bg}`}
               >
                 {item.priority}
               </span>
               <div
-                className={`flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-md ${
+                className={`flex items-center gap-1 text-[11px] sm:text-xs font-semibold px-2 py-1 rounded-md ${
                   item.daysLeft <= 3
-                    ? 'bg-rose-50 text-rose-700 border border-rose-200/80'
-                    : 'bg-slate-100 text-slate-700'
+                    ? 'bg-[#0F0F0F] text-[#FFFFFF] border border-[#2C2C2C]'
+                    : 'bg-[#F5F5F5] text-[#2C2C2C] border border-[#D8D8D8]'
                 }`}
               >
-                <Clock className="w-3.5 h-3.5" />
-                <span>{item.daysLeft}d left</span>
+                <Clock className="w-3 h-3" />
+                <span>{item.daysLeft}d</span>
               </div>
             </div>
           </div>

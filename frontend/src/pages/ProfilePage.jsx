@@ -65,7 +65,7 @@ export const ProfilePage = () => {
       return;
     }
 
-    toast.success('Security password updated successfully!');
+    toast.success('Security credentials updated successfully!');
     setPasswordData({
       currentPassword: '',
       newPassword: '',
@@ -74,54 +74,54 @@ export const ProfilePage = () => {
   };
 
   const handleAvatarChange = () => {
-    toast.success('Avatar upload prompt (mock): Avatar refreshed!');
+    toast.success('Avatar selector mock: Avatar updated!');
   };
 
   return (
     <div className="space-y-6 max-w-5xl">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
           Account & Profile
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
           Manage your personal credentials, role permissions, and notification subscriptions.
         </p>
       </div>
 
       {/* Profile Overview Card */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-6 shadow-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="relative group">
             <Avatar src={user.avatar} name={user.name} size="xl" status="online" />
             <button
               type="button"
               onClick={handleAvatarChange}
-              className="absolute inset-0 bg-slate-900/40 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 bg-[#0F0F0F]/60 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
               title="Change avatar"
             >
-              <Camera className="w-5 h-5" />
+              <Camera className="w-5 h-5 text-[#FFFFFF]" />
             </button>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-slate-900">{user.name}</h2>
-              <Badge variant="primary" size="sm">
+              <h2 className="text-lg font-bold text-[#0F0F0F]">{user.name}</h2>
+              <Badge variant="dark" size="sm">
                 {user.role}
               </Badge>
             </div>
-            <p className="text-xs text-slate-500">{user.title} • {user.department}</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">{user.location} • {user.timezone}</p>
+            <p className="text-xs text-[#5A5A5A] mt-0.5">{user.title} • {user.department}</p>
+            <p className="text-[11px] text-[#B0B0B0] mt-0.5">{user.location} • {user.timezone}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-6 border-t sm:border-t-0 sm:border-l border-slate-100 pt-4 sm:pt-0 sm:pl-6 text-xs text-slate-500">
+        <div className="flex items-center gap-6 border-t sm:border-t-0 sm:border-l border-[#EFEFEF] pt-4 sm:pt-0 sm:pl-6 text-xs text-[#5A5A5A]">
           <div>
-            <span className="block font-bold text-base text-slate-900">{stats.totalProjects}</span>
+            <span className="block font-bold text-base text-[#0F0F0F]">{stats.totalProjects}</span>
             <span>Projects Lead</span>
           </div>
           <div>
-            <span className="block font-bold text-base text-slate-900">{stats.completedTasks}</span>
+            <span className="block font-bold text-base text-[#0F0F0F]">{stats.completedTasks}</span>
             <span>Tasks Closed</span>
           </div>
         </div>
@@ -178,18 +178,18 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
               Professional Bio
             </label>
             <textarea
               rows={3}
               value={formData.bio}
               onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-              className="w-full text-sm rounded-lg p-3 bg-white border border-slate-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+              className="w-full text-xs sm:text-sm rounded-lg p-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none hover:border-[#B0B0B0] focus:border-[#0F0F0F]"
             />
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex justify-end">
+          <div className="pt-4 border-t border-[#EFEFEF] flex justify-end">
             <Button variant="primary" type="submit" leftIcon={Save}>
               Save Changes
             </Button>
@@ -200,10 +200,10 @@ export const ProfilePage = () => {
       {/* Notification Preferences */}
       <Card title="Notification Preferences" subtitle="Control when and how you receive alerts">
         <div className="space-y-3">
-          <label className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
+          <label className="flex items-center justify-between p-3 rounded-lg border border-[#E5E5E5] hover:bg-[#F5F5F5] transition-colors cursor-pointer">
             <div>
-              <p className="text-xs font-semibold text-slate-800">Task Assignments</p>
-              <p className="text-[11px] text-slate-500">Receive alerts when teammates assign issues to you</p>
+              <p className="text-xs font-semibold text-[#0F0F0F]">Task Assignments</p>
+              <p className="text-[11px] text-[#5A5A5A]">Receive alerts when teammates assign issues to you</p>
             </div>
             <input
               type="checkbox"
@@ -211,14 +211,14 @@ export const ProfilePage = () => {
               onChange={(e) =>
                 setFormData({ ...formData, taskAssignments: e.target.checked })
               }
-              className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+              className="rounded border-[#B0B0B0] text-[#0F0F0F] focus:ring-[#0F0F0F]"
             />
           </label>
 
-          <label className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
+          <label className="flex items-center justify-between p-3 rounded-lg border border-[#E5E5E5] hover:bg-[#F5F5F5] transition-colors cursor-pointer">
             <div>
-              <p className="text-xs font-semibold text-slate-800">Email Digest</p>
-              <p className="text-[11px] text-slate-500">Weekly roundup of sprint velocity and upcoming deadlines</p>
+              <p className="text-xs font-semibold text-[#0F0F0F]">Email Digest</p>
+              <p className="text-[11px] text-[#5A5A5A]">Weekly roundup of sprint velocity and upcoming deadlines</p>
             </div>
             <input
               type="checkbox"
@@ -226,7 +226,7 @@ export const ProfilePage = () => {
               onChange={(e) =>
                 setFormData({ ...formData, weeklyDigest: e.target.checked })
               }
-              className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+              className="rounded border-[#B0B0B0] text-[#0F0F0F] focus:ring-[#0F0F0F]"
             />
           </label>
         </div>
@@ -263,7 +263,7 @@ export const ProfilePage = () => {
             }
           />
 
-          <Button variant="outline" type="submit" leftIcon={Lock}>
+          <Button variant="secondary" type="submit" leftIcon={Lock}>
             Update Password
           </Button>
         </form>

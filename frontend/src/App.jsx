@@ -13,25 +13,25 @@ export function App() {
           toastOptions={{
             duration: 3500,
             style: {
-              background: '#0f172a',
-              color: '#f8fafc',
+              background: '#0F0F0F',
+              color: '#FFFFFF',
               fontSize: '12px',
               fontWeight: 500,
               padding: '10px 14px',
-              borderRadius: '10px',
-              border: '1px solid #1e293b',
-              boxShadow: '0 10px 25px -5px rgba(15, 23, 42, 0.2)',
+              borderRadius: '8px',
+              border: '1px solid #2C2C2C',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.35)',
             },
             success: {
               iconTheme: {
-                primary: '#10b981',
-                secondary: '#ffffff',
+                primary: '#FFFFFF',
+                secondary: '#0F0F0F',
               },
             },
             error: {
               iconTheme: {
-                primary: '#f43f5e',
-                secondary: '#ffffff',
+                primary: '#FFFFFF',
+                secondary: '#0F0F0F',
               },
             },
           }}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Layers, ArrowRight, Lock, Mail, User, ShieldCheck } from 'lucide-react';
+import { Layers, ArrowRight, Lock, Mail, User } from 'lucide-react';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
@@ -19,10 +19,10 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
 
   const getPasswordStrength = (pwd) => {
-    if (!pwd) return { label: '', width: '0%', color: 'bg-slate-200' };
-    if (pwd.length < 6) return { label: 'Weak', width: '25%', color: 'bg-rose-500' };
-    if (pwd.length < 10) return { label: 'Medium', width: '60%', color: 'bg-amber-500' };
-    return { label: 'Strong', width: '100%', color: 'bg-emerald-500' };
+    if (!pwd) return { label: '', width: '0%', color: 'bg-[#D8D8D8]' };
+    if (pwd.length < 6) return { label: 'Basic', width: '30%', color: 'bg-[#5A5A5A]' };
+    if (pwd.length < 10) return { label: 'Medium', width: '65%', color: 'bg-[#2C2C2C]' };
+    return { label: 'Strong', width: '100%', color: 'bg-[#0F0F0F]' };
   };
 
   const strength = getPasswordStrength(formData.password);
@@ -56,28 +56,29 @@ export const RegisterPage = () => {
       setIsLoading(false);
       toast.success(`Account created! Welcome to ProjX, ${formData.name}.`);
       navigate('/app');
-    }, 600);
+    }, 500);
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-center py-12 sm:px-6 lg:px-8 selection:bg-brand-500 selection:text-white">
+    <div className="min-h-screen bg-[#F5F5F5] flex flex-col justify-center py-12 sm:px-6 lg:px-8 selection:bg-[#0F0F0F] selection:text-[#FFFFFF]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-violetAccent-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <Layers className="w-5 h-5" />
+        <Link to="/" className="inline-flex items-center gap-2.5 mb-4 group">
+          <div className="w-10 h-10 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-sm relative">
+            <Layers className="w-5 h-5 text-white" />
+            <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#FFFFFF]" />
           </div>
-          <span className="font-bold text-2xl text-slate-900 tracking-tight">
-            Proj<span className="text-brand-600">X</span>
+          <span className="font-bold text-2xl text-[#0F0F0F] tracking-tight">
+            Proj<span className="text-[#0F0F0F]">X</span>
           </span>
         </Link>
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+        <h2 className="text-2xl font-bold text-[#0F0F0F] tracking-tight">
           Create your ProjX account
         </h2>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
           Already have an account?{' '}
           <Link
             to="/login"
-            className="font-semibold text-brand-600 hover:text-brand-700 transition-colors"
+            className="font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors underline"
           >
             Sign in here
           </Link>
@@ -85,7 +86,7 @@ export const RegisterPage = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
-        <div className="bg-white py-8 px-6 sm:px-8 border border-slate-200/90 rounded-2xl shadow-card">
+        <div className="bg-[#FFFFFF] py-8 px-6 sm:px-8 border border-[#E5E5E5] rounded-xl shadow-card">
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               label="Full Name"
@@ -109,13 +110,13 @@ export const RegisterPage = () => {
             />
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
+              <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
                 Primary Team Role
               </label>
               <select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full text-sm rounded-lg py-2.5 px-3 bg-white border border-slate-200 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20"
+                className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F] focus:ring-1 focus:ring-[#0F0F0F]"
               >
                 <option value="Lead Architect">Lead Architect / Engineering Manager</option>
                 <option value="Senior Developer">Frontend / Full-Stack Engineer</option>
@@ -140,11 +141,11 @@ export const RegisterPage = () => {
               {/* Password strength meter */}
               {formData.password && (
                 <div className="mt-2">
-                  <div className="flex justify-between items-center text-[10px] text-slate-500 mb-1">
-                    <span>Password Strength</span>
-                    <span className="font-semibold text-slate-700">{strength.label}</span>
+                  <div className="flex justify-between items-center text-[10px] text-[#5A5A5A] mb-1">
+                    <span>Password Security</span>
+                    <span className="font-semibold text-[#0F0F0F]">{strength.label}</span>
                   </div>
-                  <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                  <div className="w-full bg-[#EFEFEF] h-1.5 rounded-full overflow-hidden">
                     <div
                       className={`h-full transition-all duration-300 ${strength.color}`}
                       style={{ width: strength.width }}
@@ -156,21 +157,21 @@ export const RegisterPage = () => {
 
             {/* Terms checkbox */}
             <div>
-              <label className="flex items-start gap-2 cursor-pointer text-xs text-slate-600 mt-2">
+              <label className="flex items-start gap-2 cursor-pointer text-xs text-[#5A5A5A] mt-2">
                 <input
                   type="checkbox"
                   checked={formData.agreeTerms}
                   onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
-                  className="mt-0.5 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                  className="mt-0.5 rounded border-[#B0B0B0] text-[#0F0F0F] focus:ring-[#0F0F0F]"
                 />
                 <span>
                   I agree to the{' '}
-                  <span className="text-brand-600 underline">Terms of Service</span> and{' '}
-                  <span className="text-brand-600 underline">Privacy Policy</span>.
+                  <span className="text-[#0F0F0F] underline">Terms of Service</span> and{' '}
+                  <span className="text-[#0F0F0F] underline">Privacy Policy</span>.
                 </span>
               </label>
               {errors.agreeTerms && (
-                <p className="text-xs text-rose-600 mt-1">{errors.agreeTerms}</p>
+                <p className="text-xs text-[#0F0F0F] mt-1 font-medium">{errors.agreeTerms}</p>
               )}
             </div>
 

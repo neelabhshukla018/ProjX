@@ -23,16 +23,16 @@ export const SettingsPage = () => {
   return (
     <div className="space-y-6 max-w-5xl">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
           Workspace Settings
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
           Configure organization settings, API connections, and team security policies.
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1.5 border-b border-slate-200 pb-2">
+      <div className="flex items-center gap-1.5 border-b border-[#E5E5E5] pb-2">
         {[
           { id: 'general', label: 'General & Organization' },
           { id: 'api', label: 'API & Integrations' },
@@ -44,8 +44,8 @@ export const SettingsPage = () => {
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
               activeTab === tab.id
-                ? 'bg-brand-50 text-brand-700 border border-brand-200/80'
-                : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-[#0F0F0F] text-[#FFFFFF]'
+                : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
             }`}
           >
             {tab.label}
@@ -74,20 +74,20 @@ export const SettingsPage = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight">
-                  Subscription Tier
+                <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+                  Subscription Plan
                 </label>
-                <div className="p-4 bg-brand-50/50 border border-brand-200/60 rounded-xl flex items-center justify-between">
+                <div className="p-4 bg-[#0F0F0F] border border-[#2C2C2C] rounded-xl flex items-center justify-between text-white">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm text-brand-900">Enterprise Scale Tier</span>
-                      <Badge variant="primary" size="sm">Active</Badge>
+                      <span className="font-bold text-sm text-[#FFFFFF]">Enterprise Scale Tier</span>
+                      <Badge variant="dark" size="sm">Active</Badge>
                     </div>
-                    <p className="text-xs text-brand-700 mt-0.5">
+                    <p className="text-xs text-[#B0B0B0] mt-0.5">
                       Unlimited projects, advanced Kanban, SOC-2 compliance, and dedicated support.
                     </p>
                   </div>
-                  <span className="text-xs font-bold text-brand-800 font-mono">Billed Annually</span>
+                  <span className="text-xs font-bold text-[#FFFFFF] font-mono">Billed Annually</span>
                 </div>
               </div>
 
@@ -110,8 +110,8 @@ export const SettingsPage = () => {
             headerBorder
           >
             <div className="space-y-4">
-              <div className="p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs overflow-x-auto">
-                <div className="text-slate-500">// src/services/api.js configuration:</div>
+              <div className="p-3 bg-[#0F0F0F] text-[#FFFFFF] rounded-xl font-mono text-xs border border-[#2C2C2C] overflow-x-auto">
+                <div className="text-[#5A5A5A]">// src/services/api.js configuration:</div>
                 <div>baseURL: "{apiBaseUrl}"</div>
                 <div>timeout: 10000ms</div>
                 <div>headers: Authorization: Bearer &lt;jwt_token&gt;</div>
@@ -125,7 +125,7 @@ export const SettingsPage = () => {
               />
 
               <div className="flex justify-end">
-                <Button variant="outline" onClick={() => toast.success('API configuration saved')}>
+                <Button variant="secondary" onClick={() => toast.success('API configuration saved')}>
                   Update API Endpoint
                 </Button>
               </div>
@@ -141,21 +141,21 @@ export const SettingsPage = () => {
               ].map((tool, i) => (
                 <div
                   key={i}
-                  className="p-3 border border-slate-100 rounded-xl flex items-center justify-between hover:bg-slate-50 transition-colors"
+                  className="p-3 border border-[#E5E5E5] rounded-xl flex items-center justify-between hover:bg-[#F5F5F5] transition-colors"
                 >
                   <div>
-                    <h5 className="text-xs font-bold text-slate-900">{tool.name}</h5>
-                    <p className="text-[11px] text-slate-500">{tool.desc}</p>
+                    <h5 className="text-xs font-bold text-[#0F0F0F]">{tool.name}</h5>
+                    <p className="text-[11px] text-[#5A5A5A]">{tool.desc}</p>
                   </div>
                   {tool.connected ? (
-                    <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                    <span className="text-xs font-semibold text-[#0F0F0F] bg-[#FFFFFF] px-2.5 py-1 rounded-md border border-[#2C2C2C]">
                       Connected
                     </span>
                   ) : (
                     <button
                       type="button"
                       onClick={() => toast.success(`Connected ${tool.name}`)}
-                      className="text-xs font-semibold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200 hover:bg-brand-100 transition-colors"
+                      className="text-xs font-semibold text-[#0F0F0F] bg-[#F5F5F5] px-2.5 py-1 rounded-md border border-[#D8D8D8] hover:bg-[#EAEAEA] transition-colors"
                     >
                       Connect
                     </button>
@@ -169,26 +169,26 @@ export const SettingsPage = () => {
 
       {/* Tab 3: Security & Access */}
       {activeTab === 'security' && (
-        <Card title="Security & Authentication Policies" subtitle="Control organization sign-in rules">
-          <div className="space-y-4">
-            <label className="flex items-center justify-between p-3.5 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50">
+        <Card title="Security & Compliance" subtitle="Audit retention and zero-trust policies">
+          <div className="space-y-4 text-xs">
+            <div className="p-4 bg-[#F5F5F5] border border-[#E5E5E5] rounded-xl flex items-center justify-between">
               <div>
-                <p className="text-xs font-bold text-slate-900">Enforce Multi-Factor Authentication (MFA)</p>
-                <p className="text-[11px] text-slate-500">Require all workspace members to use TOTP / authenticator app</p>
+                <p className="font-semibold text-[#0F0F0F]">Enforce Two-Factor Authentication (2FA)</p>
+                <p className="text-[11px] text-[#5A5A5A]">Require hardware key or TOTP for all organization collaborators</p>
               </div>
-              <input type="checkbox" defaultChecked className="rounded border-slate-300 text-brand-600" />
-            </label>
+              <span className="px-2 py-1 rounded bg-[#0F0F0F] text-[#FFFFFF] font-semibold text-[10px]">
+                Enforced
+              </span>
+            </div>
 
-            <label className="flex items-center justify-between p-3.5 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-50">
+            <div className="p-4 bg-[#F5F5F5] border border-[#E5E5E5] rounded-xl flex items-center justify-between">
               <div>
-                <p className="text-xs font-bold text-slate-900">Single Sign-On (SAML / Okta)</p>
-                <p className="text-[11px] text-slate-500">Allow members to authenticate via enterprise identity provider</p>
+                <p className="font-semibold text-[#0F0F0F]">Audit Log Retention</p>
+                <p className="text-[11px] text-[#5A5A5A]">Store tamper-evident audit records for 365 days</p>
               </div>
-              <input type="checkbox" defaultChecked className="rounded border-slate-300 text-brand-600" />
-            </label>
-
-            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
-              <span className="font-bold">SOC-2 Session Timeout:</span> Inactive sessions are safely expired after 4 hours of inactivity.
+              <span className="px-2 py-1 rounded bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] font-semibold text-[10px]">
+                Active (365d)
+              </span>
             </div>
           </div>
         </Card>

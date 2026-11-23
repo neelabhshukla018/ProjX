@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
+/**
+ * Pure Monochrome Minimal Input Component
+ * - Clean minimal styling
+ * - Clear labels and helpful validation
+ * - Fully responsive with touch accessibility
+ */
 export const Input = React.forwardRef(
   (
     {
@@ -33,14 +39,14 @@ export const Input = React.forwardRef(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-xs font-semibold text-slate-700 mb-1.5 tracking-tight"
+            className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight"
           >
-            {label} {required && <span className="text-rose-500">*</span>}
+            {label} {required && <span className="text-[#0F0F0F] font-bold">*</span>}
           </label>
         )}
         <div className="relative rounded-lg shadow-subtle">
           {LeftIcon && (
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#5A5A5A]">
               <LeftIcon className="w-4 h-4" />
             </div>
           )}
@@ -54,16 +60,16 @@ export const Input = React.forwardRef(
             disabled={disabled}
             placeholder={placeholder}
             className={`
-              w-full rounded-lg text-sm bg-white border text-slate-900 placeholder-slate-400
-              transition-colors duration-150 py-2.5 outline-none
-              ${LeftIcon ? 'pl-9' : 'pl-3.5'}
-              ${isPassword || RightIcon ? 'pr-10' : 'pr-3.5'}
+              w-full rounded-lg text-xs sm:text-sm bg-[#FFFFFF] border text-[#0F0F0F] placeholder-[#B0B0B0]
+              transition-all duration-150 py-2 sm:py-2.5 outline-none
+              ${LeftIcon ? 'pl-9' : 'pl-3 sm:pl-3.5'}
+              ${isPassword || RightIcon ? 'pr-10' : 'pr-3 sm:pr-3.5'}
               ${
                 error
-                  ? 'border-rose-400 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20'
-                  : 'border-slate-200 hover:border-slate-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20'
+                  ? 'border-[#0F0F0F] focus:border-[#0F0F0F] focus:ring-1 focus:ring-[#0F0F0F]'
+                  : 'border-[#D8D8D8] hover:border-[#B0B0B0] focus:border-[#0F0F0F] focus:ring-1 focus:ring-[#0F0F0F]'
               }
-              disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed
+              disabled:bg-[#F5F5F5] disabled:text-[#B0B0B0] disabled:cursor-not-allowed
               ${inputClassName}
             `}
             {...props}
@@ -72,7 +78,7 @@ export const Input = React.forwardRef(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#5A5A5A] hover:text-[#0F0F0F] transition-colors focus:outline-none"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
@@ -81,21 +87,21 @@ export const Input = React.forwardRef(
                 <Eye className="w-4 h-4" />
               )}
             </button>
-          ) : (
-            RightIcon && (
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
-                <RightIcon className="w-4 h-4" />
-              </div>
-            )
-          )}
+          ) : RightIcon ? (
+            <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#5A5A5A]">
+              <RightIcon className="w-4 h-4" />
+            </div>
+          ) : null}
         </div>
-        {error ? (
-          <p className="text-xs text-rose-600 mt-1.5 flex items-center gap-1 font-medium">
+        {error && (
+          <p className="mt-1.5 text-xs text-[#0F0F0F] font-semibold flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F0F0F]" />
             {error}
           </p>
-        ) : helperText ? (
-          <p className="text-xs text-slate-500 mt-1.5">{helperText}</p>
-        ) : null}
+        )}
+        {!error && helperText && (
+          <p className="mt-1.5 text-xs text-[#5A5A5A]">{helperText}</p>
+        )}
       </div>
     );
   }
