@@ -27,6 +27,8 @@ import {
 } from 'recharts';
 import { heroEntrance } from '../utils/animations';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export const LandingPage = () => {
   const heroRef = useRef(null);
   const [activeTab, setActiveTab] = useState('kanban');
@@ -758,35 +760,122 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Minimal Footer */}
-      <footer className="border-t border-[#E5E5E5] bg-[#FFFFFF] py-12 px-4 sm:px-6 lg:px-8 text-xs text-[#5A5A5A]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white">
-              <Layers className="w-4 h-4" />
+      {/* Modern Responsive Footer */}
+      <footer className="border-t border-[#E5E5E5] bg-[#FFFFFF] pt-14 pb-10 px-4 sm:px-6 lg:px-8 text-xs text-[#5A5A5A]">
+        <div className="max-w-7xl mx-auto">
+          {/* Top Multi-Column Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12 pb-12">
+            {/* Brand Column */}
+            <div className="col-span-2 space-y-4">
+              <Link to="/" className="inline-flex items-center gap-2.5 group">
+                <div className="w-8 h-8 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
+                  <Layers className="w-4 h-4 text-white" />
+                </div>
+                <span className="font-bold text-base sm:text-lg text-[#0F0F0F] tracking-tight flex items-center">
+                  Proj<span className="text-[#0F0F0F] font-bold" style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span>
+                </span>
+              </Link>
+              <p className="text-xs sm:text-sm text-[#5A5A5A] max-w-sm leading-relaxed font-normal">
+                The monochrome standard for high-velocity teams, product architects, and engineering ateliers.
+              </p>
+            
             </div>
-            <span className="font-bold text-[#0F0F0F] text-sm">Proj𝕏 Platform</span>
+
+            {/* Column 1: Product */}
+            <div className="col-span-1 space-y-3">
+              <p className="font-semibold text-xs text-[#0F0F0F] uppercase tracking-wider">
+                Product
+              </p>
+              <ul className="space-y-2 font-medium">
+                <li>
+                  <Link to="/app" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Live Workspace
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/app/projects" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Kanban Boards
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/app/tasks" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Task Velocity
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/app/teams" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Team Directory
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: Explore */}
+            <div className="col-span-1 space-y-3">
+              <p className="font-semibold text-xs text-[#0F0F0F] uppercase tracking-wider">
+                Explore
+              </p>
+              <ul className="space-y-2 font-medium">
+                <li>
+                  <a href="#features" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Core Features
+                  </a>
+                </li>
+                <li>
+                  <a href="#preview" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Product Tour
+                  </a>
+                </li>
+                <li>
+                  <a href="#workflow" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Methodology
+                  </a>
+                </li>
+                <li>
+                  <a href="#security" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Security & SOC-2
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Account */}
+            <div className="col-span-1 space-y-3">
+              <p className="font-semibold text-xs text-[#0F0F0F] uppercase tracking-wider">
+                Account
+              </p>
+              <ul className="space-y-2 font-medium">
+                <li>
+                  <Link to="/login" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Sign In
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Create Account
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/app/settings" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Workspace Config
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 font-medium">
-            <Link to="/app" className="hover:text-[#0F0F0F] transition-colors">
-              App Dashboard
-            </Link>
-            <Link to="/login" className="hover:text-[#0F0F0F] transition-colors">
-              Sign In
-            </Link>
-            <Link to="/register" className="hover:text-[#0F0F0F] transition-colors">
-              Register
-            </Link>
-            <a href="#features" className="hover:text-[#0F0F0F] transition-colors">
-              Features
-            </a>
-            <a href="#workflow" className="hover:text-[#0F0F0F] transition-colors">
-              Methodology
-            </a>
+          {/* Bottom Bar */}
+          <div className="pt-8 border-t border-[#EAEAEA] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] sm:text-xs text-[#808080]">
+            <p className="flex items-center gap-1.5 text-center sm:text-left">
+              © {CURRENT_YEAR} Proj<span style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span> Inc. All rights reserved.
+            </p>
+            <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-5 gap-y-2 font-medium text-[#5A5A5A]">
+              <span className="hover:text-[#0F0F0F] cursor-pointer transition-colors">Privacy Policy</span>
+              <span className="hover:text-[#0F0F0F] cursor-pointer transition-colors">Terms of Service</span>
+              <span className="hover:text-[#0F0F0F] cursor-pointer transition-colors">Security Whitepaper</span>
+              <span className="hidden sm:inline text-[#D4D4D4]">•</span>
+            </div>
           </div>
-
-          <p>© 2026 ProjX Inc. All rights reserved.</p>
         </div>
       </footer>
     </div>
