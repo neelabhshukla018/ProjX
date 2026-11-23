@@ -12,7 +12,8 @@ const variants = {
   accent: 'bg-[#2C2C2C] text-[#FFFFFF] hover:bg-[#1A1A1A] border border-[#3A3A3A] shadow-sm focus:ring-[#2C2C2C]/30',
   outline: 'bg-transparent text-[#0F0F0F] hover:bg-[#F5F5F5] border border-[#D4D4D4] focus:ring-[#B0B0B0]/20',
   ghost: 'bg-transparent text-[#2C2C2C] hover:bg-[#EAEAEA] hover:text-[#0F0F0F] border border-transparent focus:ring-[#B0B0B0]/20',
-  dark: 'bg-[#171717] text-white hover:bg-[#2C2C2C] border border-[#2A2A2A] shadow-sm focus:ring-[#3F3F3F]',
+  dark: 'bg-[#171717] text-[#FFFFFF] hover:bg-[#262626] border border-[#333333] hover:border-[#4B4B4B] shadow-sm focus:ring-white/20',
+  white: 'bg-[#FFFFFF] text-[#0F0F0F] hover:bg-[#EAEAEA] border border-[#FFFFFF] shadow-sm focus:ring-white/30',
   danger: 'bg-[#1F1F1F] text-[#FFFFFF] hover:bg-[#2C2C2C] border border-[#404040] focus:ring-[#2C2C2C]/20',
 };
 

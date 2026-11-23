@@ -380,25 +380,44 @@ export const LandingPage = () => {
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        <div className="bg-[#0F0F0F] border border-[#2C2C2C] rounded-2xl p-8 sm:p-14 text-white shadow-elevated relative overflow-hidden">
+        <div className="bg-[#0F0F0F] border border-[#262626] rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden">
+          {/* Subtle ambient lighting */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-36 bg-gradient-to-b from-[#2A2A2A]/40 to-transparent blur-2xl pointer-events-none" />
+
           <div className="relative z-10">
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 text-white">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#8E8E8E] mb-3">
+              Enterprise Collaboration Platform
+            </p>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 text-white leading-tight">
               Ready to modernize your team's project velocity?
             </h2>
-            <p className="text-xs sm:text-sm text-[#B0B0B0] max-w-xl mx-auto mb-8 font-normal">
-              Experience the unified workspace designed for high-performance engineering, product, and design organizations.
+            <p className="text-xs sm:text-sm text-[#B0B0B0] max-w-xl mx-auto mb-8 font-normal leading-relaxed">
+              Experience the unified monochrome workspace engineered for high-velocity engineering, design ateliers, and product teams.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5">
               <Link to="/app" className="w-full sm:w-auto">
-                <Button size="lg" variant="primary" rightIcon={ArrowRight} className="w-full sm:w-auto bg-[#FFFFFF] text-[#0F0F0F] hover:bg-[#E5E5E5]">
+                <Button size="lg" variant="white" rightIcon={ArrowRight} className="w-full sm:w-auto px-6">
                   Launch Live Workspace
                 </Button>
               </Link>
               <Link to="/register" className="w-full sm:w-auto">
-                <Button size="lg" variant="secondary" className="w-full sm:w-auto text-white border-[#2C2C2C] bg-[#171717] hover:bg-[#2C2C2C]">
+                <Button size="lg" variant="dark" className="w-full sm:w-auto px-6">
                   Sign Up for Free
                 </Button>
               </Link>
+            </div>
+
+            {/* Trust Points */}
+            <div className="mt-10 pt-8 border-t border-[#222222] flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs text-[#8E8E8E] font-medium">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-white" /> Instant workspace setup
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-white" /> No credit card required
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-white" /> SOC-2 Type II Certified
+              </span>
             </div>
           </div>
         </div>
