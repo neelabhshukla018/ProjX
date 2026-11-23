@@ -120,19 +120,19 @@ export const LandingPage = () => {
   return (
     <div className="min-h-screen bg-[#F5F5F5] text-[#0F0F0F] selection:bg-[#0F0F0F] selection:text-[#FFFFFF]">
       {/* Top Navigation - Compact Floating 3D Capsule coming out of window */}
-      <header className="fixed top-3 sm:top-5 inset-x-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300">
+      <header className="fixed top-2.5 sm:top-5 inset-x-0 z-50 flex justify-center px-3 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300">
         <div
-          className={`pointer-events-auto w-full rounded-full bg-[#FFFFFF]/92 backdrop-blur-2xl border border-white/80 ring-1 ring-black/[0.08] shadow-[0_22px_45px_-10px_rgba(0,0,0,0.22),0_10px_20px_-5px_rgba(0,0,0,0.10),inset_0_1.5px_1.5px_rgba(255,255,255,1),inset_0_-1.5px_1px_rgba(0,0,0,0.05)] px-4 sm:px-6 flex items-center justify-between transition-all duration-300 ease-out hover:shadow-[0_28px_55px_-10px_rgba(0,0,0,0.26),0_12px_24px_-5px_rgba(0,0,0,0.12),inset_0_1.5px_1.5px_rgba(255,255,255,1),inset_0_-1.5px_1px_rgba(0,0,0,0.05)] ${
-            isScrolled ? 'h-11 sm:h-12 max-w-4xl lg:max-w-5xl' : 'h-14 sm:h-15 max-w-5xl lg:max-w-6xl'
+          className={`pointer-events-auto w-full rounded-full bg-[#FFFFFF]/92 backdrop-blur-2xl border border-white/80 ring-1 ring-black/[0.08] shadow-[0_16px_36px_-8px_rgba(0,0,0,0.18),0_8px_16px_-4px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,0,0,0.04)] sm:shadow-[0_22px_45px_-10px_rgba(0,0,0,0.22),0_10px_20px_-5px_rgba(0,0,0,0.10),inset_0_1.5px_1.5px_rgba(255,255,255,1),inset_0_-1.5px_1px_rgba(0,0,0,0.05)] px-3 sm:px-6 flex items-center justify-between transition-all duration-300 ease-out hover:shadow-[0_28px_55px_-10px_rgba(0,0,0,0.26),0_12px_24px_-5px_rgba(0,0,0,0.12),inset_0_1.5px_1.5px_rgba(255,255,255,1),inset_0_-1.5px_1px_rgba(0,0,0,0.05)] ${
+            isScrolled ? 'h-[38px] sm:h-11 md:h-12 max-w-4xl lg:max-w-5xl' : 'h-[44px] sm:h-14 md:h-15 max-w-5xl lg:max-w-6xl'
           }`}
         >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-md shadow-black/20 relative group-hover:scale-105 transition-transform flex-shrink-0">
-              <Layers className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white" />
-              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#FFFFFF]" />
+          <Link to="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0">
+            <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-xs sm:shadow-md shadow-black/20 relative group-hover:scale-105 transition-transform shrink-0">
+              <Layers className="w-3.5 h-3.5 sm:w-[18px] sm:h-[18px] text-white" />
+              <span className="absolute -top-0.5 -right-0.5 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#FFFFFF]" />
             </div>
-            <span className="font-bold text-base sm:text-lg text-[#0F0F0F] tracking-tight flex items-center">
+            <span className="font-bold text-xs sm:text-base md:text-lg text-[#0F0F0F] tracking-tight flex items-center">
               Proj<span className="text-[#0F0F0F] font-bold" style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span>
             </span>
           </Link>
@@ -166,10 +166,10 @@ export const LandingPage = () => {
           </nav>
 
           {/* Right CTA */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <Link
               to="/login"
-              className="text-xs sm:text-sm font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] px-3 py-1.5 rounded-full hover:bg-black/[0.05] transition-colors"
+              className="text-[11px] sm:text-sm font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] px-2 sm:px-3 py-1 sm:py-1.5 rounded-full hover:bg-black/[0.05] transition-colors"
             >
               Sign In
             </Link>
@@ -178,7 +178,7 @@ export const LandingPage = () => {
                 size="sm"
                 variant="primary"
                 rightIcon={ArrowRight}
-                className="!py-2 !px-4 !text-xs sm:!text-sm !rounded-full shadow-md shadow-black/20 hover:shadow-lg hover:-translate-y-0.5 transition-all font-semibold"
+                className="!py-1 sm:!py-2 !px-2.5 sm:!px-4 !text-[11px] sm:!text-sm !rounded-full shadow-xs sm:shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all font-semibold"
               >
                 Open App
               </Button>
@@ -188,7 +188,7 @@ export const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-28 sm:pt-36 lg:pt-40 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-32 sm:pt-36 lg:pt-40 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Animated Gradient Bars Background (inspired by @waleedkibhen on 21st.dev) */}
         <GradientBars
           numBars={15}
