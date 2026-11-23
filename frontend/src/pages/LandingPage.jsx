@@ -236,7 +236,7 @@ export const LandingPage = () => {
         </div>
 
         {/* Product Preview Mockup with 3D Container Scroll Animation */}
-        <div id="preview" className="relative z-10 max-w-6xl mx-auto mt-10 sm:mt-16">
+        <div id="preview" className="hidden md:block relative z-10 max-w-6xl mx-auto mt-10 sm:mt-16">
           <ContainerScroll maxTilt={20}>
             {/* Mock Window Header */}
             <div className="flex items-center justify-between pb-3 px-3 sm:px-4 pt-3 border-b border-[#EFEFEF] bg-[#FFFFFF]">
