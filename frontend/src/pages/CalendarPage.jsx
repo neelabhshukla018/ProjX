@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Card from '../components/common/Card';
-import Badge from '../components/common/Badge';
 
 export const CalendarPage = () => {
   const [currentMonth] = useState('November 2026');
@@ -149,14 +148,14 @@ export const CalendarPage = () => {
                   <p className="font-semibold text-[#0F0F0F]">Mobile App V3 Review</p>
                   <p className="text-[10px] text-[#5A5A5A]">Dec 05, 2026</p>
                 </div>
-                <Badge variant="silver" size="sm">Review</Badge>
+                <span className="text-xs font-medium text-[#5A5A5A]">Review</span>
               </div>
               <div className="flex items-center justify-between p-2 rounded-lg bg-[#F5F5F5] border border-[#E5E5E5]">
                 <div>
                   <p className="font-semibold text-[#0F0F0F]">Apollo Design System 2.0</p>
                   <p className="text-[10px] text-[#5A5A5A]">Dec 15, 2026</p>
                 </div>
-                <Badge variant="dark" size="sm">Sprint</Badge>
+                <span className="text-xs font-semibold text-[#0F0F0F]">Sprint</span>
               </div>
             </div>
           </Card>

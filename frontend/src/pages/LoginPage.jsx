@@ -73,7 +73,7 @@ export const LoginPage = () => {
           Don't have an account yet?{' '}
           <Link
             to="/register"
-            className="font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors underline"
+            className="font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors"
           >
             Create one for free
           </Link>

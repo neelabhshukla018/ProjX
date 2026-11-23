@@ -2,7 +2,6 @@ import React from 'react';
 import { Users, FolderKanban } from 'lucide-react';
 import Card from '../common/Card';
 import Avatar from '../common/Avatar';
-import Badge from '../common/Badge';
 
 export const TeamCard = ({ team }) => {
   return (
@@ -12,9 +11,9 @@ export const TeamCard = ({ team }) => {
     >
       <div>
         <div className="flex items-center justify-between mb-3">
-          <Badge variant="dark" size="sm">
+          <span className="text-xs font-semibold text-[#0F0F0F]">
             {team.department}
-          </Badge>
+          </span>
           <span className="text-xs font-semibold text-[#5A5A5A] flex items-center gap-1">
             <Users className="w-3.5 h-3.5" /> {team.memberCount} members
           </span>

@@ -1,13 +1,11 @@
 import React from 'react';
 import { Clock } from 'lucide-react';
 import Card from '../common/Card';
-import Badge from '../common/Badge';
 import ProgressBar from '../common/ProgressBar';
 import Avatar from '../common/Avatar';
-import { getPriorityBadge, getDaysRemaining, formatDate } from '../../utils/formatters';
+import { getDaysRemaining, formatDate } from '../../utils/formatters';
 
 export const ProjectCard = ({ project }) => {
-  const priorityInfo = getPriorityBadge(project.priority);
   const deadline = getDaysRemaining(project.dueDate);
 
   return (
@@ -16,26 +14,10 @@ export const ProjectCard = ({ project }) => {
       bodyClassName="p-5 flex flex-col h-full justify-between"
     >
       <div>
-        {/* Top Badges */}
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <Badge
-            variant={
-              project.status === 'Completed'
-                ? 'dark'
-                : project.status === 'Review'
-                ? 'silver'
-                : 'default'
-            }
-            dot
-            size="sm"
-          >
-            {project.status}
-          </Badge>
-          <span
-            className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${priorityInfo.bg}`}
-          >
-            {project.priority}
-          </span>
+        {/* Status & Priority */}
+        <div className="flex items-center justify-between gap-2 mb-3 text-xs">
+          <span className="font-semibold text-[#0F0F0F]">{project.status}</span>
+          <span className="font-medium text-[#5A5A5A]">{project.priority}</span>
         </div>
 
         {/* Title & Category */}

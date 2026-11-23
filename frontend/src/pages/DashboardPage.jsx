@@ -39,11 +39,9 @@ export const DashboardPage = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0F0F0F] text-[#FFFFFF] text-xs font-semibold border border-[#2C2C2C] shadow-subtle">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FFFFFF] animate-pulse" />
-            Workspace Nominal
-          </span>
+        <div className="flex items-center gap-1.5 text-xs text-[#5A5A5A] font-medium self-start sm:self-auto">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#0F0F0F]" />
+          <span>Active</span>
         </div>
       </div>
 

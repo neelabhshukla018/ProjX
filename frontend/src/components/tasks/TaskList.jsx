@@ -1,7 +1,6 @@
 import React from 'react';
 import { Check, Clock } from 'lucide-react';
 import Avatar from '../common/Avatar';
-import Badge from '../common/Badge';
 import { getPriorityBadge, getStatusBadge, getDaysRemaining, formatDate } from '../../utils/formatters';
 
 export const TaskList = ({ tasks = [], onMoveStatus }) => {
@@ -89,19 +88,7 @@ export const TaskList = ({ tasks = [], onMoveStatus }) => {
 
                     {/* Status */}
                     <td className="py-3 px-4">
-                      <Badge
-                        variant={
-                          task.status === 'done'
-                            ? 'dark'
-                            : task.status === 'in_progress'
-                            ? 'dark'
-                            : 'default'
-                        }
-                        size="sm"
-                        dot
-                      >
-                        {statusBadge.label}
-                      </Badge>
+                      <span className="font-medium text-xs text-[#0F0F0F]">{statusBadge.label}</span>
                     </td>
 
                     {/* Due Date */}

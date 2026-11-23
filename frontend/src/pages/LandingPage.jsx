@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   Layers,
   ArrowRight,
-  Sparkles,
   CheckCircle2,
   Kanban,
   BarChart3,
@@ -11,7 +10,6 @@ import {
   Zap,
   Users,
   Clock,
-  ChevronRight,
 } from 'lucide-react';
 import Button from '../components/common/Button';
 import { heroEntrance } from '../utils/animations';
@@ -146,23 +144,9 @@ export const LandingPage = () => {
       {/* Hero Section */}
       <section className="relative pt-16 sm:pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div ref={heroRef} className="max-w-4xl mx-auto text-center">
-          {/* Luxury Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0F0F0F] border border-[#2C2C2C] text-[#FFFFFF] text-xs font-semibold mb-6 shadow-subtle animate-in fade-in duration-300">
-            <Sparkles className="w-3.5 h-3.5 text-[#FFFFFF]" />
-            <span className="text-white">ProjX Design System</span>
-            <span className="text-[#5A5A5A]">•</span>
-            <span className="text-[#B0B0B0] flex items-center font-bold">
-              Minimal Luxury SaaS <ChevronRight className="w-3 h-3 ml-0.5" />
-            </span>
-          </div>
-
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0F0F0F] tracking-tight leading-[1.08] mb-6">
-            The monochrome standard for{' '}
-            <span className="relative inline-block text-[#0F0F0F]">
-              high-velocity teams.
-              <span className="absolute bottom-1 left-0 right-0 h-[2px] bg-[#0F0F0F] rounded-full" />
-            </span>
+            The monochrome standard for high-velocity teams.
           </h1>
 
           {/* Subheading */}
@@ -246,20 +230,20 @@ export const LandingPage = () => {
                     <span className="flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-[#B0B0B0]" /> To Do
                     </span>
-                    <span className="bg-[#F5F5F5] px-2 py-0.5 rounded text-[10px] border border-[#D8D8D8] text-[#0F0F0F]">2</span>
+                    <span className="text-xs text-[#5A5A5A] font-semibold">2 tasks</span>
                   </div>
                   <div className="space-y-2.5">
                     <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[10px] font-bold text-[#0F0F0F] bg-[#F5F5F5] px-1.5 py-0.5 rounded uppercase border border-[#D8D8D8]">Frontend</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-1">Audit WCAG AA compliance across dark & light themes</p>
+                      <span className="text-[11px] font-medium text-[#5A5A5A]">Frontend</span>
+                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Audit WCAG AA compliance across dark & light themes</p>
                       <div className="flex items-center justify-between mt-2 text-[10px] text-[#5A5A5A]">
                         <span>2/3 subtasks</span>
                         <span className="text-[#0F0F0F] font-bold">3d left</span>
                       </div>
                     </div>
                     <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[10px] font-bold text-[#0F0F0F] bg-[#F5F5F5] px-1.5 py-0.5 rounded uppercase border border-[#D8D8D8]">DevOps</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-1">Setup automated penetration test matrix for API gateway</p>
+                      <span className="text-[11px] font-medium text-[#5A5A5A]">DevOps</span>
+                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Setup automated penetration test matrix for API gateway</p>
                     </div>
                   </div>
                 </div>
@@ -270,19 +254,19 @@ export const LandingPage = () => {
                     <span className="flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-[#2C2C2C]" /> In Progress
                     </span>
-                    <span className="bg-[#0F0F0F] text-[#FFFFFF] px-2 py-0.5 rounded text-[10px] border border-[#2C2C2C]">3</span>
+                    <span className="text-xs text-[#5A5A5A] font-semibold">3 tasks</span>
                   </div>
                   <div className="space-y-2.5">
                     <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#2C2C2C] shadow-xs">
-                      <span className="text-[10px] font-bold text-[#FFFFFF] bg-[#0F0F0F] px-1.5 py-0.5 rounded uppercase">Design</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-1">Implement optimistic UI state for Kanban drag-and-drop</p>
+                      <span className="text-[11px] font-medium text-[#5A5A5A]">Design</span>
+                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Implement optimistic UI state for Kanban drag-and-drop</p>
                       <div className="w-full bg-[#EFEFEF] rounded-full h-1 mt-2">
                         <div className="bg-[#0F0F0F] h-full w-3/4 rounded-full" />
                       </div>
                     </div>
                     <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[10px] font-bold text-[#0F0F0F] bg-[#F5F5F5] px-1.5 py-0.5 rounded uppercase border border-[#D8D8D8]">AI Stream</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-1">Fine-tune streaming token responses in LLM chat UI</p>
+                      <span className="text-[11px] font-medium text-[#5A5A5A]">AI Stream</span>
+                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Fine-tune streaming token responses in LLM chat UI</p>
                     </div>
                   </div>
                 </div>
@@ -293,12 +277,12 @@ export const LandingPage = () => {
                     <span className="flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-[#0F0F0F]" /> Done
                     </span>
-                    <span className="bg-[#F5F5F5] px-2 py-0.5 rounded text-[10px] border border-[#D8D8D8] text-[#0F0F0F]">5</span>
+                    <span className="text-xs text-[#5A5A5A] font-semibold">5 tasks</span>
                   </div>
                   <div className="space-y-2.5">
                     <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[10px] font-bold text-[#5A5A5A] bg-[#F5F5F5] px-1.5 py-0.5 rounded uppercase border border-[#D8D8D8]">Mobile</span>
-                      <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-1">Integrate biometrics FaceID / TouchID auth prompt</p>
+                      <span className="text-[11px] font-medium text-[#5A5A5A]">Mobile</span>
+                      <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5">Integrate biometrics FaceID / TouchID auth prompt</p>
                       <span className="text-[10px] text-[#0F0F0F] font-semibold mt-2 block">✓ Verified in QA</span>
                     </div>
                   </div>
@@ -347,13 +331,8 @@ export const LandingPage = () => {
                 className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-6 shadow-subtle hover:shadow-card hover:border-[#B0B0B0]/70 transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-bold text-[#2C2C2C] bg-[#F5F5F5] border border-[#D8D8D8] px-2 py-0.5 rounded uppercase">
-                      {feature.tag}
-                    </span>
+                  <div className="w-10 h-10 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white mb-4">
+                    <Icon className="w-5 h-5" />
                   </div>
                   <h3 className="text-base font-semibold text-[#0F0F0F] mb-2 tracking-tight">
                     {feature.title}

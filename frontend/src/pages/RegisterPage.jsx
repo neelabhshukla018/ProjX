@@ -78,7 +78,7 @@ export const RegisterPage = () => {
           Already have an account?{' '}
           <Link
             to="/login"
-            className="font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors underline"
+            className="font-semibold text-[#0F0F0F] hover:text-[#5A5A5A] transition-colors"
           >
             Sign in here
           </Link>

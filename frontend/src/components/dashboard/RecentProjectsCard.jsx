@@ -4,7 +4,6 @@ import { ArrowRight } from 'lucide-react';
 import Card from '../common/Card';
 import ProgressBar from '../common/ProgressBar';
 import Avatar from '../common/Avatar';
-import Badge from '../common/Badge';
 
 export const RecentProjectsCard = ({ projects = [] }) => {
   return (
@@ -33,18 +32,9 @@ export const RecentProjectsCard = ({ projects = [] }) => {
               <span className="font-semibold text-xs sm:text-sm text-[#0F0F0F] truncate">
                 {project.name}
               </span>
-              <Badge
-                variant={
-                  project.status === 'Completed'
-                    ? 'dark'
-                    : project.status === 'Review'
-                    ? 'neutral'
-                    : 'default'
-                }
-                size="sm"
-              >
-                {project.status}
-              </Badge>
+              <span className="text-xs text-[#5A5A5A] font-medium">
+                • {project.status}
+              </span>
             </div>
             <p className="text-[11px] text-[#5A5A5A] truncate">{project.description}</p>
           </div>

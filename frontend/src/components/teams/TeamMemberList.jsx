@@ -1,25 +1,9 @@
 import React from 'react';
 import { CheckCircle2, FolderKanban } from 'lucide-react';
 import Avatar from '../common/Avatar';
-import Badge from '../common/Badge';
 import toast from 'react-hot-toast';
 
 export const TeamMemberList = ({ members = [] }) => {
-  const getRoleVariant = (role) => {
-    switch (role?.toLowerCase()) {
-      case 'workspace admin':
-      case 'admin':
-        return 'dark';
-      case 'lead':
-      case 'design lead':
-      case 'devops lead':
-      case 'lead architect':
-        return 'dark';
-      case 'contributor':
-      default:
-        return 'default';
-    }
-  };
 
   const handleContact = (email) => {
     toast.success(`Opening mail client for ${email}`);
@@ -47,9 +31,9 @@ export const TeamMemberList = ({ members = [] }) => {
                 <p className="text-xs text-[#5A5A5A]">{member.role}</p>
               </div>
             </div>
-            <Badge variant={getRoleVariant(member.role)} size="sm">
+            <span className="text-xs font-medium text-[#5A5A5A]">
               {member.role?.split(' ')[0]}
-            </Badge>
+            </span>
           </div>
 
           <div className="text-[11px] text-[#5A5A5A] mb-3 truncate">

@@ -4,7 +4,6 @@ import Avatar from '../components/common/Avatar';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
-import Badge from '../components/common/Badge';
 import { Save, Lock, Camera } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -106,9 +105,9 @@ export const ProfilePage = () => {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-bold text-[#0F0F0F]">{user.name}</h2>
-              <Badge variant="dark" size="sm">
-                {user.role}
-              </Badge>
+              <span className="text-xs font-medium text-[#5A5A5A]">
+                • {user.role}
+              </span>
             </div>
             <p className="text-xs text-[#5A5A5A] mt-0.5">{user.title} • {user.department}</p>
             <p className="text-[11px] text-[#B0B0B0] mt-0.5">{user.location} • {user.timezone}</p>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
-import Badge from '../components/common/Badge';
 import { useWorkspace } from '../hooks/useWorkspace';
 import { Terminal, Save } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -81,7 +80,7 @@ export const SettingsPage = () => {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-sm text-[#FFFFFF]">Enterprise Scale Tier</span>
-                      <Badge variant="dark" size="sm">Active</Badge>
+                      <span className="text-xs font-semibold text-[#B0B0B0]">• Active</span>
                     </div>
                     <p className="text-xs text-[#B0B0B0] mt-0.5">
                       Unlimited projects, advanced Kanban, SOC-2 compliance, and dedicated support.
