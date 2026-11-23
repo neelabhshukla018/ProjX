@@ -110,7 +110,10 @@ export const TopNav = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#FFFFFF] border-b border-[#E5E5E5] shadow-xs">
+      <header
+        style={{ backgroundColor: '#ffffff' }}
+        className="sticky top-0 z-40 w-full bg-[#FFFFFF] bg-white border-b border-[#E5E5E5] shadow-xs"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Left: Mobile Toggle, Logo & Workspace Switcher */}
           <div className="flex items-center gap-3 shrink-0">
