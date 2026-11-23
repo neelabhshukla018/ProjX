@@ -102,6 +102,16 @@
   }
 }
 
+/* Gradient Bars Pulse Animation */
+@keyframes pulseBar {
+  0% {
+    transform: scaleY(var(--initial-scale));
+  }
+  100% {
+    transform: scaleY(calc(var(--initial-scale) * 0.72));
+  }
+}
+
 /* Restrained animations and accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

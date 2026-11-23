@@ -16,6 +16,7 @@ import Button from '../components/common/Button';
 import FlipText from '../components/common/FlipText';
 import SquigglyText from '../components/common/SquigglyText';
 import ContainerScroll from '../components/common/ContainerScroll';
+import GradientBars from '../components/common/GradientBars';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -155,7 +156,24 @@ export const LandingPage = () => {
 
       {/* Hero Section */}
       <section className="relative pt-16 sm:pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div ref={heroRef} className="max-w-4xl mx-auto text-center">
+        {/* Animated Gradient Bars Background (inspired by @waleedkibhen on 21st.dev) */}
+        <GradientBars
+          numBars={15}
+          gradientFrom="rgba(255, 60, 0, 0.16)"
+          gradientTo="transparent"
+          animationDuration={2.6}
+          minHeight={45}
+          maxHeight={100}
+          barBorderColor="rgba(255, 60, 0, 0.05)"
+        />
+
+        {/* Ambient bottom underglow connecting the bars with the dashboard preview */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[rgba(255,60,0,0.06)] via-[rgba(255,60,0,0.02)] to-transparent pointer-events-none z-0"
+          aria-hidden="true"
+        />
+
+        <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto text-center">
           {/* Main Headline with Aceternity SquigglyText & Vengeance UI FlipText Animation */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0F0F0F] tracking-tight leading-[1.08] mb-6">
             <SquigglyText scale={[2.5, 4.5]} stepDuration={90}>
@@ -206,7 +224,7 @@ export const LandingPage = () => {
         </div>
 
         {/* Product Preview Mockup with 3D Container Scroll Animation */}
-        <div id="preview" className="max-w-6xl mx-auto mt-10 sm:mt-16">
+        <div id="preview" className="relative z-10 max-w-6xl mx-auto mt-10 sm:mt-16">
           <ContainerScroll maxTilt={20}>
             {/* Mock Window Header */}
             <div className="flex items-center justify-between pb-3 px-3 sm:px-4 pt-3 border-b border-[#EFEFEF] bg-[#FFFFFF]">
