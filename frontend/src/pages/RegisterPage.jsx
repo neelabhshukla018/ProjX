@@ -54,7 +54,7 @@ export const RegisterPage = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      toast.success(`Account created! Welcome to ProjX, ${formData.name}.`);
+      toast.success(`Account created! Welcome to Proj𝕏, ${formData.name}.`);
       navigate('/app');
     }, 500);
   };
@@ -72,7 +72,7 @@ export const RegisterPage = () => {
           </span>
         </Link>
         <h2 className="text-2xl font-bold text-[#0F0F0F] tracking-tight">
-          Create your ProjX account
+          Create your Proj𝕏 account
         </h2>
         <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
           Already have an account?{' '}

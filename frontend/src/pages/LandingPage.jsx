@@ -30,11 +30,21 @@ import { heroEntrance } from '../utils/animations';
 export const LandingPage = () => {
   const heroRef = useRef(null);
   const [activeTab, setActiveTab] = useState('kanban');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     if (heroRef.current) {
       heroEntrance(heroRef.current);
     }
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const features = [
@@ -107,46 +117,97 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] text-[#0F0F0F] selection:bg-[#0F0F0F] selection:text-[#FFFFFF]">
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-40 bg-[#FFFFFF]/90 backdrop-blur-md border-b border-[#E5E5E5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      {/* Top Navigation - Fixed Full-Width Header with Scroll-Shrink Effect */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? 'bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-[#D2D2D2] shadow-[0_14px_34px_-6px_rgba(0,0,0,0.15),0_4px_12px_-2px_rgba(0,0,0,0.08),inset_0_-1px_0_rgba(0,0,0,0.04)]'
+            : 'bg-[#FFFFFF]/85 backdrop-blur-md border-b border-[#E5E5E5] shadow-none'
+        }`}
+      >
+        <div
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ease-in-out ${
+            isScrolled ? 'h-13 sm:h-14' : 'h-18 sm:h-20'
+          }`}
+        >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-sm relative">
-              <Layers className="w-5 h-5 text-white" />
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div
+              className={`rounded-xl bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-md shadow-black/25 relative group-hover:scale-105 transition-all duration-300 ${
+                isScrolled ? 'w-8 h-8' : 'w-9 h-9 sm:w-10 sm:h-10'
+              }`}
+            >
+              <Layers
+                className={`text-white transition-all duration-300 ${
+                  isScrolled ? 'w-4 h-4' : 'w-5 h-5'
+                }`}
+              />
               <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#FFFFFF]" />
             </div>
-            <span className="font-bold text-lg sm:text-xl text-[#0F0F0F] tracking-tight">
+            <span
+              className={`font-bold text-[#0F0F0F] tracking-tight transition-all duration-300 ${
+                isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
+              }`}
+            >
               Proj<span className="text-[#0F0F0F]">X</span>
             </span>
           </Link>
 
           {/* Center Links */}
-          <nav className="hidden md:flex items-center gap-8 text-xs sm:text-sm font-medium text-[#5A5A5A]">
-            <a href="#features" className="hover:text-[#0F0F0F] transition-colors">
+          <nav className="hidden md:flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-[#4A4A4A]">
+            <a
+              href="#features"
+              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
+                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
+              }`}
+            >
               Features
             </a>
-            <a href="#preview" className="hover:text-[#0F0F0F] transition-colors">
+            <a
+              href="#preview"
+              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
+                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
+              }`}
+            >
               Product Tour
             </a>
-            <a href="#workflow" className="hover:text-[#0F0F0F] transition-colors">
+            <a
+              href="#workflow"
+              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
+                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
+              }`}
+            >
               Methodology
             </a>
-            <a href="#security" className="hover:text-[#0F0F0F] transition-colors">
+            <a
+              href="#security"
+              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
+                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
+              }`}
+            >
               Enterprise
             </a>
           </nav>
 
           {/* Right CTA */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/login"
-              className="text-xs sm:text-sm font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] px-3 py-2 rounded-lg transition-colors"
+              className={`font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] rounded-lg hover:bg-[#F0F0F0] transition-all duration-200 ${
+                isScrolled ? 'text-xs px-2.5 py-1.5' : 'text-xs sm:text-sm px-3 py-2'
+              }`}
             >
               Sign In
             </Link>
             <Link to="/app">
-              <Button size="sm" variant="primary" rightIcon={ArrowRight}>
+              <Button
+                size="sm"
+                variant="primary"
+                rightIcon={ArrowRight}
+                className={`shadow-md shadow-black/25 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 font-semibold ${
+                  isScrolled ? 'text-xs py-1.5 px-3' : 'text-xs sm:text-sm py-2 px-3.5'
+                }`}
+              >
                 Open App
               </Button>
             </Link>
@@ -155,7 +216,7 @@ export const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-16 sm:pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Animated Gradient Bars Background (inspired by @waleedkibhen on 21st.dev) */}
         <GradientBars
           numBars={15}

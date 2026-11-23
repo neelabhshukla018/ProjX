@@ -130,7 +130,7 @@ export const TopNav = () => {
                 <Layers className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold text-base sm:text-lg text-[#0F0F0F] tracking-tight">
-                ProjX
+                Proj𝕏
               </span>
             </Link>
 
