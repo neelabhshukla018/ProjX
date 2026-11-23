@@ -17,6 +17,7 @@ import FlipText from '../components/common/FlipText';
 import SquigglyText from '../components/common/SquigglyText';
 import ContainerScroll from '../components/common/ContainerScroll';
 import GradientBars from '../components/common/GradientBars';
+import ImageTrail from '../components/common/ImageTrail';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -28,6 +29,41 @@ import {
 import { heroEntrance } from '../utils/animations';
 
 const CURRENT_YEAR = new Date().getFullYear();
+
+const PROJX_WORKFLOW_IMAGES = [
+  {
+    src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
+    alt: 'Predictive velocity telemetry and sprint analytics',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80',
+    alt: 'Modern engineering atelier workspace',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80',
+    alt: 'Sprint burndown charts and throughput tracking',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80',
+    alt: 'Interactive Kanban board and milestone planning',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80',
+    alt: 'Zero-downtime code review and developer velocity',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80',
+    alt: 'Cross-functional engineering team synchronization',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80',
+    alt: 'Milestone roadmap and quarterly deliverables',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80',
+    alt: 'High-frequency systems architecture and telemetry',
+  },
+];
 
 export const LandingPage = () => {
   const heroRef = useRef(null);
@@ -141,16 +177,23 @@ export const LandingPage = () => {
           {/* Center Links */}
           <nav className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-[#5A5A5A]">
             <a
-              href="#features"
-              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
-            >
-              Features
-            </a>
-            <a
               href="#preview"
               className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
             >
               Product Tour
+            </a>
+            <a
+              href="#atelier"
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors flex items-center gap-1.5"
+            >
+              <span>Workflow Canvas</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse" />
+            </a>
+            <a
+              href="#features"
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
+            >
+              Features
             </a>
             <a
               href="#workflow"
@@ -623,6 +666,66 @@ export const LandingPage = () => {
         </div>
       </section>
 
+      {/* Interactive Atelier Canvas / Image Trail Section (Desktop Only) */}
+      <section id="atelier" className="hidden md:block py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+      
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F0F0F] tracking-tight">
+            The anatomy of high-velocity execution
+          </h2>
+          <p className="text-[#5A5A5A] text-xs sm:text-base mt-3 max-w-xl mx-auto leading-relaxed">
+            Glide your pointer across the canvas to preview the engineering workflow — from real-time sprint burndowns and Kanban pipelines to telemetry insights and architectural milestones.
+          </p>
+        </div>
+
+        {/* The ImageTrail Canvas (Desktop Only) */}
+        <div className="relative group rounded-3xl border border-[#E5E5E5] bg-[#FFFFFF] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.07)] overflow-hidden transition-all duration-300 hover:border-[#0F0F0F]/30 hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.12)]">
+          <ImageTrail
+            images={PROJX_WORKFLOW_IMAGES}
+            threshold={68}
+            minDelay={45}
+            duration={1100}
+            maxItems={8}
+            rotationRange={32}
+            desktopOnly={true}
+            imageClassName="w-36 md:w-44 rounded-xl shadow-[0_20px_35px_-10px_rgba(0,0,0,0.35)] ring-1 ring-black/10"
+            className="flex min-h-[480px] md:min-h-[520px] flex-col items-center justify-center p-8 text-center cursor-crosshair select-none bg-gradient-to-b from-[#FAFAFA] to-[#F0F0F0]"
+          >
+            {/* Visual subtle grid background */}
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#0F0F0F_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.06]" />
+
+            {/* Corner aesthetic brackets */}
+            <div className="pointer-events-none absolute top-4 left-4 text-[10px] font-mono text-[#8E8E8E] flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1.5 bg-[#0F0F0F]" />
+              <span>PROJX_WORKSPACE</span>
+            </div>
+            <div className="pointer-events-none absolute top-4 right-4 text-[10px] font-mono text-[#8E8E8E]">
+              <span>SPRINT VELOCITY: 94.2%</span>
+            </div>
+            <div className="pointer-events-none absolute bottom-4 left-4 text-[10px] font-mono text-[#8E8E8E]">
+              <span>[ PIPELINE STATE: SYNCHRONIZED ]</span>
+            </div>
+            <div className="pointer-events-none absolute bottom-4 right-4 text-[10px] font-mono text-[#8E8E8E]">
+              <span>ENGINEERING ATELIER SUITE</span>
+            </div>
+
+            {/* Center Heading Content */}
+            <div className="pointer-events-none relative z-10 max-w-xl mx-auto space-y-4">
+            
+              <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0F0F0F] tracking-tight leading-tight">
+                Orchestrate projects with tactile precision
+              </h3>
+              <p className="text-xs sm:text-base text-[#5A5A5A] font-medium max-w-md mx-auto">
+                Unify issues, sprints, and code delivery in one fluid workspace built for engineering ateliers, product architects, and high-tempo builders.
+              </p>
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-[#0F0F0F]">
+          
+              </div>
+            </div>
+          </ImageTrail>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -718,7 +821,17 @@ export const LandingPage = () => {
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        <div className="bg-[#0F0F0F] border border-[#262626] rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden">
+        <ImageTrail
+          images={PROJX_WORKFLOW_IMAGES}
+          threshold={75}
+          minDelay={50}
+          duration={1000}
+          maxItems={6}
+          rotationRange={28}
+          desktopOnly={true}
+          imageClassName="w-28 sm:w-36 rounded-xl shadow-[0_20px_35px_-10px_rgba(0,0,0,0.6)] ring-1 ring-white/20"
+          className="bg-[#0F0F0F] border border-[#262626] rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden"
+        >
           {/* Subtle ambient lighting */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-36 bg-gradient-to-b from-[#2A2A2A]/40 to-transparent blur-2xl pointer-events-none" />
 
@@ -758,7 +871,7 @@ export const LandingPage = () => {
               </span>
             </div>
           </div>
-        </div>
+        </ImageTrail>
       </section>
 
       {/* Modern Responsive Footer */}
@@ -817,6 +930,11 @@ export const LandingPage = () => {
                 Explore
               </p>
               <ul className="space-y-2 font-medium">
+                <li>
+                  <a href="#atelier" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Workflow Canvas (Desktop)
+                  </a>
+                </li>
                 <li>
                   <a href="#features" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
                     Core Features
