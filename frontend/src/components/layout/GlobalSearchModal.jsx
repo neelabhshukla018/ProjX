@@ -190,7 +190,7 @@ export const GlobalSearchModal = () => {
               <kbd className="px-1.5 py-0.5 bg-[#FFFFFF] border border-[#D8D8D8] rounded text-[#0F0F0F]">↵</kbd> Select
             </span>
           </div>
-          <span className="text-[#808080] text-[10px]">ProjX</span>
+          <span className="text-[#808080] text-[10px]">Proj𝕏</span>
         </div>
       </div>
     </Modal>

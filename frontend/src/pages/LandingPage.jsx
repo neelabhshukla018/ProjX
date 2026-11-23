@@ -149,7 +149,7 @@ export const LandingPage = () => {
                 isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
               }`}
             >
-              Proj<span className="text-[#0F0F0F]">X</span>
+              Proj<span className="text-[#0F0F0F]">𝕏</span>
             </span>
           </Link>
 
@@ -795,7 +795,7 @@ export const LandingPage = () => {
             <div className="w-7 h-7 rounded bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white">
               <Layers className="w-4 h-4" />
             </div>
-            <span className="font-bold text-[#0F0F0F] text-sm">ProjX Platform</span>
+            <span className="font-bold text-[#0F0F0F] text-sm">Proj𝕏 Platform</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-6 font-medium">

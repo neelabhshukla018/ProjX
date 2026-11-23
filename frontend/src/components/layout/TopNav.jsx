@@ -355,7 +355,7 @@ export const TopNav = () => {
                 <div className="w-8 h-8 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white">
                   <Layers className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-bold text-base text-[#0F0F0F]">ProjX</span>
+                <span className="font-bold text-base text-[#0F0F0F]">Proj𝕏</span>
               </Link>
               <button
                 type="button"

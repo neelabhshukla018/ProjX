@@ -68,7 +68,7 @@ export const RegisterPage = () => {
             <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#FFFFFF]" />
           </div>
           <span className="font-bold text-2xl text-[#0F0F0F] tracking-tight">
-            Proj<span className="text-[#0F0F0F]">X</span>
+            Proj<span className="text-[#0F0F0F]">𝕏</span>
           </span>
         </Link>
         <h2 className="text-2xl font-bold text-[#0F0F0F] tracking-tight">
