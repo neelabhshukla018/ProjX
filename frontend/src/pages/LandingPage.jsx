@@ -188,9 +188,9 @@ export const LandingPage = () => {
             {/* Mock Window Header */}
             <div className="flex items-center justify-between pb-3 px-2 border-b border-[#EFEFEF] mb-4">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#0F0F0F]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#B0B0B0]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#E5E5E5]" />
+                <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50 shadow-xs" />
+                <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50 shadow-xs" />
+                <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50 shadow-xs" />
                 <span className="ml-3 text-xs font-semibold text-[#5A5A5A] hidden sm:inline">
                   app.projx.io/workspace/apollo-design-system
                 </span>
