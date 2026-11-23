@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import Button from '../components/common/Button';
 import FlipText from '../components/common/FlipText';
+import SquigglyText from '../components/common/SquigglyText';
 import { heroEntrance } from '../utils/animations';
 
 export const LandingPage = () => {
@@ -145,9 +146,11 @@ export const LandingPage = () => {
       {/* Hero Section */}
       <section className="relative pt-16 sm:pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div ref={heroRef} className="max-w-4xl mx-auto text-center">
-          {/* Main Headline with Vengeance UI FlipText Animation */}
+          {/* Main Headline with Aceternity SquigglyText & Vengeance UI FlipText Animation */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0F0F0F] tracking-tight leading-[1.08] mb-6">
-            The monochrome standard for{' '}
+            <SquigglyText scale={[2.5, 4.5]} stepDuration={90}>
+              The monochrome standard for
+            </SquigglyText>{' '}
             <FlipText
               words={[
                 'high-velocity teams.',
