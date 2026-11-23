@@ -13,6 +13,7 @@ export const FlipText = ({
   children,
   words,
   className = '',
+  color,
   duration = 2.4,
   delay = 0,
   loop = true,
@@ -78,6 +79,7 @@ export const FlipText = ({
   return (
     <span
       className={`inline-block perspective-1000 cursor-pointer select-none ${className}`}
+      style={color ? { color } : undefined}
       onMouseEnter={handleMouseEnter}
       aria-label={currentText}
     >

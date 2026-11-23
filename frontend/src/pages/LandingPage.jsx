@@ -155,7 +155,7 @@ export const LandingPage = () => {
                 'product architects.',
               ]}
               duration={2.5}
-              className="inline-block text-[#0F0F0F]"
+              className="inline-block text-[#0093A5]"
             />
           </h1>
 
