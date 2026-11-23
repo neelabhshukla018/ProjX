@@ -14,6 +14,15 @@ import {
 import Button from '../components/common/Button';
 import FlipText from '../components/common/FlipText';
 import SquigglyText from '../components/common/SquigglyText';
+import ContainerScroll from '../components/common/ContainerScroll';
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
 import { heroEntrance } from '../utils/animations';
 
 export const LandingPage = () => {
@@ -195,11 +204,11 @@ export const LandingPage = () => {
           </div>
         </div>
 
-        {/* Product Preview Mockup */}
-        <div id="preview" className="max-w-6xl mx-auto mt-14">
-          <div className="bg-[#FFFFFF] rounded-2xl border border-[#E5E5E5] shadow-elevated p-2 sm:p-4 transition-all">
+        {/* Product Preview Mockup with 3D Container Scroll Animation */}
+        <div id="preview" className="max-w-6xl mx-auto mt-10 sm:mt-16">
+          <ContainerScroll maxTilt={20}>
             {/* Mock Window Header */}
-            <div className="flex items-center justify-between pb-3 px-2 border-b border-[#EFEFEF] mb-4">
+            <div className="flex items-center justify-between pb-3 px-3 sm:px-4 pt-3 border-b border-[#EFEFEF] bg-[#FFFFFF]">
               <div className="flex items-center gap-2">
                 <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50 shadow-xs" />
                 <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50 shadow-xs" />
@@ -208,116 +217,226 @@ export const LandingPage = () => {
                   app.projx.io/workspace/apollo-design-system
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 bg-[#F5F5F5] p-1 rounded-lg border border-[#E5E5E5]">
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('kanban')}
-                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                    activeTab === 'kanban'
-                      ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
-                      : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
-                  }`}
-                >
-                  Kanban Board
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab('analytics')}
-                  className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                    activeTab === 'analytics'
-                      ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
-                      : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
-                  }`}
-                >
-                  Throughput Metrics
-                </button>
+
+              {/* Real-time Workspace Sync & View Switcher */}
+              <div className="flex items-center gap-3">
+                <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#F5F5F5] border border-[#E5E5E5] text-[10px] font-medium text-[#5A5A5A]">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#27C93F] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#27C93F]" />
+                  </span>
+                  <span>Live Sync</span>
+                </div>
+
+                <div className="flex items-center gap-1.5 bg-[#F5F5F5] p-1 rounded-lg border border-[#E5E5E5]">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('kanban')}
+                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                      activeTab === 'kanban'
+                        ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
+                        : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
+                    }`}
+                  >
+                    Kanban Board
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('analytics')}
+                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                      activeTab === 'analytics'
+                        ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
+                        : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
+                    }`}
+                  >
+                    Throughput Metrics
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* Mock Dashboard Preview Content */}
-            {activeTab === 'kanban' ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2 bg-[#F5F5F5] rounded-xl">
-                {/* Col 1 */}
-                <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5]">
-                  <div className="flex items-center justify-between text-xs font-bold text-[#0F0F0F] mb-3">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#B0B0B0]" /> To Do
-                    </span>
-                    <span className="text-xs text-[#5A5A5A] font-semibold">2 tasks</span>
-                  </div>
-                  <div className="space-y-2.5">
-                    <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[11px] font-medium text-[#5A5A5A]">Frontend</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Audit WCAG AA compliance across dark & light themes</p>
-                      <div className="flex items-center justify-between mt-2 text-[10px] text-[#5A5A5A]">
-                        <span>2/3 subtasks</span>
-                        <span className="text-[#0F0F0F] font-bold">3d left</span>
+            <div className="p-3 sm:p-5 bg-[#FAFAFA]">
+              {activeTab === 'kanban' ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Col 1 - To Do */}
+                  <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5] shadow-xs">
+                    <div className="flex items-center justify-between text-xs font-bold text-[#0F0F0F] mb-3">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-[#B0B0B0]" /> To Do
+                      </span>
+                      <span className="text-xs text-[#5A5A5A] font-semibold">2 tasks</span>
+                    </div>
+                    <div className="space-y-2.5">
+                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
+                        <span className="text-[11px] font-medium text-[#5A5A5A]">Frontend</span>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                          Audit WCAG AA compliance across dark & light themes
+                        </p>
+                        <div className="flex items-center justify-between mt-2.5 text-[10px] text-[#5A5A5A]">
+                          <span>2/3 subtasks</span>
+                          <span className="text-[#0F0F0F] font-bold">3d left</span>
+                        </div>
+                      </div>
+                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
+                        <span className="text-[11px] font-medium text-[#5A5A5A]">DevOps</span>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                          Setup automated penetration test matrix for API gateway
+                        </p>
+                        <div className="flex items-center justify-between mt-2.5 text-[10px] text-[#5A5A5A]">
+                          <span>0/4 subtasks</span>
+                          <span className="text-[#5A5A5A]">5d left</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[11px] font-medium text-[#5A5A5A]">DevOps</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Setup automated penetration test matrix for API gateway</p>
-                    </div>
                   </div>
-                </div>
 
-                {/* Col 2 */}
-                <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5]">
-                  <div className="flex items-center justify-between text-xs font-bold text-[#0F0F0F] mb-3">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#2C2C2C]" /> In Progress
-                    </span>
-                    <span className="text-xs text-[#5A5A5A] font-semibold">3 tasks</span>
-                  </div>
-                  <div className="space-y-2.5">
-                    <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#2C2C2C] shadow-xs">
-                      <span className="text-[11px] font-medium text-[#5A5A5A]">Design</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Implement optimistic UI state for Kanban drag-and-drop</p>
-                      <div className="w-full bg-[#EFEFEF] rounded-full h-1 mt-2">
-                        <div className="bg-[#0F0F0F] h-full w-3/4 rounded-full" />
+                  {/* Col 2 - In Progress */}
+                  <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5] shadow-xs">
+                    <div className="flex items-center justify-between text-xs font-bold text-[#0F0F0F] mb-3">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-[#0F0F0F]" /> In Progress
+                      </span>
+                      <span className="text-xs text-[#5A5A5A] font-semibold">3 tasks</span>
+                    </div>
+                    <div className="space-y-2.5">
+                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#0F0F0F] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer relative overflow-hidden">
+                        <span className="text-[11px] font-medium text-[#5A5A5A]">Design</span>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                          Implement optimistic UI state for Kanban drag-and-drop
+                        </p>
+                        {/* Animated Shimmer Progress Bar */}
+                        <div className="w-full bg-[#EFEFEF] rounded-full h-1.5 mt-2.5 overflow-hidden">
+                          <div className="bg-[#0F0F0F] h-full w-3/4 rounded-full relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between mt-2 text-[10px] text-[#5A5A5A]">
+                          <span className="text-[#0F0F0F] font-semibold">75% completed</span>
+                          <span className="text-[#0F0F0F] font-bold">Today</span>
+                        </div>
+                      </div>
+
+                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
+                        <span className="text-[11px] font-medium text-[#5A5A5A]">AI Stream</span>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                          Fine-tune streaming token responses in LLM chat UI
+                        </p>
+                        {/* Live streaming indicator */}
+                        <div className="flex items-center gap-1.5 mt-2.5 text-[10px] text-[#5A5A5A]">
+                          <span className="flex gap-1 items-center">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse [animation-delay:200ms]" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse [animation-delay:400ms]" />
+                          </span>
+                          <span className="font-semibold text-[#0093A5]">Streaming live weights</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[11px] font-medium text-[#5A5A5A]">AI Stream</span>
-                      <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">Fine-tune streaming token responses in LLM chat UI</p>
-                    </div>
                   </div>
-                </div>
 
-                {/* Col 3 */}
-                <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5]">
-                  <div className="flex items-center justify-between text-xs font-bold text-[#0F0F0F] mb-3">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#0F0F0F]" /> Done
-                    </span>
-                    <span className="text-xs text-[#5A5A5A] font-semibold">5 tasks</span>
-                  </div>
-                  <div className="space-y-2.5">
-                    <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs">
-                      <span className="text-[11px] font-medium text-[#5A5A5A]">Mobile</span>
-                      <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5">Integrate biometrics FaceID / TouchID auth prompt</p>
-                      <span className="text-[10px] text-[#0F0F0F] font-semibold mt-2 block">✓ Verified in QA</span>
+                  {/* Col 3 - Done */}
+                  <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5] shadow-xs">
+                    <div className="flex items-center justify-between text-xs font-bold text-[#0F0F0F] mb-3">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-[#27C93F]" /> Done
+                      </span>
+                      <span className="text-xs text-[#5A5A5A] font-semibold">5 tasks</span>
+                    </div>
+                    <div className="space-y-2.5">
+                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
+                        <span className="text-[11px] font-medium text-[#5A5A5A]">Mobile</span>
+                        <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5">
+                          Integrate biometrics FaceID / TouchID auth prompt
+                        </p>
+                        <span className="text-[10px] text-[#0F0F0F] font-semibold mt-2.5 inline-flex items-center gap-1">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#27C93F]" /> Verified in QA
+                        </span>
+                      </div>
+                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
+                        <span className="text-[11px] font-medium text-[#5A5A5A]">Infrastructure</span>
+                        <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5">
+                          Zero-downtime PostgreSQL cluster migration to v16
+                        </p>
+                        <span className="text-[10px] text-[#0F0F0F] font-semibold mt-2.5 inline-flex items-center gap-1">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#27C93F]" /> Merged & deployed
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="p-8 bg-[#F5F5F5] rounded-xl flex flex-col items-center justify-center text-center">
-                <div className="w-12 h-12 rounded-xl bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-[#FFFFFF] mb-3">
-                  <BarChart3 className="w-6 h-6" />
+              ) : (
+                /* Throughput Metrics Interactive Preview */
+                <div className="p-4 sm:p-6 bg-[#FFFFFF] rounded-xl border border-[#E5E5E5] shadow-xs animate-in fade-in duration-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+                    <div className="p-3.5 bg-[#F5F5F5] rounded-xl border border-[#E5E5E5]">
+                      <span className="text-[10px] font-bold text-[#5A5A5A] uppercase tracking-wider">
+                        Velocity SLA
+                      </span>
+                      <p className="text-xl font-extrabold text-[#0F0F0F] mt-1">94.2%</p>
+                      <span className="text-[10px] text-[#27C93F] font-semibold">↑ +4.8% vs last sprint</span>
+                    </div>
+                    <div className="p-3.5 bg-[#F5F5F5] rounded-xl border border-[#E5E5E5]">
+                      <span className="text-[10px] font-bold text-[#5A5A5A] uppercase tracking-wider">
+                        Cycle Duration
+                      </span>
+                      <p className="text-xl font-extrabold text-[#0F0F0F] mt-1">1.4 Days</p>
+                      <span className="text-[10px] text-[#27C93F] font-semibold">↓ -0.6d turnaround</span>
+                    </div>
+                    <div className="p-3.5 bg-[#F5F5F5] rounded-xl border border-[#E5E5E5]">
+                      <span className="text-[10px] font-bold text-[#5A5A5A] uppercase tracking-wider">
+                        Issues Resolved
+                      </span>
+                      <p className="text-xl font-extrabold text-[#0F0F0F] mt-1">54 Tickets</p>
+                      <span className="text-[10px] text-[#0093A5] font-semibold">100% test coverage</span>
+                    </div>
+                  </div>
+
+                  <div className="h-48 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart
+                        data={[
+                          { sprint: 'S1', velocity: 68 },
+                          { sprint: 'S2', velocity: 76 },
+                          { sprint: 'S3', velocity: 84 },
+                          { sprint: 'S4', velocity: 81 },
+                          { sprint: 'S5', velocity: 91 },
+                          { sprint: 'S6', velocity: 95 },
+                        ]}
+                        margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                      >
+                        <defs>
+                          <linearGradient id="velocityGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#0F0F0F" stopOpacity={0.25} />
+                            <stop offset="95%" stopColor="#0F0F0F" stopOpacity={0.0} />
+                          </linearGradient>
+                        </defs>
+                        <XAxis dataKey="sprint" stroke="#8E8E8E" fontSize={11} tickLine={false} />
+                        <YAxis stroke="#8E8E8E" fontSize={11} tickLine={false} domain={[50, 100]} />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: '#0F0F0F',
+                            borderColor: '#2C2C2C',
+                            color: '#FFFFFF',
+                            borderRadius: '8px',
+                            fontSize: '11px',
+                          }}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="velocity"
+                          stroke="#0F0F0F"
+                          strokeWidth={2.5}
+                          fillOpacity={1}
+                          fill="url(#velocityGrad)"
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
-                <h4 className="text-base font-semibold text-[#0F0F0F] mb-1">94.2% On-Time Delivery Velocity</h4>
-                <p className="text-xs text-[#5A5A5A] max-w-md mb-4">
-                  ProjX automatically aggregates lead times, cycle durations, and blocker resolution speeds into real-time visual telemetry.
-                </p>
-                <Link to="/app/analytics">
-                  <Button size="sm" variant="primary">
-                    View Live Analytics Engine
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          </ContainerScroll>
         </div>
       </section>
 

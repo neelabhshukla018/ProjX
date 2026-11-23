@@ -92,6 +92,16 @@
   }
 }
 
+/* Shimmer Progress Keyframes */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Restrained animations and accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
