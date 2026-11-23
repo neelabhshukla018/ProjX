@@ -96,7 +96,7 @@ export const Sidebar = () => {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-[#FFFFFF] text-base tracking-tight leading-tight flex items-center gap-1.5">
-                  Proj𝕏
+                  Proj<span className="font-bold" style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span>
                   <span className="text-[10px] uppercase font-bold px-1.5 py-0.2 rounded bg-[#2C2C2C] text-[#FFFFFF] border border-[#3A3A3A]">
                     Pro
                   </span>

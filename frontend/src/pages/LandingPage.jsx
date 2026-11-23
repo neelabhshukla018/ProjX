@@ -117,73 +117,47 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F5F5] text-[#0F0F0F] selection:bg-[#0F0F0F] selection:text-[#FFFFFF]">
-      {/* Top Navigation - Fixed Full-Width Header with Scroll-Shrink Effect */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-in-out ${
-          isScrolled
-            ? 'bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-[#D2D2D2] shadow-[0_14px_34px_-6px_rgba(0,0,0,0.15),0_4px_12px_-2px_rgba(0,0,0,0.08),inset_0_-1px_0_rgba(0,0,0,0.04)]'
-            : 'bg-[#FFFFFF]/85 backdrop-blur-md border-b border-[#E5E5E5] shadow-none'
-        }`}
-      >
+      {/* Top Navigation - Compact Floating 3D Capsule coming out of window */}
+      <header className="fixed top-3 sm:top-5 inset-x-0 z-50 flex justify-center px-4 sm:px-6 lg:px-8 pointer-events-none transition-all duration-300">
         <div
-          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ease-in-out ${
-            isScrolled ? 'h-13 sm:h-14' : 'h-18 sm:h-20'
+          className={`pointer-events-auto w-full rounded-full bg-[#FFFFFF]/92 backdrop-blur-2xl border border-white/80 ring-1 ring-black/[0.08] shadow-[0_22px_45px_-10px_rgba(0,0,0,0.22),0_10px_20px_-5px_rgba(0,0,0,0.10),inset_0_1.5px_1.5px_rgba(255,255,255,1),inset_0_-1.5px_1px_rgba(0,0,0,0.05)] px-4 sm:px-6 flex items-center justify-between transition-all duration-300 ease-out hover:shadow-[0_28px_55px_-10px_rgba(0,0,0,0.26),0_12px_24px_-5px_rgba(0,0,0,0.12),inset_0_1.5px_1.5px_rgba(255,255,255,1),inset_0_-1.5px_1px_rgba(0,0,0,0.05)] ${
+            isScrolled ? 'h-11 sm:h-12 max-w-4xl lg:max-w-5xl' : 'h-14 sm:h-15 max-w-5xl lg:max-w-6xl'
           }`}
         >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div
-              className={`rounded-xl bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-md shadow-black/25 relative group-hover:scale-105 transition-all duration-300 ${
-                isScrolled ? 'w-8 h-8' : 'w-9 h-9 sm:w-10 sm:h-10'
-              }`}
-            >
-              <Layers
-                className={`text-white transition-all duration-300 ${
-                  isScrolled ? 'w-4 h-4' : 'w-5 h-5'
-                }`}
-              />
+          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white shadow-md shadow-black/20 relative group-hover:scale-105 transition-transform flex-shrink-0">
+              <Layers className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-white" />
               <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#FFFFFF]" />
             </div>
-            <span
-              className={`font-bold text-[#0F0F0F] tracking-tight transition-all duration-300 ${
-                isScrolled ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
-              }`}
-            >
-              Proj<span className="text-[#0F0F0F]">𝕏</span>
+            <span className="font-bold text-base sm:text-lg text-[#0F0F0F] tracking-tight flex items-center">
+              Proj<span className="text-[#0F0F0F] font-bold" style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span>
             </span>
           </Link>
 
           {/* Center Links */}
-          <nav className="hidden md:flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-[#4A4A4A]">
+          <nav className="hidden md:flex items-center gap-1.5 text-sm font-semibold text-[#5A5A5A]">
             <a
               href="#features"
-              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
-                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
-              }`}
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
             >
               Features
             </a>
             <a
               href="#preview"
-              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
-                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
-              }`}
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
             >
               Product Tour
             </a>
             <a
               href="#workflow"
-              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
-                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
-              }`}
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
             >
               Methodology
             </a>
             <a
               href="#security"
-              className={`rounded-lg hover:text-[#0F0F0F] hover:bg-[#F0F0F0] transition-all duration-200 ${
-                isScrolled ? 'px-2.5 py-1' : 'px-3 py-1.5'
-              }`}
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
             >
               Enterprise
             </a>
@@ -193,9 +167,7 @@ export const LandingPage = () => {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/login"
-              className={`font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] rounded-lg hover:bg-[#F0F0F0] transition-all duration-200 ${
-                isScrolled ? 'text-xs px-2.5 py-1.5' : 'text-xs sm:text-sm px-3 py-2'
-              }`}
+              className="text-xs sm:text-sm font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] px-3 py-1.5 rounded-full hover:bg-black/[0.05] transition-colors"
             >
               Sign In
             </Link>
@@ -204,9 +176,7 @@ export const LandingPage = () => {
                 size="sm"
                 variant="primary"
                 rightIcon={ArrowRight}
-                className={`shadow-md shadow-black/25 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 font-semibold ${
-                  isScrolled ? 'text-xs py-1.5 px-3' : 'text-xs sm:text-sm py-2 px-3.5'
-                }`}
+                className="!py-2 !px-4 !text-xs sm:!text-sm !rounded-full shadow-md shadow-black/20 hover:shadow-lg hover:-translate-y-0.5 transition-all font-semibold"
               >
                 Open App
               </Button>
@@ -216,7 +186,7 @@ export const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-24 sm:pt-30 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Animated Gradient Bars Background (inspired by @waleedkibhen on 21st.dev) */}
         <GradientBars
           numBars={15}

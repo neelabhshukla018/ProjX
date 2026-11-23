@@ -130,7 +130,7 @@ export const TopNav = () => {
                 <Layers className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold text-base sm:text-lg text-[#0F0F0F] tracking-tight">
-                Proj𝕏
+                Proj<span className="font-bold" style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span>
               </span>
             </Link>
 
