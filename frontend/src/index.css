@@ -108,7 +108,7 @@
     transform: scaleY(var(--initial-scale));
   }
   100% {
-    transform: scaleY(calc(var(--initial-scale) * 0.72));
+    transform: scaleY(calc(var(--initial-scale) * 0.93));
   }
 }
 
