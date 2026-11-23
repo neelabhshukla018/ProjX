@@ -40,8 +40,8 @@ export const NotificationDropdown = () => {
             <div className="flex items-center gap-2">
               <span className="font-semibold text-xs sm:text-sm text-[#0F0F0F]">Notifications</span>
               {unreadCount > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#0F0F0F] text-[#FFFFFF] border border-[#2C2C2C]">
-                  {unreadCount} new
+                <span className="text-xs text-[#5A5A5A] font-medium">
+                  ({unreadCount} unread)
                 </span>
               )}
             </div>
