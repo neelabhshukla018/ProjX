@@ -58,6 +58,38 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
+
+/* Vengeance UI 3D Flip Text Keyframes */
+@keyframes flipIn {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateX(-90deg) translateY(-8px);
+  }
+  60% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) translateY(0);
+  }
+}
+
+@keyframes flipOut {
+  0% {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) translateY(0);
+  }
+  40% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(800px) rotateX(90deg) translateY(8px);
+  }
 }
 
 /* Restrained animations and accessibility */
