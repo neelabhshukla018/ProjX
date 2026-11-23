@@ -4,6 +4,7 @@ import {
   Layers,
   ArrowRight,
   CheckCircle2,
+  CheckSquare,
   Kanban,
   BarChart3,
   ShieldCheck,
@@ -267,25 +268,70 @@ export const LandingPage = () => {
                       </span>
                       <span className="text-xs text-[#5A5A5A] font-semibold">2 tasks</span>
                     </div>
-                    <div className="space-y-2.5">
-                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
-                        <span className="text-[11px] font-medium text-[#5A5A5A]">Frontend</span>
-                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                    <div className="space-y-3">
+                      {/* Card 1: Frontend WCAG */}
+                      <div className="group relative bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#0F0F0F] transition-all duration-300 ease-out cursor-pointer overflow-hidden">
+                        {/* Left edge accent beam on hover */}
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0F0F0F] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        {/* Light shimmer sweep on hover */}
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.04] to-transparent transition-transform duration-700 pointer-events-none" />
+
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="font-semibold text-[#5A5A5A] px-2 py-0.5 rounded-md bg-[#F5F5F5] border border-[#EAEAEA] group-hover:border-[#D5D5D5] transition-colors">
+                            Frontend
+                          </span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#8E8E8E] font-mono">
+                            PROJX-104
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5 leading-snug group-hover:text-[#000000] transition-colors">
                           Audit WCAG AA compliance across dark & light themes
                         </p>
-                        <div className="flex items-center justify-between mt-2.5 text-[10px] text-[#5A5A5A]">
-                          <span>2/3 subtasks</span>
-                          <span className="text-[#0F0F0F] font-bold">3d left</span>
+                        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#F0F0F0] text-[10px] text-[#5A5A5A]">
+                          <span className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-[#8E8E8E] group-hover:text-[#0F0F0F] transition-colors" />
+                            <span>2/3 subtasks</span>
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#F5F5F5] text-[#0F0F0F] font-bold">
+                              3d left
+                            </span>
+                            <div className="w-4 h-4 rounded-full bg-[#0F0F0F] text-white flex items-center justify-center text-[8px] font-bold">
+                              AR
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
-                        <span className="text-[11px] font-medium text-[#5A5A5A]">DevOps</span>
-                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+
+                      {/* Card 2: DevOps Penetration Testing */}
+                      <div className="group relative bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#0F0F0F] transition-all duration-300 ease-out cursor-pointer overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0F0F0F] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.04] to-transparent transition-transform duration-700 pointer-events-none" />
+
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="font-semibold text-[#5A5A5A] px-2 py-0.5 rounded-md bg-[#F5F5F5] border border-[#EAEAEA] group-hover:border-[#D5D5D5] transition-colors">
+                            DevOps
+                          </span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#8E8E8E] font-mono">
+                            PROJX-112
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5 leading-snug group-hover:text-[#000000] transition-colors">
                           Setup automated penetration test matrix for API gateway
                         </p>
-                        <div className="flex items-center justify-between mt-2.5 text-[10px] text-[#5A5A5A]">
-                          <span>0/4 subtasks</span>
-                          <span className="text-[#5A5A5A]">5d left</span>
+                        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#F0F0F0] text-[10px] text-[#5A5A5A]">
+                          <span className="flex items-center gap-1">
+                            <ShieldCheck className="w-3 h-3 text-[#8E8E8E] group-hover:text-[#0F0F0F] transition-colors" />
+                            <span>0/4 subtasks</span>
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#F5F5F5] text-[#5A5A5A] font-semibold">
+                              5d left
+                            </span>
+                            <div className="w-4 h-4 rounded-full bg-[#2C2C2C] text-white flex items-center justify-center text-[8px] font-bold">
+                              MK
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -299,37 +345,77 @@ export const LandingPage = () => {
                       </span>
                       <span className="text-xs text-[#5A5A5A] font-semibold">3 tasks</span>
                     </div>
-                    <div className="space-y-2.5">
-                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#0F0F0F] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer relative overflow-hidden">
-                        <span className="text-[11px] font-medium text-[#5A5A5A]">Design</span>
-                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                    <div className="space-y-3">
+                      {/* Card 3: Design Drag-and-Drop */}
+                      <div className="group relative bg-[#FFFFFF] p-3 rounded-lg border border-[#0F0F0F] shadow-sm hover:-translate-y-1 hover:shadow-xl hover:border-[#0F0F0F] transition-all duration-300 ease-out cursor-pointer overflow-hidden ring-1 ring-[#0F0F0F]/10">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0093A5] opacity-100 pointer-events-none" />
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.04] to-transparent transition-transform duration-700 pointer-events-none" />
+
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="font-semibold text-[#0093A5] px-2 py-0.5 rounded-md bg-[#0093A5]/10 border border-[#0093A5]/20">
+                            Design
+                          </span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#0093A5] font-mono font-bold">
+                            PROJX-108
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5 leading-snug group-hover:text-[#000000] transition-colors">
                           Implement optimistic UI state for Kanban drag-and-drop
                         </p>
                         {/* Animated Shimmer Progress Bar */}
                         <div className="w-full bg-[#EFEFEF] rounded-full h-1.5 mt-2.5 overflow-hidden">
-                          <div className="bg-[#0F0F0F] h-full w-3/4 rounded-full relative overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+                          <div className="bg-[#0F0F0F] h-full w-3/4 rounded-full relative overflow-hidden transition-all duration-500 group-hover:w-[85%]">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
                           </div>
                         </div>
-                        <div className="flex items-center justify-between mt-2 text-[10px] text-[#5A5A5A]">
-                          <span className="text-[#0F0F0F] font-semibold">75% completed</span>
-                          <span className="text-[#0F0F0F] font-bold">Today</span>
+                        <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-[#F0F0F0] text-[10px]">
+                          <div className="flex items-center gap-1.5 text-[#0F0F0F] font-semibold">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0093A5] opacity-75" />
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0093A5]" />
+                            </span>
+                            <span>75% completed</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="px-1.5 py-0.5 rounded bg-[#0F0F0F] text-white font-bold text-[9px]">
+                              Today
+                            </span>
+                            <div className="w-4 h-4 rounded-full bg-[#0093A5] text-white flex items-center justify-center text-[8px] font-bold">
+                              SL
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
-                        <span className="text-[11px] font-medium text-[#5A5A5A]">AI Stream</span>
-                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5">
+                      {/* Card 4: AI Stream */}
+                      <div className="group relative bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#0F0F0F] transition-all duration-300 ease-out cursor-pointer overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0093A5] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.04] to-transparent transition-transform duration-700 pointer-events-none" />
+
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="font-semibold text-[#5A5A5A] px-2 py-0.5 rounded-md bg-[#F5F5F5] border border-[#EAEAEA] group-hover:border-[#0093A5]/30 transition-colors">
+                            AI Stream
+                          </span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#8E8E8E] font-mono">
+                            PROJX-119
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[#0F0F0F] mt-0.5 leading-snug group-hover:text-[#000000] transition-colors">
                           Fine-tune streaming token responses in LLM chat UI
                         </p>
-                        {/* Live streaming indicator */}
-                        <div className="flex items-center gap-1.5 mt-2.5 text-[10px] text-[#5A5A5A]">
-                          <span className="flex gap-1 items-center">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse" />
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse [animation-delay:200ms]" />
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse [animation-delay:400ms]" />
-                          </span>
-                          <span className="font-semibold text-[#0093A5]">Streaming live weights</span>
+                        {/* Live streaming animated indicator */}
+                        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#F0F0F0] text-[10px]">
+                          <div className="flex items-center gap-1.5 text-[#0093A5] font-semibold">
+                            <span className="flex gap-1 items-center">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse [animation-delay:200ms]" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse [animation-delay:400ms]" />
+                            </span>
+                            <span>Streaming live weights</span>
+                          </div>
+                          <div className="w-4 h-4 rounded-full bg-[#0F0F0F] text-white flex items-center justify-center text-[8px] font-bold">
+                            EV
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -343,24 +429,57 @@ export const LandingPage = () => {
                       </span>
                       <span className="text-xs text-[#5A5A5A] font-semibold">5 tasks</span>
                     </div>
-                    <div className="space-y-2.5">
-                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
-                        <span className="text-[11px] font-medium text-[#5A5A5A]">Mobile</span>
-                        <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5">
+                    <div className="space-y-3">
+                      {/* Card 5: Mobile */}
+                      <div className="group relative bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#27C93F] transition-all duration-300 ease-out cursor-pointer overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#27C93F] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.04] to-transparent transition-transform duration-700 pointer-events-none" />
+
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="font-semibold text-[#5A5A5A] px-2 py-0.5 rounded-md bg-[#F5F5F5] border border-[#EAEAEA]">
+                            Mobile
+                          </span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#8E8E8E] font-mono">
+                            PROJX-94
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5 leading-snug group-hover:text-[#2C2C2C] transition-colors">
                           Integrate biometrics FaceID / TouchID auth prompt
                         </p>
-                        <span className="text-[10px] text-[#0F0F0F] font-semibold mt-2.5 inline-flex items-center gap-1">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#27C93F]" /> Verified in QA
-                        </span>
+                        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#F0F0F0] text-[10px]">
+                          <span className="text-[#27C93F] font-semibold inline-flex items-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#27C93F]" /> Verified in QA
+                          </span>
+                          <div className="w-4 h-4 rounded-full bg-[#27C93F] text-white flex items-center justify-center text-[8px] font-bold">
+                            AR
+                          </div>
+                        </div>
                       </div>
-                      <div className="bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 cursor-pointer">
-                        <span className="text-[11px] font-medium text-[#5A5A5A]">Infrastructure</span>
-                        <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5">
+
+                      {/* Card 6: Infrastructure */}
+                      <div className="group relative bg-[#FFFFFF] p-3 rounded-lg border border-[#E5E5E5] shadow-xs hover:-translate-y-1 hover:shadow-lg hover:border-[#27C93F] transition-all duration-300 ease-out cursor-pointer overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#27C93F] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.04] to-transparent transition-transform duration-700 pointer-events-none" />
+
+                        <div className="flex items-center justify-between text-[11px] mb-1.5">
+                          <span className="font-semibold text-[#5A5A5A] px-2 py-0.5 rounded-md bg-[#F5F5F5] border border-[#EAEAEA]">
+                            Infrastructure
+                          </span>
+                          <span className="flex items-center gap-1 text-[10px] text-[#8E8E8E] font-mono">
+                            PROJX-88
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-[#5A5A5A] line-through mt-0.5 leading-snug group-hover:text-[#2C2C2C] transition-colors">
                           Zero-downtime PostgreSQL cluster migration to v16
                         </p>
-                        <span className="text-[10px] text-[#0F0F0F] font-semibold mt-2.5 inline-flex items-center gap-1">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#27C93F]" /> Merged & deployed
-                        </span>
+                        <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-[#F0F0F0] text-[10px]">
+                          <span className="text-[#0F0F0F] font-semibold inline-flex items-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#27C93F]" /> Merged & deployed
+                          </span>
+                          <div className="w-4 h-4 rounded-full bg-[#0F0F0F] text-white flex items-center justify-center text-[8px] font-bold">
+                            SL
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -460,18 +579,36 @@ export const LandingPage = () => {
             return (
               <div
                 key={idx}
-                className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-6 shadow-subtle hover:shadow-card hover:border-[#B0B0B0]/70 transition-all duration-200 flex flex-col justify-between"
+                className="group relative bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-6 shadow-subtle hover:shadow-xl hover:border-[#0F0F0F] hover:-translate-y-1.5 transition-all duration-300 ease-out cursor-pointer overflow-hidden flex flex-col justify-between"
               >
+                {/* Left Edge Accent Beam on Hover */}
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0F0F0F] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                {/* Ambient Light Reflection Sweep on Hover */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-black/[0.03] to-transparent transition-transform duration-700 pointer-events-none" />
+
                 <div>
-                  <div className="w-10 h-10 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white mb-4">
-                    <Icon className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-[#0F0F0F] border border-[#2C2C2C] flex items-center justify-center text-white group-hover:scale-105 group-hover:bg-[#000000] transition-all duration-200 shadow-xs">
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    {feature.tag && (
+                      <span className="text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 rounded bg-[#F5F5F5] border border-[#EAEAEA] text-[#5A5A5A] group-hover:border-[#D5D5D5] transition-colors">
+                        {feature.tag}
+                      </span>
+                    )}
                   </div>
-                  <h3 className="text-base font-semibold text-[#0F0F0F] mb-2 tracking-tight">
+                  <h3 className="text-base font-semibold text-[#0F0F0F] mb-2 tracking-tight group-hover:text-[#000000] transition-colors">
                     {feature.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#5A5A5A] leading-relaxed font-normal">
                     {feature.description}
                   </p>
+                </div>
+
+                <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#F5F5F5] text-xs font-semibold text-[#5A5A5A] group-hover:text-[#0F0F0F] transition-colors">
+                  <span>Explore capability</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200" />
                 </div>
               </div>
             );
@@ -495,13 +632,18 @@ export const LandingPage = () => {
             {workflowSteps.map((step, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-xl bg-[#171717] border border-[#2A2A2A] flex flex-col justify-between"
+                className="group relative p-6 rounded-xl bg-[#171717] border border-[#2A2A2A] hover:border-[#404040] hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 ease-out cursor-pointer overflow-hidden flex flex-col justify-between"
               >
+                {/* Top Subtle Sheen Line on Hover */}
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
                 <div>
-                  <span className="text-3xl font-black text-[#FFFFFF] mb-4 block font-mono">
+                  <span className="text-3xl font-black text-[#FFFFFF] mb-4 block font-mono group-hover:text-white transition-colors">
                     {step.step}
                   </span>
-                  <h4 className="text-base font-bold text-white mb-2">{step.title}</h4>
+                  <h4 className="text-base font-bold text-white mb-2 group-hover:translate-x-0.5 transition-transform duration-200">
+                    {step.title}
+                  </h4>
                   <p className="text-xs text-[#B0B0B0] leading-relaxed">{step.desc}</p>
                 </div>
               </div>
