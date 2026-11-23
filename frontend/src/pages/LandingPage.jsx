@@ -186,7 +186,7 @@ export const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-24 sm:pt-30 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-28 sm:pt-36 lg:pt-40 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Animated Gradient Bars Background (inspired by @waleedkibhen on 21st.dev) */}
         <GradientBars
           numBars={15}
