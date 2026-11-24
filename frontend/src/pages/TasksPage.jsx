@@ -4,31 +4,33 @@ import { useWorkspace } from '../hooks/useWorkspace';
 import TaskKanban from '../components/tasks/TaskKanban';
 import TaskList from '../components/tasks/TaskList';
 import TaskFilterBar from '../components/tasks/TaskFilterBar';
+import TaskDetailModal from '../components/tasks/TaskDetailModal';
 import Button from '../components/common/Button';
 
 export const TasksPage = () => {
-  const { tasks, updateTaskStatus, projects, setIsNewTaskModalOpen } = useWorkspace();
+  const { tasks, updateTaskStatus, projects, setIsNewTaskModalOpen, user } = useWorkspace();
   const [viewMode, setViewMode] = useState('kanban');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('all');
   const [selectedProject, setSelectedProject] = useState('all');
+  const [selectedTaskForDetail, setSelectedTaskForDetail] = useState(null);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
+      const title = task.title || '';
+      const desc = task.description || '';
+
       const matchesSearch =
-        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (task.description &&
-          task.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (task.tags &&
-          task.tags.some((tag) =>
-            tag.toLowerCase().includes(searchQuery.toLowerCase())
-          ));
+        title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        desc.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesPriority =
-        selectedPriority === 'all' || task.priority === selectedPriority;
+        selectedPriority === 'all' ||
+        task.priority?.toLowerCase() === selectedPriority.toLowerCase();
 
+      const taskProjId = task.project?._id || task.project?.id || task.project || task.projectId;
       const matchesProject =
-        selectedProject === 'all' || task.projectId === selectedProject;
+        selectedProject === 'all' || taskProjId === selectedProject;
 
       return matchesSearch && matchesPriority && matchesProject;
     });
@@ -40,20 +42,24 @@ export const TasksPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
-            My Tasks
+            {user?.role === 'project_manager' ? 'Task & Sprint Management' : 'My Daily Tasks'}
           </h1>
           <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
-            Prioritize and manage your actionable work items across active sprints.
+            {user?.role === 'project_manager'
+              ? 'Assign, track, and review sprint work across your accepted team members.'
+              : 'Complete your assigned deliverables, submit progress updates, and view manager feedback.'}
           </p>
         </div>
 
-        <Button
-          variant="primary"
-          leftIcon={Plus}
-          onClick={() => setIsNewTaskModalOpen(true)}
-        >
-          New Task
-        </Button>
+        {user?.role === 'project_manager' && (
+          <Button
+            variant="primary"
+            leftIcon={Plus}
+            onClick={() => setIsNewTaskModalOpen(true)}
+          >
+            New Task
+          </Button>
+        )}
       </div>
 
       {/* Filter and View Mode Switcher */}
@@ -74,11 +80,22 @@ export const TasksPage = () => {
         <TaskKanban
           tasks={filteredTasks}
           onMoveStatus={updateTaskStatus}
+          onOpenDetail={(t) => setSelectedTaskForDetail(t)}
         />
       ) : (
         <TaskList
           tasks={filteredTasks}
           onMoveStatus={updateTaskStatus}
+          onOpenDetail={(t) => setSelectedTaskForDetail(t)}
+        />
+      )}
+
+      {/* Task Detail Modal */}
+      {selectedTaskForDetail && (
+        <TaskDetailModal
+          task={selectedTaskForDetail}
+          isOpen={Boolean(selectedTaskForDetail)}
+          onClose={() => setSelectedTaskForDetail(null)}
         />
       )}
     </div>

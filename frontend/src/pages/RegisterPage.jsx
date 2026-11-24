@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Layers, ArrowRight, Lock, Mail, User } from 'lucide-react';
+import { Layers, ArrowRight, Lock, Mail, User, ShieldCheck } from 'lucide-react';
+import { useWorkspace } from '../hooks/useWorkspace';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
@@ -9,19 +10,21 @@ export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    role: 'Lead Architect',
+    role: 'project_manager',
     password: '',
+    confirmPassword: '',
     agreeTerms: true,
   });
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const { register } = useWorkspace();
   const navigate = useNavigate();
 
   const getPasswordStrength = (pwd) => {
     if (!pwd) return { label: '', width: '0%', color: 'bg-[#D8D8D8]' };
-    if (pwd.length < 6) return { label: 'Basic', width: '30%', color: 'bg-[#5A5A5A]' };
-    if (pwd.length < 10) return { label: 'Medium', width: '65%', color: 'bg-[#2C2C2C]' };
+    if (pwd.length < 6) return { label: 'Too short', width: '25%', color: 'bg-[#5A5A5A]' };
+    if (pwd.length < 9) return { label: 'Medium', width: '65%', color: 'bg-[#2C2C2C]' };
     return { label: 'Strong', width: '100%', color: 'bg-[#0F0F0F]' };
   };
 
@@ -31,14 +34,19 @@ export const RegisterPage = () => {
     const errs = {};
     if (!formData.name.trim()) errs.name = 'Full name is required';
     if (!formData.email.trim()) {
-      errs.email = 'Work email is required';
+      errs.email = 'Email address is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errs.email = 'Please enter a valid work email';
+      errs.email = 'Please enter a valid email address';
     }
     if (!formData.password) {
       errs.password = 'Password is required';
     } else if (formData.password.length < 6) {
       errs.password = 'Password must be at least 6 characters';
+    }
+    if (!formData.confirmPassword) {
+      errs.confirmPassword = 'Confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      errs.confirmPassword = 'Passwords do not match';
     }
     if (!formData.agreeTerms) {
       errs.agreeTerms = 'You must agree to the Terms of Service';
@@ -47,16 +55,25 @@ export const RegisterPage = () => {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success(`Account created! Welcome to Proj𝕏, ${formData.name}.`);
+    try {
+      await register({
+        fullName: formData.name,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        role: formData.role,
+      });
       navigate('/app');
-    }, 500);
+    } catch (err) {
+      toast.error(err.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -92,18 +109,24 @@ export const RegisterPage = () => {
               label="Full Name"
               placeholder="e.g. Alex Morgan"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) => {
+                setFormData({ ...formData, name: e.target.value });
+                if (errors.name) setErrors({ ...errors, name: null });
+              }}
               error={errors.name}
               leftIcon={User}
               required
             />
 
             <Input
-              label="Work Email Address"
+              label="Email Address"
               type="email"
-              placeholder="alex@company.com"
+              placeholder="e.g. alex@projx.com"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value });
+                if (errors.email) setErrors({ ...errors, email: null });
+              }}
               error={errors.email}
               leftIcon={Mail}
               required
@@ -111,36 +134,58 @@ export const RegisterPage = () => {
 
             <div>
               <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
-                Primary Team Role
+                Select Your Role <span className="text-[#0F0F0F] font-bold">*</span>
               </label>
-              <select
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F] focus:ring-1 focus:ring-[#0F0F0F]"
-              >
-                <option value="Lead Architect">Lead Architect / Engineering Manager</option>
-                <option value="Senior Developer">Frontend / Full-Stack Engineer</option>
-                <option value="Product Manager">Product Manager</option>
-                <option value="Product Designer">Product / UX Designer</option>
-                <option value="DevOps Specialist">DevOps / SRE Lead</option>
-              </select>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, role: 'project_manager' })}
+                  className={`p-3 rounded-lg border text-left transition-all ${
+                    formData.role === 'project_manager'
+                      ? 'border-[#0F0F0F] bg-[#0F0F0F] text-white shadow-sm'
+                      : 'border-[#D8D8D8] bg-white text-[#2C2C2C] hover:border-[#888888]'
+                  }`}
+                >
+                  <div className="font-bold text-xs sm:text-sm">Project Manager</div>
+                  <div className={`text-[10px] mt-0.5 ${formData.role === 'project_manager' ? 'text-[#D0D0D0]' : 'text-[#777777]'}`}>
+                    Creates & leads projects
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, role: 'team_member' })}
+                  className={`p-3 rounded-lg border text-left transition-all ${
+                    formData.role === 'team_member'
+                      ? 'border-[#0F0F0F] bg-[#0F0F0F] text-white shadow-sm'
+                      : 'border-[#D8D8D8] bg-white text-[#2C2C2C] hover:border-[#888888]'
+                  }`}
+                >
+                  <div className="font-bold text-xs sm:text-sm">Team Member</div>
+                  <div className={`text-[10px] mt-0.5 ${formData.role === 'team_member' ? 'text-[#D0D0D0]' : 'text-[#777777]'}`}>
+                    Applies & executes tasks
+                  </div>
+                </button>
+              </div>
             </div>
 
             <div>
               <Input
-                label="Create Password"
+                label="Password"
                 type="password"
                 placeholder="At least 6 characters"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={(e) => {
+                  setFormData({ ...formData, password: e.target.value });
+                  if (errors.password) setErrors({ ...errors, password: null });
+                }}
                 error={errors.password}
                 leftIcon={Lock}
                 required
               />
 
-              {/* Password strength meter */}
               {formData.password && (
-                <div className="mt-2">
+                <div className="mt-1.5">
                   <div className="flex justify-between items-center text-[10px] text-[#5A5A5A] mb-1">
                     <span>Password Security</span>
                     <span className="font-semibold text-[#0F0F0F]">{strength.label}</span>
@@ -155,7 +200,20 @@ export const RegisterPage = () => {
               )}
             </div>
 
-            {/* Terms checkbox */}
+            <Input
+              label="Confirm Password"
+              type="password"
+              placeholder="Re-enter password"
+              value={formData.confirmPassword}
+              onChange={(e) => {
+                setFormData({ ...formData, confirmPassword: e.target.value });
+                if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: null });
+              }}
+              error={errors.confirmPassword}
+              leftIcon={Lock}
+              required
+            />
+
             <div>
               <label className="flex items-start gap-2 cursor-pointer text-xs text-[#5A5A5A] mt-2">
                 <input
@@ -182,7 +240,7 @@ export const RegisterPage = () => {
               isLoading={isLoading}
               rightIcon={ArrowRight}
             >
-              Create Account
+              Register & Launch Workspace
             </Button>
           </form>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Layers, ArrowRight, Lock, Mail, Sparkles } from 'lucide-react';
+import { Layers, ArrowRight, Lock, Mail, Shield, User } from 'lucide-react';
+import { useWorkspace } from '../hooks/useWorkspace';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
@@ -8,9 +9,9 @@ import toast from 'react-hot-toast';
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(true);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useWorkspace();
   const navigate = useNavigate();
 
   const validate = () => {
@@ -29,28 +30,24 @@ export const LoginPage = () => {
     return Object.keys(errs).length === 0;
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success('Welcome back to ProjX!');
+    try {
+      const loggedUser = await login(email, password);
       navigate('/app');
-    }, 500);
+    } catch (err) {
+      toast.error(err.message || 'Login failed. Please check your credentials.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDemoLogin = () => {
-    setEmail('alex.morgan@projx.io');
-    setPassword('secret-password');
-    toast.success('Signed in as Alex Morgan (Demo)');
-    navigate('/app');
-  };
-
-  const handleForgotPassword = (e) => {
-    e.preventDefault();
-    toast.success('Password reset instructions sent to your email.');
+  const handleQuickFill = (roleEmail, rolePassword) => {
+    setEmail(roleEmail);
+    setPassword(rolePassword);
   };
 
   return (
@@ -82,26 +79,11 @@ export const LoginPage = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
         <div className="bg-[#FFFFFF] py-8 px-6 sm:px-8 border border-[#E5E5E5] rounded-xl shadow-card">
-          {/* Quick Demo Access Pill */}
-          <div className="mb-6 p-3 bg-[#0F0F0F] border border-[#2C2C2C] rounded-lg flex items-center justify-between text-xs text-white">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#FFFFFF] shrink-0" />
-              <span className="font-medium text-xs">Explore as Lead Architect</span>
-            </div>
-            <button
-              type="button"
-              onClick={handleDemoLogin}
-              className="font-bold text-xs text-[#0F0F0F] bg-[#FFFFFF] hover:bg-[#E5E5E5] px-2.5 py-1 rounded transition-colors"
-            >
-              1-Click Demo
-            </button>
-          </div>
-
           <form onSubmit={handleLogin} className="space-y-4">
             <Input
-              label="Work Email"
+              label="Email Address"
               type="email"
-              placeholder="alex.morgan@projx.io"
+              placeholder="e.g. manager@projx.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -128,44 +110,28 @@ export const LoginPage = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs">
-              <label className="flex items-center gap-2 cursor-pointer text-[#5A5A5A]">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded border-[#B0B0B0] text-[#0F0F0F] focus:ring-[#0F0F0F]"
-                />
-                <span>Remember me for 30 days</span>
-              </label>
-
-              <button
-                type="button"
-                onClick={handleForgotPassword}
-                className="font-medium text-[#2C2C2C] hover:text-[#0F0F0F] transition-colors"
-              >
-                Forgot password?
-              </button>
-            </div>
-
             <Button
               type="submit"
               variant="primary"
-              className="w-full"
+              className="w-full mt-2"
               isLoading={isLoading}
               rightIcon={ArrowRight}
             >
-              Sign In to Workspace
+              Sign In
             </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-[#EFEFEF] text-center">
-            <Link
-              to="/app"
-              className="text-xs text-[#5A5A5A] hover:text-[#0F0F0F] font-medium transition-colors"
-            >
-              Skip directly to Dashboard preview →
-            </Link>
+          {/* Role Guidance Helper */}
+          <div className="mt-6 pt-5 border-t border-[#EFEFEF] text-center text-xs text-[#5A5A5A]">
+            <p className="font-medium text-[#0F0F0F] mb-1">Supported User Roles</p>
+            <div className="flex justify-center gap-3 mt-2 text-[11px]">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#F5F5F5] border border-[#E5E5E5] text-[#0F0F0F] font-semibold">
+                <Shield className="w-3 h-3" /> Project Manager
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#F5F5F5] border border-[#E5E5E5] text-[#0F0F0F] font-semibold">
+                <User className="w-3 h-3" /> Team Member
+              </span>
+            </div>
           </div>
         </div>
       </div>

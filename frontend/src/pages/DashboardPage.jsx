@@ -4,6 +4,8 @@ import {
   Clock,
   TrendingUp,
   CheckCircle2,
+  Shield,
+  UserCheck,
 } from 'lucide-react';
 import { useWorkspace } from '../hooks/useWorkspace';
 import StatCard from '../components/dashboard/StatCard';
@@ -26,60 +28,65 @@ export const DashboardPage = () => {
     });
   });
 
+  const displayName = (user?.fullName || user?.name || 'User').split(' ')[0];
+  const isPM = user?.role === 'project_manager';
+
   return (
     <div className="space-y-5 sm:space-y-6">
       {/* Personalized Welcome Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
         <div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
-            Welcome back, {user.name.split(' ')[0]}
+            Welcome back, {displayName}
           </h1>
           <p className="text-xs sm:text-sm text-[#5A5A5A] mt-0.5">
-            {currentDate} • High-velocity project telemetry and sprint throughput.
+            {currentDate} • {isPM ? 'Project Manager Dashboard' : 'Team Member Dashboard'}
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 text-xs text-[#5A5A5A] font-medium self-start sm:self-auto">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0F0F0F]" />
-          <span>Active</span>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F0F0F] text-white text-xs font-semibold">
+            {isPM ? <Shield className="w-3.5 h-3.5 text-white" /> : <UserCheck className="w-3.5 h-3.5 text-white" />}
+            {isPM ? 'Project Manager' : 'Team Member'}
+          </span>
         </div>
       </div>
 
       {/* 4 Stat Cards with Animated Counters */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
         <StatCard
-          title="Total Projects"
+          title={isPM ? 'Managed Projects' : 'My Projects'}
           value={stats.totalProjects}
-          trend="+18%"
+          trend={isPM ? 'Active Portfolios' : 'Accepted Initiatives'}
           isPositive={true}
-          subtitle="across 4 teams"
+          subtitle={isPM ? 'across your teams' : 'collaborative roles'}
           icon={FolderKanban}
           iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
           title="Active Projects"
           value={stats.activeProjects}
-          trend="3 on track"
+          trend="In Progress"
           isPositive={true}
-          subtitle="94% velocity"
+          subtitle="milestone sprints"
           icon={TrendingUp}
           iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
-          title="Assigned Tasks"
+          title={isPM ? 'Assigned Tasks' : 'My Open Tasks'}
           value={stats.assignedTasks}
-          trend="6 urgent"
+          trend="In Action"
           isPositive={false}
-          subtitle="due this sprint"
+          subtitle="requiring execution"
           icon={Clock}
           iconColor="bg-[#2C2C2C] text-[#FFFFFF] border-[#3F3F3F]"
         />
         <StatCard
           title="Completed Tasks"
           value={stats.completedTasks}
-          trend="+24%"
+          trend="Finished"
           isPositive={true}
-          subtitle="this milestone"
+          subtitle="verified deliverables"
           icon={CheckCircle2}
           iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />

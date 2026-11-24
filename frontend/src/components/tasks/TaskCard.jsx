@@ -2,25 +2,35 @@ import React from 'react';
 import { Clock, ArrowRight, ArrowLeft, CheckSquare } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import { getPriorityBadge, getDaysRemaining } from '../../utils/formatters';
+import { API_ORIGIN } from '../../services/api';
 
-export const TaskCard = ({ task, onMoveStatus }) => {
+export const TaskCard = ({ task, onMoveStatus, onOpenDetail }) => {
   const priorityInfo = getPriorityBadge(task.priority);
   const deadline = getDaysRemaining(task.dueDate);
 
-  const completedSubtasks = (task.subtasks || []).filter((s) => s.completed).length;
-  const totalSubtasks = (task.subtasks || []).length;
+  const assigneeName = task.assignedTo?.fullName || task.assignee?.name || 'Assignee';
+  const assigneeAvatar = task.assignedTo?.profilePhoto
+    ? task.assignedTo.profilePhoto.startsWith('http')
+      ? task.assignedTo.profilePhoto
+      : `${API_ORIGIN}${task.assignedTo.profilePhoto}`
+    : task.assignee?.avatar || '';
+
+  const projectName = task.project?.name || task.projectName || 'General';
 
   return (
-    <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle hover:shadow-card hover:border-[#B0B0B0] transition-all duration-150 group">
+    <div
+      onClick={() => onOpenDetail && onOpenDetail(task)}
+      className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl p-4 shadow-subtle hover:shadow-card hover:border-[#888888] transition-all duration-150 group cursor-pointer"
+    >
       {/* Top Project Tag & Priority */}
       <div className="flex items-center justify-between gap-2 mb-2">
         <span className="text-[10px] font-semibold uppercase tracking-wider text-[#5A5A5A] bg-[#F5F5F5] border border-[#E5E5E5] px-2 py-0.5 rounded truncate max-w-[150px]">
-          {task.projectName}
+          {projectName}
         </span>
         <span
-          className={`text-[10px] font-semibold px-2 py-0.5 rounded border shrink-0 ${priorityInfo.bg}`}
+          className={`text-[10px] font-semibold px-2 py-0.5 rounded border shrink-0 ${priorityInfo.bg || 'bg-[#F0F0F0] text-[#0F0F0F]'}`}
         >
-          {task.priority}
+          {task.priority || 'Medium'}
         </span>
       </div>
 
@@ -36,33 +46,22 @@ export const TaskCard = ({ task, onMoveStatus }) => {
         </p>
       )}
 
-      {/* Subtasks Progress */}
-      {totalSubtasks > 0 && (
-        <div className="flex items-center gap-2 mb-3 text-[11px] text-[#5A5A5A]">
-          <CheckSquare className="w-3.5 h-3.5 text-[#0F0F0F]" />
-          <span>
-            {completedSubtasks}/{totalSubtasks} subtasks
-          </span>
-          <div className="flex-1 bg-[#EFEFEF] rounded-full h-1 overflow-hidden">
-            <div
-              className="bg-[#0F0F0F] h-full rounded-full transition-all"
-              style={{ width: `${(completedSubtasks / totalSubtasks) * 100}%` }}
-            />
-          </div>
+      {/* Progress submission if available */}
+      {task.progressUpdate && (
+        <div className="mb-2 p-1.5 bg-[#F9F9F9] rounded text-[10px] text-[#0F0F0F] truncate border border-[#EFEFEF]">
+          <span className="font-bold">Update: </span>{task.progressUpdate}
         </div>
       )}
 
       {/* Footer Info: Assignee, Due Date & Quick Column Shifters */}
       <div className="pt-2.5 border-t border-[#EFEFEF] flex items-center justify-between text-xs">
         <div className="flex items-center gap-2">
-          {task.assignee && (
-            <Avatar
-              src={task.assignee.avatar}
-              name={task.assignee.name}
-              size="xs"
-              className="ring-1 ring-[#D8D8D8]"
-            />
-          )}
+          <Avatar
+            src={assigneeAvatar}
+            name={assigneeName}
+            size="xs"
+            className="ring-1 ring-[#D8D8D8]"
+          />
           <span
             className={`flex items-center gap-1 text-[11px] font-medium ${
               deadline.isOverdue
@@ -78,16 +77,22 @@ export const TaskCard = ({ task, onMoveStatus }) => {
         </div>
 
         {/* Stage Mover Buttons */}
-        <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
-          {task.status !== 'todo' && (
+        <div
+          className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {task.status !== 'To Do' && (
             <button
               type="button"
-              onClick={() =>
-                onMoveStatus(
-                  task.id,
-                  task.status === 'done' ? 'in_progress' : 'todo'
-                )
-              }
+              onClick={() => {
+                const prevStatus =
+                  task.status === 'Completed'
+                    ? 'In Review'
+                    : task.status === 'In Review'
+                    ? 'In Progress'
+                    : 'To Do';
+                onMoveStatus(task._id || task.id, prevStatus);
+              }}
               className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
               title="Move backward"
             >
@@ -95,15 +100,18 @@ export const TaskCard = ({ task, onMoveStatus }) => {
             </button>
           )}
 
-          {task.status !== 'done' && (
+          {task.status !== 'Completed' && (
             <button
               type="button"
-              onClick={() =>
-                onMoveStatus(
-                  task.id,
-                  task.status === 'todo' ? 'in_progress' : 'done'
-                )
-              }
+              onClick={() => {
+                const nextStatus =
+                  task.status === 'To Do'
+                    ? 'In Progress'
+                    : task.status === 'In Progress'
+                    ? 'In Review'
+                    : 'Completed';
+                onMoveStatus(task._id || task.id, nextStatus);
+              }}
               className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
               title="Advance stage"
             >

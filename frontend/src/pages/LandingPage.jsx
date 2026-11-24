@@ -69,8 +69,20 @@ const PROJX_WORKFLOW_IMAGES = [
 
 export const LandingPage = () => {
   const heroRef = useRef(null);
+  const getStartedRef = useRef(null);
   const [activeTab, setActiveTab] = useState('workflow');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showGetStartedMenu, setShowGetStartedMenu] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (getStartedRef.current && !getStartedRef.current.contains(e.target)) {
+        setShowGetStartedMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -205,24 +217,52 @@ export const LandingPage = () => {
        
           </nav>
 
-          {/* Right CTA */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            <Link
-              to="/login"
-              className="text-[11px] sm:text-sm font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] px-2 sm:px-3 py-1 sm:py-1.5 rounded-full hover:bg-black/[0.05] transition-colors"
+          {/* Right CTA - Get Started Flow */}
+          <div className="relative shrink-0" ref={getStartedRef}>
+            <Button
+              size="sm"
+              variant="primary"
+              rightIcon={ArrowRight}
+              onClick={() => setShowGetStartedMenu((prev) => !prev)}
+              className="!py-1.5 sm:!py-2 !px-3 sm:!px-5 !text-xs sm:!text-sm !rounded-full shadow-xs sm:shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all font-semibold"
             >
-              Sign In
-            </Link>
-            <Link to="/app">
-              <Button
-                size="sm"
-                variant="primary"
-                rightIcon={ArrowRight}
-                className="!py-1 sm:!py-2 !px-2.5 sm:!px-4 !text-[11px] sm:!text-sm !rounded-full shadow-xs sm:shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all font-semibold"
-              >
-                Open App
-              </Button>
-            </Link>
+              Get Started
+            </Button>
+
+            {showGetStartedMenu && (
+              <div className="absolute right-0 mt-2 w-64 bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl shadow-dropdown py-2 px-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+                <div className="px-3 py-1.5 text-[10px] font-semibold text-[#5A5A5A] uppercase tracking-wider border-b border-[#F0F0F0] mb-1">
+                  Choose an option
+                </div>
+                <Link
+                  to="/login"
+                  onClick={() => setShowGetStartedMenu(false)}
+                  className="flex flex-col px-3 py-2.5 rounded-lg hover:bg-[#F5F5F5] transition-colors group"
+                >
+                  <span className="text-xs sm:text-sm font-bold text-[#0F0F0F] group-hover:text-black flex items-center justify-between">
+                    Option 1: Sign In
+                    <ArrowRight className="w-3.5 h-3.5 text-[#5A5A5A] group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                  <span className="text-[11px] text-[#5A5A5A] mt-0.5">
+                    For users who already have an account.
+                  </span>
+                </Link>
+
+                <Link
+                  to="/register"
+                  onClick={() => setShowGetStartedMenu(false)}
+                  className="flex flex-col px-3 py-2.5 rounded-lg hover:bg-[#F5F5F5] transition-colors group mt-0.5"
+                >
+                  <span className="text-xs sm:text-sm font-bold text-[#0F0F0F] group-hover:text-black flex items-center justify-between">
+                    Option 2: Sign Up
+                    <ArrowRight className="w-3.5 h-3.5 text-[#5A5A5A] group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                  <span className="text-[11px] text-[#5A5A5A] mt-0.5">
+                    For new users registering on ProjX.
+                  </span>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </header>

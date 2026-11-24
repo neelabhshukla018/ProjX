@@ -1,5 +1,6 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
+import { useWorkspace } from '../../hooks/useWorkspace';
 import TopNav from './TopNav';
 import GlobalSearchModal from './GlobalSearchModal';
 
@@ -9,9 +10,26 @@ import TaskModal from '../tasks/TaskModal';
 import InviteMemberModal from '../teams/InviteMemberModal';
 
 export const DashboardLayout = () => {
+  const { user, authLoading, isAuthenticated } = useWorkspace();
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-[#0F0F0F] border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-[#5A5A5A] font-medium">Verifying ProjX workspace session...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col antialiased text-[#0F0F0F] overflow-x-hidden w-full">
-      {/* Top Navigation Bar (Unified Navbar replacing Sidebar) */}
+      {/* Top Navigation Bar */}
       <TopNav />
 
       {/* Main Content Area - Full Width */}

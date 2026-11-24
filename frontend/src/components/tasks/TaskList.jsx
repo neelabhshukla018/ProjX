@@ -2,8 +2,9 @@ import React from 'react';
 import { Check, Clock } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import { getPriorityBadge, getStatusBadge, getDaysRemaining, formatDate } from '../../utils/formatters';
+import { API_ORIGIN } from '../../services/api';
 
-export const TaskList = ({ tasks = [], onMoveStatus }) => {
+export const TaskList = ({ tasks = [], onMoveStatus, onOpenDetail }) => {
   return (
     <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl shadow-card overflow-hidden">
       <div className="overflow-x-auto">
@@ -28,24 +29,37 @@ export const TaskList = ({ tasks = [], onMoveStatus }) => {
               </tr>
             ) : (
               tasks.map((task) => {
-                const isDone = task.status === 'done';
+                const isDone = task.status === 'Completed' || task.status === 'done';
                 const priorityBadge = getPriorityBadge(task.priority);
                 const statusBadge = getStatusBadge(task.status);
                 const deadline = getDaysRemaining(task.dueDate);
 
+                const assigneeName = task.assignedTo?.fullName || task.assignee?.name || 'Assignee';
+                const assigneeAvatar = task.assignedTo?.profilePhoto
+                  ? task.assignedTo.profilePhoto.startsWith('http')
+                    ? task.assignedTo.profilePhoto
+                    : `${API_ORIGIN}${task.assignedTo.profilePhoto}`
+                  : task.assignee?.avatar || '';
+
+                const projectName = task.project?.name || task.projectName || 'General';
+
                 return (
                   <tr
-                    key={task.id}
-                    className={`hover:bg-[#F5F5F5] transition-colors ${
+                    key={task._id || task.id}
+                    onClick={() => onOpenDetail && onOpenDetail(task)}
+                    className={`hover:bg-[#F5F5F5] transition-colors cursor-pointer ${
                       isDone ? 'bg-[#FAFAFA] text-[#B0B0B0]' : 'text-[#0F0F0F]'
                     }`}
                   >
                     {/* Checkbox */}
-                    <td className="py-3 px-4">
+                    <td className="py-3 px-4" onClick={(e) => e.stopPropagation()}>
                       <button
                         type="button"
                         onClick={() =>
-                          onMoveStatus(task.id, isDone ? 'todo' : 'done')
+                          onMoveStatus(
+                            task._id || task.id,
+                            isDone ? 'To Do' : 'Completed'
+                          )
                         }
                         className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
                           isDone
@@ -64,37 +78,40 @@ export const TaskList = ({ tasks = [], onMoveStatus }) => {
                           {task.title}
                         </span>
                       </div>
-                      {task.subtasks && task.subtasks.length > 0 && (
-                        <div className="text-[10px] text-[#5A5A5A] mt-0.5">
-                          {task.subtasks.filter((s) => s.completed).length}/
-                          {task.subtasks.length} subtasks
+                      {task.progressUpdate && (
+                        <div className="text-[10px] text-[#5A5A5A] mt-0.5 line-clamp-1">
+                          Update: {task.progressUpdate}
                         </div>
                       )}
                     </td>
 
                     {/* Project */}
-                    <td className="py-3 px-4 text-[#5A5A5A] font-medium">
-                      {task.projectName}
+                    <td className="py-3 px-4 text-[#5A5A5A] font-medium truncate max-w-[150px]">
+                      {projectName}
                     </td>
 
                     {/* Priority */}
                     <td className="py-3 px-4">
                       <span
-                        className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded border ${priorityBadge.bg}`}
+                        className={`inline-block px-2 py-0.5 rounded text-[10px] font-semibold border ${priorityBadge.bg || 'bg-[#F0F0F0] text-[#0F0F0F]'}`}
                       >
-                        {task.priority}
+                        {task.priority || 'Medium'}
                       </span>
                     </td>
 
                     {/* Status */}
                     <td className="py-3 px-4">
-                      <span className="font-medium text-xs text-[#0F0F0F]">{statusBadge.label}</span>
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded text-[10px] font-semibold border ${statusBadge.bg || 'bg-[#F0F0F0] text-[#0F0F0F]'}`}
+                      >
+                        {task.status}
+                      </span>
                     </td>
 
                     {/* Due Date */}
                     <td className="py-3 px-4">
                       <span
-                        className={`flex items-center gap-1 font-medium ${
+                        className={`flex items-center gap-1 text-[11px] font-medium ${
                           deadline.isOverdue
                             ? 'text-[#0F0F0F] font-bold'
                             : deadline.isUrgent
@@ -109,18 +126,16 @@ export const TaskList = ({ tasks = [], onMoveStatus }) => {
 
                     {/* Assignee */}
                     <td className="py-3 px-4">
-                      {task.assignee ? (
-                        <div className="flex items-center gap-2">
-                          <Avatar
-                            src={task.assignee.avatar}
-                            name={task.assignee.name}
-                            size="xs"
-                          />
-                          <span className="font-medium text-[#0F0F0F]">{task.assignee.name}</span>
-                        </div>
-                      ) : (
-                        <span className="text-[#B0B0B0]">Unassigned</span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        <Avatar
+                          src={assigneeAvatar}
+                          name={assigneeName}
+                          size="xs"
+                        />
+                        <span className="truncate max-w-[100px] text-[#2C2C2C] font-medium">
+                          {assigneeName}
+                        </span>
+                      </div>
                     </td>
                   </tr>
                 );

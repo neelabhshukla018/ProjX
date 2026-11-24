@@ -3,6 +3,7 @@ import { useWorkspace } from '../../hooks/useWorkspace';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import { Upload, FileText, Image as ImageIcon } from 'lucide-react';
 
 export const ProjectModal = () => {
   const { isNewProjectModalOpen, setIsNewProjectModalOpen, addProject, user } = useWorkspace();
@@ -10,25 +11,20 @@ export const ProjectModal = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    category: 'Design System',
-    priority: 'High',
-    dueDate: '',
-    teamLead: user.name,
+    requiredSkills: '',
+    requiredExperience: '1-2 years experience',
+    requiredMembers: 3,
+    startDate: new Date().toISOString().split('T')[0],
+    deadline: '',
+    status: 'Recruiting',
   });
 
+  const [photoFile, setPhotoFile] = useState(null);
+  const [docFiles, setDocFiles] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const categories = [
-    'Design System',
-    'Infrastructure',
-    'Mobile',
-    'AI & ML',
-    'Web App',
-    'Security',
-    'Marketing',
-  ];
-
-  const priorities = ['Low', 'Medium', 'High', 'Urgent'];
+  const statuses = ['Planning', 'Recruiting', 'In Progress', 'Completed'];
 
   const validate = () => {
     const errs = {};
@@ -38,39 +34,60 @@ export const ProjectModal = () => {
       errs.name = 'Project name must be at least 3 characters';
     }
     if (!formData.description.trim()) {
-      errs.description = 'Please provide a brief project summary';
+      errs.description = 'Please provide a project description';
     }
-    if (!formData.dueDate) {
-      errs.dueDate = 'Target completion deadline is required';
+    if (!formData.deadline) {
+      errs.deadline = 'Project deadline is required';
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
-    addProject({
-      name: formData.name.trim(),
-      description: formData.description.trim(),
-      category: formData.category,
-      priority: formData.priority,
-      dueDate: formData.dueDate,
-      teamLead: formData.teamLead,
-      status: 'In Progress',
-    });
+    setIsSubmitting(true);
+    try {
+      const data = new FormData();
+      data.append('name', formData.name.trim());
+      data.append('description', formData.description.trim());
+      data.append('requiredSkills', formData.requiredSkills);
+      data.append('requiredExperience', formData.requiredExperience);
+      data.append('requiredMembers', formData.requiredMembers);
+      data.append('startDate', formData.startDate);
+      data.append('deadline', formData.deadline);
+      data.append('status', formData.status);
 
-    setFormData({
-      name: '',
-      description: '',
-      category: 'Design System',
-      priority: 'High',
-      dueDate: '',
-      teamLead: user.name,
-    });
-    setErrors({});
-    setIsNewProjectModalOpen(false);
+      if (photoFile) {
+        data.append('photo', photoFile);
+      }
+      if (docFiles && docFiles.length > 0) {
+        for (let i = 0; i < docFiles.length; i++) {
+          data.append('documents', docFiles[i]);
+        }
+      }
+
+      await addProject(data);
+
+      setFormData({
+        name: '',
+        description: '',
+        requiredSkills: '',
+        requiredExperience: '1-2 years experience',
+        requiredMembers: 3,
+        startDate: new Date().toISOString().split('T')[0],
+        deadline: '',
+        status: 'Recruiting',
+      });
+      setPhotoFile(null);
+      setDocFiles([]);
+      setErrors({});
+    } catch {
+      // handled in context
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -78,13 +95,13 @@ export const ProjectModal = () => {
       isOpen={isNewProjectModalOpen}
       onClose={() => setIsNewProjectModalOpen(false)}
       title="Create New Project"
-      subtitle="Kick off a high-impact initiative with structured milestones and team assignments."
-      maxWidth="max-w-xl"
+      subtitle="Publish a collaborative project, specify requirements, and recruit team members."
+      maxWidth="max-w-2xl"
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 max-h-[80vh] overflow-y-auto pr-1">
         <Input
-          label="Project Title"
-          placeholder="e.g. Apollo Design System 2.0"
+          label="Project Name"
+          placeholder="e.g. Distributed Cloud Sync Engine"
           value={formData.name}
           onChange={(e) => {
             setFormData({ ...formData, name: e.target.value });
@@ -100,7 +117,7 @@ export const ProjectModal = () => {
           </label>
           <textarea
             rows={3}
-            placeholder="Briefly state the mission, deliverables, and strategic scope..."
+            placeholder="Describe the initiative's objectives, architecture, and expected deliverables..."
             value={formData.description}
             onChange={(e) => {
               setFormData({ ...formData, description: e.target.value });
@@ -122,52 +139,118 @@ export const ProjectModal = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
-              Domain Category
-            </label>
-            <select
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
-            >
-              {categories.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Input
+            label="Required Skills (comma separated)"
+            placeholder="e.g. React, Node.js, MongoDB, Tailwind"
+            value={formData.requiredSkills}
+            onChange={(e) => setFormData({ ...formData, requiredSkills: e.target.value })}
+          />
+
+          <Input
+            label="Required Experience"
+            placeholder="e.g. 1-2 years or Intermediate level"
+            value={formData.requiredExperience}
+            onChange={(e) => setFormData({ ...formData, requiredExperience: e.target.value })}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Input
+            label="Required Team Members"
+            type="number"
+            min="1"
+            max="50"
+            value={formData.requiredMembers}
+            onChange={(e) => setFormData({ ...formData, requiredMembers: e.target.value })}
+            required
+          />
 
           <div>
             <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
-              Priority Tier
+              Project Status
             </label>
             <select
-              value={formData.priority}
-              onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+              value={formData.status}
+              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               className="w-full text-xs sm:text-sm rounded-lg py-2.5 px-3 bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
             >
-              {priorities.map((p) => (
-                <option key={p} value={p}>
-                  {p} Priority
+              {statuses.map((st) => (
+                <option key={st} value={st}>
+                  {st}
                 </option>
               ))}
             </select>
           </div>
         </div>
 
-        <Input
-          label="Target Milestone Date"
-          type="date"
-          value={formData.dueDate}
-          onChange={(e) => {
-            setFormData({ ...formData, dueDate: e.target.value });
-            if (errors.dueDate) setErrors({ ...errors, dueDate: null });
-          }}
-          error={errors.dueDate}
-          required
-        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Input
+            label="Project Start Date"
+            type="date"
+            value={formData.startDate}
+            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+          />
+
+          <Input
+            label="Target Project Deadline"
+            type="date"
+            value={formData.deadline}
+            onChange={(e) => {
+              setFormData({ ...formData, deadline: e.target.value });
+              if (errors.deadline) setErrors({ ...errors, deadline: null });
+            }}
+            error={errors.deadline}
+            required
+          />
+        </div>
+
+        {/* File Uploads: Project Photo & PDF Documents */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          {/* Project Photo */}
+          <div>
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+              Project Cover Photo (JPG/PNG/WEBP)
+            </label>
+            <div className="relative border border-dashed border-[#D8D8D8] rounded-lg p-3 hover:border-[#0F0F0F] transition-colors">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setPhotoFile(e.target.files[0] || null)}
+                className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+              />
+              <div className="flex items-center gap-2 text-xs text-[#5A5A5A]">
+                <ImageIcon className="w-4 h-4 text-[#0F0F0F] shrink-0" />
+                <span className="truncate">
+                  {photoFile ? photoFile.name : 'Choose cover image...'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Project PDF Documents */}
+          <div>
+            <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
+              Project Documents (PDF)
+            </label>
+            <div className="relative border border-dashed border-[#D8D8D8] rounded-lg p-3 hover:border-[#0F0F0F] transition-colors">
+              <input
+                type="file"
+                accept="application/pdf"
+                multiple
+                onChange={(e) => setDocFiles(Array.from(e.target.files || []))}
+                className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+              />
+              <div className="flex items-center gap-2 text-xs text-[#5A5A5A]">
+                <FileText className="w-4 h-4 text-[#0F0F0F] shrink-0" />
+                <span className="truncate">
+                  {docFiles.length > 0
+                    ? `${docFiles.length} PDF file(s) selected`
+                    : 'Attach project PDF specs...'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="pt-4 border-t border-[#EFEFEF] flex items-center justify-end gap-3">
           <Button
@@ -177,8 +260,8 @@ export const ProjectModal = () => {
           >
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
-            Create Project
+          <Button type="submit" variant="primary" isLoading={isSubmitting}>
+            Publish Project
           </Button>
         </div>
       </form>

@@ -2,11 +2,15 @@ import axios from 'axios';
 
 /**
  * Axios instance configured for ProjX API integration.
- * In this frontend foundation phase, this sets the stage for future MERN backend connectivity.
+ * Supports HTTP-only cookies and Bearer token fallback.
  */
+export const API_ORIGIN =
+  import.meta.env.VITE_API_ORIGIN || 'http://localhost:5000';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
-  timeout: 10000,
+  baseURL: import.meta.env.VITE_API_BASE_URL || `${API_ORIGIN}/api`,
+  timeout: 15000,
+  withCredentials: true, // Enables HTTP-only cookies
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -36,7 +40,7 @@ api.interceptors.response.use(
       error.response?.data?.message ||
       error.message ||
       'An unexpected error occurred';
-    
+
     console.warn('[API Response Error]:', errorMsg);
     return Promise.reject({
       message: errorMsg,
