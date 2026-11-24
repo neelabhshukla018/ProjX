@@ -335,6 +335,7 @@ export const HorizontalBranchingWorkflow = () => {
   const svgContainerRef = useRef(null);
   const speedRef = useRef(1.0);
   const offsetRef = useRef(0);
+  const branchOffsetRef = useRef(0);
   const isReduced = useRef(isReducedMotion());
 
   // Check if a path connects to the hovered node
@@ -347,7 +348,7 @@ export const HorizontalBranchingWorkflow = () => {
   );
 
   // 1. Scroll-Driven Velocity Acceleration
-  // Specifically accelerates into turbo speed when scrolling up (deltaY < 0)
+  // Controlled gentle acceleration when scrolling up (deltaY < 0)
   useEffect(() => {
     let lastScrollY = window.scrollY;
     let lastTime = performance.now();
@@ -362,12 +363,12 @@ export const HorizontalBranchingWorkflow = () => {
       const scrollSpeed = Math.abs(deltaY) / dt;
 
       if (deltaY < 0) {
-        // SCROLLING UP: Gentle acceleration, keeping it calm
-        const boostedSpeed = Math.min(1.3 + scrollSpeed * 3, 2.5);
+        // SCROLLING UP: Responsive acceleration
+        const boostedSpeed = Math.min(1.25 + scrollSpeed * 1.2, 1.8);
         speedRef.current = Math.max(speedRef.current, boostedSpeed);
       } else if (deltaY > 0) {
         // SCROLLING DOWN: Subtle boost
-        const boostedSpeed = Math.min(1.1 + scrollSpeed * 1.5, 1.8);
+        const boostedSpeed = Math.min(1.1 + scrollSpeed * 0.5, 1.4);
         speedRef.current = Math.max(speedRef.current, boostedSpeed);
       }
 
@@ -379,7 +380,7 @@ export const HorizontalBranchingWorkflow = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. High-Performance 60FPS Continuous Animation Loop (Calm, Slow Pace)
+  // 2. High-Performance 60FPS Continuous Animation Loop (Balanced Smooth Flow)
   // Updates CSS custom properties on the SVG container to drive continuous streaming flow
   useEffect(() => {
     if (isReduced.current) return;
@@ -390,25 +391,34 @@ export const HorizontalBranchingWorkflow = () => {
     const animateLoop = (time) => {
       // Smooth decay back to base 1.0x speed
       const targetBaseSpeed = 1.0;
-      speedRef.current += (targetBaseSpeed - speedRef.current) * 0.035;
+      speedRef.current += (targetBaseSpeed - speedRef.current) * 0.03;
 
-      // Base advance factor tuned down from 1.4 to 0.35 for a truly slow, calm, elegant pace
+      // Crisp, energetic flow speed: 0.28 for main flow, 0.25 for branches
       const speed = speedRef.current;
-      offsetRef.current = (offsetRef.current + 0.35 * speed) % 10000;
+      offsetRef.current = (offsetRef.current + 0.28 * speed) % 10000;
+      branchOffsetRef.current = (branchOffsetRef.current + 0.25 * speed) % 10000;
 
       // Update CSS custom properties directly on the container (zero React re-render overhead)
       if (svgContainerRef.current) {
         svgContainerRef.current.style.setProperty('--flow-offset', `${offsetRef.current}px`);
         svgContainerRef.current.style.setProperty(
           '--pulse-offset',
-          `${offsetRef.current * 1.25}px`
+          `${offsetRef.current * 1.15}px`
+        );
+        svgContainerRef.current.style.setProperty(
+          '--branch-flow-offset',
+          `${branchOffsetRef.current}px`
+        );
+        svgContainerRef.current.style.setProperty(
+          '--branch-pulse-offset',
+          `${branchOffsetRef.current * 1.1}px`
         );
       }
 
       // Throttle UI speed counter display to ~10 times/second
       if (time - lastUpdateDisplay > 100) {
         setCurrentSpeedDisplay(parseFloat(speed.toFixed(1)));
-        setIsFastScrolling(speed > 1.8);
+        setIsFastScrolling(speed > 1.4);
         lastUpdateDisplay = time;
       }
 
@@ -421,7 +431,7 @@ export const HorizontalBranchingWorkflow = () => {
 
   // Manual Turbo Speed Boost on button click
   const triggerTurboBoost = () => {
-    speedRef.current = 8.5;
+    speedRef.current = 2.5;
   };
 
   const hoveredNode = WORKFLOW_NODES.find((n) => n.id === hoveredNodeId);
@@ -433,6 +443,8 @@ export const HorizontalBranchingWorkflow = () => {
       style={{
         '--flow-offset': '0px',
         '--pulse-offset': '0px',
+        '--branch-flow-offset': '0px',
+        '--branch-pulse-offset': '0px',
       }}
     >
       {/* Top Header Bar: Real-time Velocity & Color Branch Indicator */}
@@ -509,10 +521,40 @@ export const HorizontalBranchingWorkflow = () => {
             <pattern id="wfGridMulti" width="24" height="24" patternUnits="userSpaceOnUse">
               <circle cx="2" cy="2" r="0.8" fill="#6F675D" fillOpacity="0.10" />
             </pattern>
+
+            {/* Ambient Aurora Glow behind Parallel Branches */}
+            <radialGradient id="wfBranchAura" cx="436" cy="162" r="260" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.08" />
+              <stop offset="45%" stopColor="#D4AF37" stopOpacity="0.03" />
+              <stop offset="85%" stopColor="#29251F" stopOpacity="0.01" />
+              <stop offset="100%" stopColor="#29251F" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
-          {/* Background Grid */}
+          {/* 0. Background Effects & Precision Grid Layers */}
+          {/* Base Grid */}
           <rect width="1200" height="340" fill="url(#wfGridMulti)" rx="16" />
+
+          {/* Ambient Luminous Halo behind Design/Frontend/Backend Branch Cluster */}
+          <ellipse cx="436" cy="162" rx="260" ry="145" fill="url(#wfBranchAura)" pointerEvents="none" />
+
+          {/* Architectural Alignment Guide Rails (Faint CAD Tracks) */}
+          <g className="cad-guide-rails" opacity="0.15" pointerEvents="none">
+            {/* Design Track Rail */}
+            <line x1="30" y1="82" x2="1170" y2="82" stroke="#29251F" strokeWidth="0.8" strokeDasharray="3 8" />
+            {/* Main Axis Track Rail */}
+            <line x1="30" y1="180" x2="1170" y2="180" stroke="#29251F" strokeWidth="0.8" strokeDasharray="3 8" />
+            {/* Backend Track Rail */}
+            <line x1="30" y1="278" x2="1170" y2="278" stroke="#29251F" strokeWidth="0.8" strokeDasharray="3 8" />
+          </g>
+
+          {/* Precision Blueprint Corner L-Brackets */}
+          <g className="hud-corner-brackets" stroke="#29251F" strokeWidth="1.2" strokeOpacity="0.22" fill="none" pointerEvents="none">
+            <path d="M 18 34 L 18 18 L 34 18" />
+            <path d="M 1182 34 L 1182 18 L 1166 18" />
+            <path d="M 18 306 L 18 322 L 34 322" />
+            <path d="M 1182 306 L 1182 322 L 1166 322" />
+          </g>
 
           {/* 1. Base Static Guide Traces */}
           <g className="base-guide-lines" opacity="0.3">
@@ -533,6 +575,8 @@ export const HorizontalBranchingWorkflow = () => {
           <g className="flowing-streams">
             {WORKFLOW_PATHS.map((p) => {
               const highlighted = isPathHighlighted(p);
+              const isBranch =
+                p.id.includes('design') || p.id.includes('frontend') || p.id.includes('backend');
               return (
                 <path
                   key={`flow-${p.id}`}
@@ -543,7 +587,9 @@ export const HorizontalBranchingWorkflow = () => {
                   strokeLinecap="round"
                   strokeDasharray="10 8"
                   style={{
-                    strokeDashoffset: 'calc(-1 * var(--flow-offset, 0px))',
+                    strokeDashoffset: isBranch
+                      ? 'calc(-1 * var(--branch-flow-offset, 0px))'
+                      : 'calc(-1 * var(--flow-offset, 0px))',
                     filter: highlighted
                       ? p.color === '#29251F'
                         ? 'url(#glow-pink)'
@@ -563,21 +609,27 @@ export const HorizontalBranchingWorkflow = () => {
 
           {/* 3. Fast Traveling Energy Laser Pulses (Accelerates on scroll up) */}
           <g className="laser-pulses">
-            {WORKFLOW_PATHS.map((p) => (
-              <path
-                key={`laser-${p.id}`}
-                d={p.d}
-                fill="none"
-                stroke={p.pulseColor}
-                strokeWidth={isFastScrolling ? 3.5 : 2.5}
-                strokeLinecap="round"
-                strokeDasharray="28 90"
-                style={{
-                  strokeDashoffset: 'calc(-1 * var(--pulse-offset, 0px))',
-                  opacity: isFastScrolling ? 1 : 0.75,
-                }}
-              />
-            ))}
+            {WORKFLOW_PATHS.map((p) => {
+              const isBranch =
+                p.id.includes('design') || p.id.includes('frontend') || p.id.includes('backend');
+              return (
+                <path
+                  key={`laser-${p.id}`}
+                  d={p.d}
+                  fill="none"
+                  stroke={p.pulseColor}
+                  strokeWidth={isFastScrolling ? 3.0 : 2.2}
+                  strokeLinecap="round"
+                  strokeDasharray="24 100"
+                  style={{
+                    strokeDashoffset: isBranch
+                      ? 'calc(-1 * var(--branch-pulse-offset, 0px))'
+                      : 'calc(-1 * var(--pulse-offset, 0px))',
+                    opacity: isFastScrolling ? 0.9 : 0.65,
+                  }}
+                />
+              );
+            })}
           </g>
 
           {/* 4. Branching Junction Dots */}
@@ -662,7 +714,7 @@ export const HorizontalBranchingWorkflow = () => {
                         <span className="relative flex h-2 w-2">
                           <span
                             className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                            style={{ backgroundColor: node.color }}
+                            style={{ backgroundColor: node.color, animationDuration: '3s' }}
                           />
                           <span
                             className="relative inline-flex rounded-full h-2 w-2"

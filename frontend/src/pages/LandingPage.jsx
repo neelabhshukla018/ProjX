@@ -374,11 +374,62 @@ export const LandingPage = () => {
               </div>
             </div>
 
-            {/* Mock Dashboard Preview Content */}
-            <div className="p-3 sm:p-5 bg-[#FAFAFA]">
-              {activeTab === 'workflow' ? (
-                <HorizontalBranchingWorkflow />
-              ) : activeTab === 'kanban' ? (
+            {/* Mock Dashboard Preview Content with Enhanced Mac Screen Background Effects */}
+            <div className="relative p-3 sm:p-5 bg-[#FAF8F5] overflow-hidden">
+              {/* 1. Ambient Atmospheric Glow (Soft Cyan / Warm Halo behind center screen) */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle 540px at 46% 48%, rgba(0, 229, 255, 0.06), rgba(212, 175, 55, 0.035), transparent 72%)',
+                }}
+              />
+
+              {/* 2. Precision Micro Dot Grid Pattern with Radial Vignette */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-30"
+                style={{
+                  backgroundImage: 'radial-gradient(circle, #2C2C2C 1px, transparent 1px)',
+                  backgroundSize: '24px 24px',
+                  maskImage:
+                    'radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%)',
+                  WebkitMaskImage:
+                    'radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 95%)',
+                }}
+              />
+
+              {/* 3. Technical Blueprint HUD Accent Marks */}
+              <div className="absolute top-2.5 left-4 flex items-center gap-2 font-mono text-[9px] text-[#2C2C2C]/25 tracking-widest pointer-events-none select-none hidden sm:flex">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]/60 animate-pulse" />
+                <span>CANVAS // 1060×340</span>
+              </div>
+              <div className="absolute top-2.5 right-4 font-mono text-[9px] text-[#2C2C2C]/25 tracking-widest pointer-events-none select-none hidden sm:block">
+                <span>RETINA 2X • PIPELINE ACTIVE</span>
+              </div>
+              <div className="absolute bottom-2 left-4 font-mono text-[8px] text-[#2C2C2C]/20 tracking-wider pointer-events-none select-none hidden sm:block">
+                + LAT: 0.12ms // BUFFER: OK
+              </div>
+              <div className="absolute bottom-2 right-4 font-mono text-[8px] text-[#2C2C2C]/20 tracking-wider pointer-events-none select-none hidden sm:block">
+                SYS_VER // 2.4.0
+              </div>
+
+              {/* 4. Luxury Retina Glass Diagonal Sheen Reflection */}
+              <div
+                className="absolute -top-1/2 -right-1/4 w-[120%] h-[200%] pointer-events-none rotate-12 opacity-35"
+                style={{
+                  background:
+                    'linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 38%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 65%)',
+                }}
+              />
+
+              {/* 5. Inset Screen Bevel Shadow for True Physical Display Depth */}
+              <div className="absolute inset-0 pointer-events-none shadow-[inset_0_2px_14px_rgba(0,0,0,0.05)] rounded-b-xl" />
+
+              {/* Screen Tab Contents */}
+              <div className="relative z-10">
+                {activeTab === 'workflow' ? (
+                  <HorizontalBranchingWorkflow />
+                ) : activeTab === 'kanban' ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Col 1 - To Do */}
                   <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5] shadow-xs">
@@ -674,6 +725,7 @@ export const LandingPage = () => {
                   </div>
                 </div>
               )}
+              </div>
             </div>
           </ContainerScroll>
         </div>
