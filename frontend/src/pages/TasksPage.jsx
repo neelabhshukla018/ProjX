@@ -9,11 +9,24 @@ import Button from '../components/common/Button';
 
 export const TasksPage = () => {
   const { tasks, updateTaskStatus, projects, setIsNewTaskModalOpen, user } = useWorkspace();
-  const [viewMode, setViewMode] = useState('kanban');
+  const [viewMode, setViewMode] = useState(() => {
+    try {
+      return localStorage.getItem('projx_task_view_mode') || 'list';
+    } catch {
+      return 'list';
+    }
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('all');
   const [selectedProject, setSelectedProject] = useState('all');
   const [selectedTaskForDetail, setSelectedTaskForDetail] = useState(null);
+
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode);
+    try {
+      localStorage.setItem('projx_task_view_mode', mode);
+    } catch {}
+  };
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
@@ -67,7 +80,7 @@ export const TasksPage = () => {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         viewMode={viewMode}
-        onViewModeChange={setViewMode}
+        onViewModeChange={handleViewModeChange}
         selectedPriority={selectedPriority}
         onPriorityChange={setSelectedPriority}
         selectedProject={selectedProject}
