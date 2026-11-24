@@ -1078,8 +1078,8 @@ export const LandingPage = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/app/settings" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
-                    Workspace Config
+                  <Link to="/app/profile" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Account Profile
                   </Link>
                 </li>
               </ul>

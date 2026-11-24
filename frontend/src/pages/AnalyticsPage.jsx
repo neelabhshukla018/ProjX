@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -12,8 +12,8 @@ import {
 } from 'recharts';
 import Card from '../components/common/Card';
 import StatCard from '../components/dashboard/StatCard';
-import { Zap, Clock, CheckCircle2, TrendingUp } from 'lucide-react';
-import { monthlyVelocityTrend, teamWorkloadData } from '../utils/mockData';
+import { Zap, Clock, CheckCircle2, TrendingUp, FolderKanban } from 'lucide-react';
+import { useWorkspace } from '../hooks/useWorkspace';
 
 const CustomAnalyticsTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -32,6 +32,41 @@ const CustomAnalyticsTooltip = ({ active, payload, label }) => {
 };
 
 export const AnalyticsPage = () => {
+  const { projects, tasks, stats } = useWorkspace();
+
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((t) => t.status === 'Completed' || t.status === 'done').length;
+  const inProgressTasks = tasks.filter((t) => t.status === 'In Progress' || t.status === 'in_progress').length;
+  const inReviewTasks = tasks.filter((t) => t.status === 'In Review').length;
+  const todoTasks = tasks.filter((t) => t.status === 'To Do' || t.status === 'todo').length;
+
+  const velocityPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  // Task Status Distribution for BarChart
+  const taskStatusData = [
+    { name: 'To Do', count: todoTasks },
+    { name: 'In Progress', count: inProgressTasks },
+    { name: 'In Review', count: inReviewTasks },
+    { name: 'Completed', count: completedTasks },
+  ];
+
+  // Project Progress Breakdown for Chart
+  const projectProgressData = useMemo(() => {
+    if (projects.length === 0) {
+      return [
+        { name: 'Planning', progress: 0 },
+        { name: 'Recruiting', progress: 0 },
+        { name: 'In Progress', progress: 0 },
+        { name: 'Completed', progress: 100 },
+      ];
+    }
+    return projects.slice(0, 6).map((p) => ({
+      name: p.name.length > 14 ? `${p.name.slice(0, 14)}...` : p.name,
+      progress: p.progress || 0,
+      tasks: (p.members || []).length,
+    }));
+  }, [projects]);
+
   return (
     <div className="space-y-6">
       <div>
@@ -39,106 +74,94 @@ export const AnalyticsPage = () => {
           Engineering & Product Analytics
         </h1>
         <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
-          Deep telemetry into team velocity, cycle times, throughput, and capacity distribution.
+          Real-time metrics computed directly from your active database projects and sprint tasks.
         </p>
       </div>
 
       {/* KPI Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Sprint Velocity"
-          value={96}
-          suffix=" pts"
-          trend="+8.2%"
-          isPositive={true}
-          subtitle="vs previous cycle"
+          title="Overall Velocity"
+          value={velocityPercent}
+          suffix="%"
+          trend="Sprint completion"
+          isPositive={velocityPercent >= 50}
+          subtitle="across all tasks"
           icon={TrendingUp}
           iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
-          title="Average Cycle Time"
-          value={2.7}
-          suffix=" days"
-          trend="-0.4d"
+          title="Total Initiatives"
+          value={projects.length}
+          suffix=" projects"
+          trend="Active portfolio"
           isPositive={true}
-          subtitle="lead-time to shipping"
-          icon={Clock}
+          subtitle="managed & joined"
+          icon={FolderKanban}
           iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
         <StatCard
-          title="On-Time Delivery"
-          value={94.2}
-          suffix="%"
-          trend="+3.1%"
+          title="Completed Tasks"
+          value={completedTasks}
+          suffix={`/${totalTasks}`}
+          trend="Finished deliverables"
           isPositive={true}
           subtitle="milestone adherence"
           icon={CheckCircle2}
           iconColor="bg-[#2C2C2C] text-[#FFFFFF] border-[#3F3F3F]"
         />
         <StatCard
-          title="Active Capacity"
-          value={88}
-          suffix="%"
-          trend="balanced"
-          isPositive={true}
-          subtitle="across 4 teams"
-          icon={Zap}
+          title="Tasks In Action"
+          value={inProgressTasks + inReviewTasks}
+          suffix=" active"
+          trend="In execution"
+          isPositive={false}
+          subtitle="in progress or review"
+          icon={Clock}
           iconColor="bg-[#0F0F0F] text-[#FFFFFF] border-[#2C2C2C]"
         />
       </div>
 
-      {/* Monthly Velocity Trend Chart */}
-      <Card
-        title="Monthly Sprint Velocity (Points Shipped)"
-        subtitle="Tracking aggregate story points and tasks closed from June to November 2026"
-        headerBorder
-      >
-        <div className="w-full h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={monthlyVelocityTrend} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="velocityGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0F0F0F" stopOpacity={0.25} />
-                  <stop offset="95%" stopColor="#0F0F0F" stopOpacity={0.0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />
-              <XAxis dataKey="month" stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
-              <Tooltip content={<CustomAnalyticsTooltip />} />
-              <Area
-                type="monotone"
-                dataKey="velocity"
-                stroke="#0F0F0F"
-                strokeWidth={2}
-                fill="url(#velocityGrad)"
-                name="Velocity Points"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </Card>
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Project Completion Progress */}
+        <Card
+          title="Project Milestone Progress"
+          subtitle="Completion percentages derived dynamically from associated tasks"
+          headerBorder
+        >
+          <div className="w-full h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={projectProgressData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#5A5A5A' }} stroke="#D8D8D8" />
+                <YAxis tick={{ fontSize: 11, fill: '#5A5A5A' }} stroke="#D8D8D8" domain={[0, 100]} />
+                <Tooltip content={<CustomAnalyticsTooltip />} />
+                <Bar dataKey="progress" fill="#0F0F0F" radius={[4, 4, 0, 0]} name="Progress (%)" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
 
-      {/* Team Workload Distribution */}
-      <Card
-        title="Team Workload & Capacity Allocation"
-        subtitle="Current task distribution across senior team members"
-        headerBorder
-      >
-        <div className="w-full h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={teamWorkloadData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />
-              <XAxis dataKey="name" stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="#5A5A5A" fontSize={11} tickLine={false} axisLine={false} />
-              <Tooltip content={<CustomAnalyticsTooltip />} />
-              <Bar dataKey="completed" fill="#0F0F0F" radius={[3, 3, 0, 0]} name="Completed Tasks" />
-              <Bar dataKey="inProgress" fill="#5A5A5A" radius={[3, 3, 0, 0]} name="In Progress" />
-              <Bar dataKey="assigned" fill="#B0B0B0" radius={[3, 3, 0, 0]} name="Total Assigned" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </Card>
+        {/* Task Status Distribution */}
+        <Card
+          title="Task Status Pipeline Breakdown"
+          subtitle="Real-time distribution of deliverables across execution stages"
+          headerBorder
+        >
+          <div className="w-full h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={taskStatusData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#5A5A5A' }} stroke="#D8D8D8" />
+                <YAxis tick={{ fontSize: 11, fill: '#5A5A5A' }} stroke="#D8D8D8" allowDecimals={false} />
+                <Tooltip content={<CustomAnalyticsTooltip />} />
+                <Bar dataKey="count" fill="#2C2C2C" radius={[4, 4, 0, 0]} name="Tasks Count" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

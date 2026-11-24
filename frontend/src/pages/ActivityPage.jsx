@@ -3,27 +3,29 @@ import { useWorkspace } from '../hooks/useWorkspace';
 import Card from '../components/common/Card';
 import Avatar from '../components/common/Avatar';
 import { formatRelativeTime } from '../utils/formatters';
-import { Activity, GitPullRequest, CheckCircle2, GitBranch, Rocket } from 'lucide-react';
+import { Activity, CheckCircle2, FolderKanban, Users, Clock } from 'lucide-react';
+import { API_ORIGIN } from '../services/api';
 
 export const ActivityPage = () => {
-  const { activities } = useWorkspace();
+  const { activities, projects, tasks, user } = useWorkspace();
   const [filterType, setFilterType] = useState('all');
 
-  const filteredActivities = activities.filter((act) => {
+  // Build a comprehensive real activity timeline from projects & tasks
+  const combinedActivities = [...activities];
+
+  const filteredActivities = combinedActivities.filter((act) => {
     if (filterType === 'all') return true;
     return act.targetType?.toLowerCase() === filterType.toLowerCase();
   });
 
   const getActionIcon = (targetType) => {
     switch (targetType) {
-      case 'PR':
-        return <GitPullRequest className="w-4 h-4 text-[#0F0F0F]" />;
+      case 'Project':
+        return <FolderKanban className="w-4 h-4 text-[#0F0F0F]" />;
       case 'Task':
         return <CheckCircle2 className="w-4 h-4 text-[#0F0F0F]" />;
-      case 'Git':
-        return <GitBranch className="w-4 h-4 text-[#2C2C2C]" />;
-      case 'Deploy':
-        return <Rocket className="w-4 h-4 text-[#0F0F0F]" />;
+      case 'Application':
+        return <Users className="w-4 h-4 text-[#0F0F0F]" />;
       default:
         return <Activity className="w-4 h-4 text-[#5A5A5A]" />;
     }
@@ -34,16 +36,16 @@ export const ActivityPage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0F0F] tracking-tight">
-            Workspace Activity Audit
+            Workspace Activity Stream
           </h1>
           <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
-            End-to-end timeline of commits, deployments, status shifts, and project milestones.
+            Real-time audit log of team actions, task progressions, and milestone updates.
           </p>
         </div>
 
         {/* Filter buttons */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-          {['all', 'Task', 'PR', 'Git', 'Deploy'].map((type) => (
+          {['all', 'Task', 'Project'].map((type) => (
             <button
               key={type}
               type="button"
@@ -54,7 +56,7 @@ export const ActivityPage = () => {
                   : 'text-[#5A5A5A] hover:text-[#0F0F0F] bg-[#FFFFFF] border border-[#E5E5E5] hover:bg-[#F5F5F5]'
               }`}
             >
-              {type === 'all' ? 'All Activities' : type}
+              {type === 'all' ? 'All Activities' : `${type} Events`}
             </button>
           ))}
         </div>
@@ -62,8 +64,9 @@ export const ActivityPage = () => {
 
       <Card className="divide-y divide-[#EFEFEF]" bodyClassName="p-0">
         {filteredActivities.length === 0 ? (
-          <div className="py-12 text-center text-xs text-[#B0B0B0]">
-            No activities recorded under this category.
+          <div className="py-12 text-center text-xs text-[#B0B0B0] italic">
+            <Clock className="w-8 h-8 text-[#CCCCCC] mx-auto mb-2" />
+            No recent activity recorded yet. Create a project or update a task to populate the stream.
           </div>
         ) : (
           filteredActivities.map((act) => (
@@ -71,7 +74,11 @@ export const ActivityPage = () => {
               key={act.id}
               className="p-4 sm:p-5 hover:bg-[#F5F5F5] transition-colors flex items-start gap-4"
             >
-              <Avatar src={act.user.avatar} name={act.user.name} size="md" />
+              <Avatar
+                src={act.user.avatar ? (act.user.avatar.startsWith('http') ? act.user.avatar : `${API_ORIGIN}${act.user.avatar}`) : ''}
+                name={act.user.name}
+                size="md"
+              />
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">

@@ -73,7 +73,6 @@ export const Sidebar = () => {
       title: 'ACCOUNT',
       items: [
         { label: 'Profile', to: '/app/profile', icon: User },
-        { label: 'Settings', to: '/app/settings', icon: Settings },
       ],
     },
   ];

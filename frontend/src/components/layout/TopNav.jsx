@@ -15,7 +15,6 @@ import {
   Calendar,
   BarChart3,
   Activity,
-  Settings,
   ChevronDown,
   Layers,
 } from 'lucide-react';
@@ -28,25 +27,19 @@ export const TopNav = () => {
   const {
     isMobileNavOpen,
     setIsMobileNavOpen,
-    setIsGlobalSearchOpen,
     setIsNewProjectModalOpen,
     setIsNewTaskModalOpen,
     setIsInviteModalOpen,
-    workspaces,
-    activeWorkspace,
-    setActiveWorkspace,
   } = useWorkspace();
 
   const location = useLocation();
 
   // Dropdown states
   const [showMoreMenu, setShowMoreMenu] = useState(false);
-  const [showWorkspaceMenu, setShowWorkspaceMenu] = useState(false);
   const [showQuickMenu, setShowQuickMenu] = useState(false);
 
   // Click outside refs
   const moreMenuRef = useRef(null);
-  const workspaceMenuRef = useRef(null);
   const quickMenuRef = useRef(null);
 
   // Close dropdowns on outside click
@@ -54,9 +47,6 @@ export const TopNav = () => {
     const handleClickOutside = (e) => {
       if (moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
         setShowMoreMenu(false);
-      }
-      if (workspaceMenuRef.current && !workspaceMenuRef.current.contains(e.target)) {
-        setShowWorkspaceMenu(false);
       }
       if (quickMenuRef.current && !quickMenuRef.current.contains(e.target)) {
         setShowQuickMenu(false);
@@ -87,12 +77,6 @@ export const TopNav = () => {
       items: [
         { label: 'Analytics', to: '/app/analytics', icon: BarChart3, desc: 'Sprint velocity & cycle throughput' },
         { label: 'Activity', to: '/app/activity', icon: Activity, desc: 'Workspace audit log feed' },
-      ],
-    },
-    {
-      group: 'WORKSPACE',
-      items: [
-        { label: 'Settings', to: '/app/settings', icon: Settings, desc: 'Configuration & API endpoints' },
       ],
     },
   ];
@@ -136,55 +120,6 @@ export const TopNav = () => {
                 Proj<span className="font-bold" style={{ fontFamily: '"Inter", "Segoe UI Symbol", "Apple Symbols", sans-serif' }}>𝕏</span>
               </span>
             </Link>
-
-            <div className="h-5 w-px bg-[#E5E5E5] hidden md:block" />
-
-            {/* Workspace Selector Dropdown List */}
-            <div className="relative hidden sm:block" ref={workspaceMenuRef}>
-              <button
-                type="button"
-                onClick={() => setShowWorkspaceMenu(!showWorkspaceMenu)}
-                className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] border border-transparent hover:border-[#E5E5E5] transition-colors"
-                title="Switch Workspace"
-              >
-                <span className="w-5 h-5 rounded bg-[#0F0F0F] text-white flex items-center justify-center text-[10px] font-bold">
-                  {activeWorkspace?.name?.[0] || 'W'}
-                </span>
-                <span className="truncate max-w-[120px]">{activeWorkspace?.name}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#5A5A5A]" />
-              </button>
-
-              {showWorkspaceMenu && (
-                <div className="absolute top-full left-0 mt-1.5 w-60 bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl shadow-dropdown py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100">
-                  <div className="px-3 py-1 text-[10px] font-semibold text-[#5A5A5A] uppercase tracking-wider">
-                    Workspaces
-                  </div>
-                  {workspaces.map((ws) => (
-                    <button
-                      key={ws.id}
-                      type="button"
-                      onClick={() => {
-                        setActiveWorkspace(ws);
-                        setShowWorkspaceMenu(false);
-                      }}
-                      className={`w-full px-3 py-2 text-left text-xs flex items-center justify-between transition-colors ${
-                        ws.id === activeWorkspace.id
-                          ? 'bg-[#F5F5F5] text-[#0F0F0F] font-semibold'
-                          : 'text-[#5A5A5A] hover:bg-[#F9F9F9] hover:text-[#0F0F0F]'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2 truncate">
-                        <span className="w-4 h-4 rounded bg-[#2C2C2C] text-white flex items-center justify-center text-[9px] font-bold">
-                          {ws.name[0]}
-                        </span>
-                        <span className="truncate">{ws.name}</span>
-                      </div>
-                      <span className="text-[10px] text-[#5A5A5A] shrink-0">{ws.role}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Center: Clean, Restrained Desktop Navigation */}
@@ -270,22 +205,8 @@ export const TopNav = () => {
             </div>
           </nav>
 
-          {/* Right: Search, + New, Notifications, User */}
+          {/* Right: + New, Notifications, User */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-            {/* Minimal Search Button */}
-            <button
-              type="button"
-              onClick={() => setIsGlobalSearchOpen(true)}
-              className="h-8.5 px-2.5 rounded-lg bg-[#F5F5F5] hover:bg-[#EAEAEA] border border-[#D8D8D8] text-[#5A5A5A] hover:text-[#0F0F0F] flex items-center gap-2 text-xs transition-colors shadow-subtle group"
-              title="Search workspace (Cmd+K)"
-            >
-              <Search className="w-3.5 h-3.5 text-[#5A5A5A] group-hover:text-[#0F0F0F]" />
-              <span className="hidden xl:inline text-xs">Search...</span>
-              <kbd className="hidden sm:inline-block px-1 py-0.2 text-[10px] bg-[#FFFFFF] border border-[#D8D8D8] rounded font-mono text-[#5A5A5A]">
-                ⌘K
-              </kbd>
-            </button>
-
             {/* Quick Action "+ New" Dropdown List */}
             <div className="relative" ref={quickMenuRef}>
               <Button
@@ -367,33 +288,6 @@ export const TopNav = () => {
               >
                 <X className="w-5 h-5" />
               </button>
-            </div>
-
-            {/* Mobile Workspace Selector */}
-            <div className="p-3 border-b border-[#E5E5E5] bg-[#F9F9F9]">
-              <div className="text-[10px] font-semibold text-[#5A5A5A] uppercase tracking-wider mb-1.5 px-1">
-                Workspace
-              </div>
-              <div className="space-y-1">
-                {workspaces.map((ws) => (
-                  <button
-                    key={ws.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveWorkspace(ws);
-                      setShowWorkspaceMenu(false);
-                    }}
-                    className={`w-full px-2.5 py-1.5 text-left text-xs rounded-lg flex items-center justify-between transition-colors ${
-                      ws.id === activeWorkspace.id
-                        ? 'bg-[#0F0F0F] text-[#FFFFFF] font-semibold'
-                        : 'text-[#2C2C2C] hover:bg-[#EAEAEA]'
-                    }`}
-                  >
-                    <span className="truncate">{ws.name}</span>
-                    <span className="text-[10px] opacity-80">{ws.role}</span>
-                  </button>
-                ))}
-              </div>
             </div>
 
             {/* Mobile Nav Links */}

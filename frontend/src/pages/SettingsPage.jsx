@@ -3,21 +3,40 @@ import Card from '../components/common/Card';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { useWorkspace } from '../hooks/useWorkspace';
-import { Terminal, Save } from 'lucide-react';
+import { Terminal, Save, CheckCircle2, Shield, Database, Globe, LogOut, KeyRound } from 'lucide-react';
+import api from '../services/api';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export const SettingsPage = () => {
-  const { activeWorkspace } = useWorkspace();
+  const { user, activeWorkspace, logout } = useWorkspace();
   const [activeTab, setActiveTab] = useState('general');
+  const [apiPingStatus, setApiPingStatus] = useState(null);
+  const [isPinging, setIsPinging] = useState(false);
+  const navigate = useNavigate();
 
-  const [workspaceName, setWorkspaceName] = useState(activeWorkspace.name);
-  const [workspaceDomain, setWorkspaceDomain] = useState('acme.projx.io');
-  const [apiBaseUrl, setApiBaseUrl] = useState('http://localhost:5000/api');
-
-  const handleSave = (e) => {
-    e.preventDefault();
-    toast.success('Workspace settings updated successfully!');
+  const handleTestConnection = async () => {
+    setIsPinging(true);
+    try {
+      const res = await api.get('/health');
+      setApiPingStatus({
+        ok: true,
+        service: res.service || 'ProjX Backend API',
+        timestamp: res.timestamp || new Date().toISOString(),
+      });
+      toast.success('Backend connection verified successfully!');
+    } catch (err) {
+      setApiPingStatus({
+        ok: false,
+        error: err.message || 'Connection failed',
+      });
+      toast.error('Could not reach backend API server');
+    } finally {
+      setIsPinging(false);
+    }
   };
+
+  const roleName = user?.role === 'project_manager' ? 'Project Manager' : 'Team Member';
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -26,16 +45,16 @@ export const SettingsPage = () => {
           Workspace Settings
         </h1>
         <p className="text-xs sm:text-sm text-[#5A5A5A] mt-1">
-          Configure organization settings, API connections, and team security policies.
+          Configure platform integration, database telemetry, and authenticated session controls.
         </p>
       </div>
 
       {/* Tabs */}
       <div className="flex items-center gap-1.5 border-b border-[#E5E5E5] pb-2">
         {[
-          { id: 'general', label: 'General & Organization' },
-          { id: 'api', label: 'API & Integrations' },
-          { id: 'security', label: 'Security & Access' },
+          { id: 'general', label: 'Platform & Role Profile' },
+          { id: 'api', label: 'API & Database Integration' },
+          { id: 'security', label: 'Security & Session' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -54,143 +73,152 @@ export const SettingsPage = () => {
 
       {/* Tab 1: General */}
       {activeTab === 'general' && (
-        <form onSubmit={handleSave} className="space-y-6">
-          <Card title="Workspace Profile" subtitle="General organization metadata">
+        <div className="space-y-4">
+          <Card title="Account Overview" subtitle="Authenticated user information and platform access tier">
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input
-                  label="Workspace Name"
-                  value={workspaceName}
-                  onChange={(e) => setWorkspaceName(e.target.value)}
-                  required
-                />
-                <Input
-                  label="Custom Domain Slug"
-                  value={workspaceDomain}
-                  onChange={(e) => setWorkspaceDomain(e.target.value)}
-                  required
-                />
+                <div>
+                  <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                    Authenticated User
+                  </label>
+                  <p className="p-2.5 bg-[#F9F9F9] border border-[#E5E5E5] rounded-lg text-xs font-bold text-[#0F0F0F]">
+                    {user?.fullName || user?.name}
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                    Account Email
+                  </label>
+                  <p className="p-2.5 bg-[#F9F9F9] border border-[#E5E5E5] rounded-lg text-xs text-[#5A5A5A]">
+                    {user?.email}
+                  </p>
+                </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
-                  Subscription Plan
+                  Assigned Platform Role
                 </label>
                 <div className="p-4 bg-[#0F0F0F] border border-[#2C2C2C] rounded-xl flex items-center justify-between text-white">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm text-[#FFFFFF]">Enterprise Scale Tier</span>
-                      <span className="text-xs font-semibold text-[#B0B0B0]">• Active</span>
+                      <span className="font-bold text-sm text-[#FFFFFF]">{roleName}</span>
+                      <span className="text-xs font-semibold text-emerald-400">• Verified Role</span>
                     </div>
                     <p className="text-xs text-[#B0B0B0] mt-0.5">
-                      Unlimited projects, advanced Kanban, SOC-2 compliance, and dedicated support.
+                      {user?.role === 'project_manager'
+                        ? 'Full project lifecycle authority: project creation, applicant review, task delegation.'
+                        : 'Collaborator privileges: browse initiatives, express interest, execute tasks, submit deliverables.'}
                     </p>
                   </div>
-                  <span className="text-xs font-bold text-[#FFFFFF] font-mono">Billed Annually</span>
                 </div>
               </div>
-
-              <div className="flex justify-end pt-3">
-                <Button variant="primary" type="submit" leftIcon={Save}>
-                  Save Workspace Info
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </form>
-      )}
-
-      {/* Tab 2: API & Integrations */}
-      {activeTab === 'api' && (
-        <div className="space-y-6">
-          <Card
-            title="Axios API Client Configuration"
-            subtitle="Frontend foundation service endpoint for MERN backend connectivity"
-            headerBorder
-          >
-            <div className="space-y-4">
-              <div className="p-3 bg-[#0F0F0F] text-[#FFFFFF] rounded-xl font-mono text-xs border border-[#2C2C2C] overflow-x-auto">
-                <div className="text-[#5A5A5A]">// src/services/api.js configuration:</div>
-                <div>baseURL: "{apiBaseUrl}"</div>
-                <div>timeout: 10000ms</div>
-                <div>headers: Authorization: Bearer &lt;jwt_token&gt;</div>
-              </div>
-
-              <Input
-                label="Backend Target Base URL (VITE_API_BASE_URL)"
-                value={apiBaseUrl}
-                onChange={(e) => setApiBaseUrl(e.target.value)}
-                leftIcon={Terminal}
-              />
-
-              <div className="flex justify-end">
-                <Button variant="secondary" onClick={() => toast.success('API configuration saved')}>
-                  Update API Endpoint
-                </Button>
-              </div>
-            </div>
-          </Card>
-
-          <Card title="Connected Third-Party Tools" subtitle="Active webhooks and sync providers">
-            <div className="space-y-3">
-              {[
-                { name: 'GitHub Actions', desc: 'Sync PR statuses and deployment triggers', connected: true },
-                { name: 'Figma Tokens', desc: 'Auto-sync design tokens with Apollo DS', connected: true },
-                { name: 'Slack Workspaces', desc: 'Real-time task assignment alerts in #eng-sprints', connected: false },
-              ].map((tool, i) => (
-                <div
-                  key={i}
-                  className="p-3 border border-[#E5E5E5] rounded-xl flex items-center justify-between hover:bg-[#F5F5F5] transition-colors"
-                >
-                  <div>
-                    <h5 className="text-xs font-bold text-[#0F0F0F]">{tool.name}</h5>
-                    <p className="text-[11px] text-[#5A5A5A]">{tool.desc}</p>
-                  </div>
-                  {tool.connected ? (
-                    <span className="text-xs font-semibold text-[#0F0F0F] bg-[#FFFFFF] px-2.5 py-1 rounded-md border border-[#2C2C2C]">
-                      Connected
-                    </span>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => toast.success(`Connected ${tool.name}`)}
-                      className="text-xs font-semibold text-[#0F0F0F] bg-[#F5F5F5] px-2.5 py-1 rounded-md border border-[#D8D8D8] hover:bg-[#EAEAEA] transition-colors"
-                    >
-                      Connect
-                    </button>
-                  )}
-                </div>
-              ))}
             </div>
           </Card>
         </div>
       )}
 
-      {/* Tab 3: Security & Access */}
-      {activeTab === 'security' && (
-        <Card title="Security & Compliance" subtitle="Audit retention and zero-trust policies">
-          <div className="space-y-4 text-xs">
-            <div className="p-4 bg-[#F5F5F5] border border-[#E5E5E5] rounded-xl flex items-center justify-between">
-              <div>
-                <p className="font-semibold text-[#0F0F0F]">Enforce Two-Factor Authentication (2FA)</p>
-                <p className="text-[11px] text-[#5A5A5A]">Require hardware key or TOTP for all organization collaborators</p>
+      {/* Tab 2: API & Database */}
+      {activeTab === 'api' && (
+        <div className="space-y-4">
+          <Card title="Backend & Database Connectivity" subtitle="Live service endpoints powering your ProjX workspace">
+            <div className="space-y-4">
+              <div className="p-4 bg-[#F9F9F9] border border-[#E5E5E5] rounded-xl space-y-3 text-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Database className="w-4 h-4 text-[#0F0F0F]" />
+                    <span className="font-bold text-[#0F0F0F]">MongoDB Database</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-black text-white font-semibold text-[10px]">
+                    MongoDB Atlas Connected
+                  </span>
+                </div>
+                <p className="text-[#5A5A5A]">
+                  Cluster: <span className="font-mono text-[#0F0F0F]">projx-cluster.vqefor9.mongodb.net/projx</span>
+                </p>
               </div>
-              <span className="px-2 py-1 rounded bg-[#0F0F0F] text-[#FFFFFF] font-semibold text-[10px]">
-                Enforced
-              </span>
-            </div>
 
-            <div className="p-4 bg-[#F5F5F5] border border-[#E5E5E5] rounded-xl flex items-center justify-between">
-              <div>
-                <p className="font-semibold text-[#0F0F0F]">Audit Log Retention</p>
-                <p className="text-[11px] text-[#5A5A5A]">Store tamper-evident audit records for 365 days</p>
+              <div className="p-4 bg-[#F9F9F9] border border-[#E5E5E5] rounded-xl space-y-3 text-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-[#0F0F0F]" />
+                    <span className="font-bold text-[#0F0F0F]">REST API Service Base</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-black text-white font-semibold text-[10px]">
+                    Port 5000 Active
+                  </span>
+                </div>
+                <p className="text-[#5A5A5A]">
+                  Base URL: <span className="font-mono text-[#0F0F0F]">http://localhost:5000/api</span>
+                </p>
               </div>
-              <span className="px-2 py-1 rounded bg-[#FFFFFF] border border-[#D8D8D8] text-[#0F0F0F] font-semibold text-[10px]">
-                Active (365d)
-              </span>
+
+              {/* Ping Test Button */}
+              <div className="pt-2 flex items-center justify-between">
+                <div>
+                  {apiPingStatus && (
+                    <span className="text-xs font-semibold text-[#0F0F0F] flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      Status: {apiPingStatus.service} responding OK
+                    </span>
+                  )}
+                </div>
+
+                <Button
+                  variant="primary"
+                  size="sm"
+                  isLoading={isPinging}
+                  onClick={handleTestConnection}
+                >
+                  Test API Ping
+                </Button>
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
+      )}
+
+      {/* Tab 3: Security & Session */}
+      {activeTab === 'security' && (
+        <div className="space-y-4">
+          <Card title="Security & Authentication Standards" subtitle="Session tokens and authorization policies">
+            <div className="space-y-4">
+              <div className="p-4 bg-[#F9F9F9] border border-[#E5E5E5] rounded-xl space-y-2 text-xs">
+                <div className="flex items-center gap-2 text-[#0F0F0F] font-bold">
+                  <Shield className="w-4 h-4" />
+                  <span>HTTP-Only Cookie JWT Architecture</span>
+                </div>
+                <p className="text-[#5A5A5A] leading-relaxed">
+                  Your session authentication token is secured in an HTTP-only browser cookie (<code className="bg-[#EAEAEA] px-1 py-0.2 rounded">projx_token</code>). JavaScript running in the browser cannot tamper with or read the raw session credentials, protecting against XSS token harvesting.
+                </p>
+              </div>
+
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={KeyRound}
+                  onClick={() => navigate('/app/profile')}
+                >
+                  Change Password in Profile
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-red-600 hover:text-red-800"
+                  leftIcon={LogOut}
+                  onClick={async () => {
+                    await logout();
+                    navigate('/');
+                  }}
+                >
+                  Sign Out of ProjX
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );

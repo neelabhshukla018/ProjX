@@ -37,7 +37,7 @@ export const AppRoutes = () => {
         <Route path="analytics" element={<AnalyticsPage />} />
         <Route path="activity" element={<ActivityPage />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="settings" element={<SettingsPage />} />
+        <Route path="settings" element={<Navigate to="/app/profile" replace />} />
       </Route>
 
       {/* Fallback & 404 */}
