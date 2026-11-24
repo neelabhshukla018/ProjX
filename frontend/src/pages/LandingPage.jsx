@@ -18,6 +18,7 @@ import SquigglyText from '../components/common/SquigglyText';
 import ContainerScroll from '../components/common/ContainerScroll';
 import GradientBars from '../components/common/GradientBars';
 import ImageTrail from '../components/common/ImageTrail';
+import TechnologiesSection from '../components/common/TechnologiesSection';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -182,7 +183,12 @@ export const LandingPage = () => {
             >
               Product Tour
             </a>
-         
+            <a
+              href="#technologies"
+              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
+            >
+              Technologies
+            </a>
             <a
               href="#features"
               className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
@@ -660,6 +666,9 @@ export const LandingPage = () => {
         </div>
       </section>
 
+      {/* Technologies We Used Section - Vengeance UI Stacked Logos Running Belt */}
+      <TechnologiesSection />
+
       {/* Interactive Atelier Canvas / Image Trail Section (Desktop Only) */}
       <section id="atelier" className="hidden md:block py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-10">
@@ -924,6 +933,11 @@ export const LandingPage = () => {
                 Explore
               </p>
               <ul className="space-y-2 font-medium">
+                <li>
+                  <a href="#technologies" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
+                    Technologies We Used
+                  </a>
+                </li>
                 <li>
                   <a href="#atelier" className="hover:text-[#0F0F0F] transition-colors block py-0.5">
                     Workflow Canvas (Desktop)
