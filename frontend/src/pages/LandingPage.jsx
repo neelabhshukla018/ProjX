@@ -232,29 +232,29 @@ export const LandingPage = () => {
         {/* Animated Gradient Bars Background (inspired by @waleedkibhen on 21st.dev) */}
         <GradientBars
           numBars={15}
-          gradientFrom="rgba(255, 60, 0, 0.12)"
-          gradientTo="rgba(255, 60, 0, 0.045)"
+          gradientFrom="rgba(255, 60, 0, 0.18)"
+          gradientTo="rgba(255, 60, 0, 0.075)"
           animationDuration={2.6}
-          minHeight={28}
+          minHeight={32}
           maxHeight={100}
-          barBorderColor="rgba(255, 60, 0, 0.025)"
+          barBorderColor="rgba(255, 60, 0, 0.045)"
         />
 
         {/* Top-left flank glow (soft faded reach on the left side) */}
         <div
-          className="absolute top-0 left-0 w-80 sm:w-96 h-64 bg-gradient-to-br from-[rgba(255,60,0,0.045)] via-[rgba(255,60,0,0.01)] to-transparent pointer-events-none z-0"
+          className="absolute top-0 left-0 w-80 sm:w-96 h-72 bg-gradient-to-br from-[rgba(255,60,0,0.085)] via-[rgba(255,60,0,0.03)] to-transparent pointer-events-none z-0"
           aria-hidden="true"
         />
 
         {/* Top-right flank glow (soft faded reach on the right side) */}
         <div
-          className="absolute top-0 right-0 w-80 sm:w-96 h-64 bg-gradient-to-bl from-[rgba(255,60,0,0.045)] via-[rgba(255,60,0,0.01)] to-transparent pointer-events-none z-0"
+          className="absolute top-0 right-0 w-80 sm:w-96 h-72 bg-gradient-to-bl from-[rgba(255,60,0,0.085)] via-[rgba(255,60,0,0.03)] to-transparent pointer-events-none z-0"
           aria-hidden="true"
         />
 
         {/* Ambient bottom underglow connecting the bars with the dashboard preview */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-[rgba(255,60,0,0.05)] via-[rgba(255,60,0,0.015)] to-transparent pointer-events-none z-0"
+          className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[rgba(255,60,0,0.08)] via-[rgba(255,60,0,0.025)] to-transparent pointer-events-none z-0"
           aria-hidden="true"
         />
 

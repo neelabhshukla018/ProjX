@@ -10,12 +10,12 @@ import React from 'react';
  */
 export const GradientBars = ({
   numBars = 15,
-  gradientFrom = 'rgba(255, 60, 0, 0.12)',
-  gradientTo = 'rgba(255, 60, 0, 0.045)',
+  gradientFrom = 'rgba(255, 60, 0, 0.18)',
+  gradientTo = 'rgba(255, 60, 0, 0.075)',
   animationDuration = 2.6,
-  minHeight = 28,
+  minHeight = 32,
   maxHeight = 100,
-  barBorderColor = 'rgba(255, 60, 0, 0.025)',
+  barBorderColor = 'rgba(255, 60, 0, 0.045)',
   className = '',
 }) => {
   // Calculates height percentage to produce the steep V-shape:
@@ -73,7 +73,7 @@ export const GradientBars = ({
                   flex: `1 0 calc(100% / ${numBars})`,
                   maxWidth: `calc(100% / ${numBars})`,
                   height: '100%',
-                  background: `linear-gradient(to top, ${gradientFrom} 0%, rgba(255, 60, 0, ${(0.065 * curve).toFixed(3)}) 55%, ${barGradientTo} 100%)`,
+                  background: `linear-gradient(to top, ${gradientFrom} 0%, rgba(255, 60, 0, ${(0.095 * curve).toFixed(3)}) 55%, ${barGradientTo} 100%)`,
                   transform: `scaleY(${scale})`,
                   transformOrigin: 'bottom',
                   transition: 'transform 0.5s ease-in-out',
