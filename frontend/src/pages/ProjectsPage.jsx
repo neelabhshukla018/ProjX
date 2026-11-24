@@ -1,16 +1,24 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Search, FolderPlus, Compass, Layers } from 'lucide-react';
 import { useWorkspace } from '../hooks/useWorkspace';
 import ProjectCard from '../components/projects/ProjectCard';
-import ProjectDetailModal from '../components/projects/ProjectDetailModal';
 import Button from '../components/common/Button';
 
 export const ProjectsPage = () => {
+  const navigate = useNavigate();
   const { projects, allProjects, user, setIsNewProjectModalOpen } = useWorkspace();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState('all'); // 'all' (explore) or 'my'
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('all');
-  const [selectedProjectForDetail, setSelectedProjectForDetail] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(() => searchParams.get('status') || 'all');
+
+  useEffect(() => {
+    const statusParam = searchParams.get('status');
+    if (statusParam) {
+      setSelectedStatus(statusParam);
+    }
+  }, [searchParams]);
 
   const statuses = [
     { label: 'All Statuses', value: 'all' },
@@ -169,19 +177,10 @@ export const ProjectsPage = () => {
             <ProjectCard
               key={project._id || project.id}
               project={project}
-              onOpenDetail={(p) => setSelectedProjectForDetail(p)}
+              onOpenDetail={(p) => navigate(`/app/projects/${p._id || p.id}`)}
             />
           ))}
         </div>
-      )}
-
-      {/* Project Detail Modal */}
-      {selectedProjectForDetail && (
-        <ProjectDetailModal
-          project={selectedProjectForDetail}
-          isOpen={Boolean(selectedProjectForDetail)}
-          onClose={() => setSelectedProjectForDetail(null)}
-        />
       )}
     </div>
   );

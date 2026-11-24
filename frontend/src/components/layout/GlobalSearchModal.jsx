@@ -90,9 +90,9 @@ export const GlobalSearchModal = () => {
               <div className="space-y-1">
                 {filteredProjects.map((p) => (
                   <button
-                    key={p.id}
+                    key={p._id || p.id}
                     type="button"
-                    onClick={() => handleSelect('/app/projects')}
+                    onClick={() => handleSelect(`/app/projects/${p._id || p.id}`)}
                     className="w-full p-2.5 rounded-lg hover:bg-[#F5F5F5] text-left transition-colors flex items-center justify-between group"
                   >
                     <div className="min-w-0 pr-2">

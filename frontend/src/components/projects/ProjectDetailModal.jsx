@@ -310,14 +310,41 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }) => {
           </form>
         ) : (
           <>
-            {/* Cover Photo if uploaded */}
+        {/* Cover Photo if uploaded (Responsive & Fully Seeable) */}
         {photoUrl && (
-          <div className="w-full h-48 rounded-xl overflow-hidden border border-[#E5E5E5] bg-[#0F0F0F]">
-            <img
-              src={photoUrl}
-              alt={projectData.name}
-              className="w-full h-full object-cover"
+          <div className="w-full rounded-xl border border-[#E5E5E5] bg-[#F7F7F7] shadow-xs overflow-hidden relative group">
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-15 blur-xl scale-110 pointer-events-none"
+              style={{ backgroundImage: `url(${photoUrl})` }}
+              aria-hidden="true"
             />
+            <div className="relative z-10 w-full flex items-center justify-center p-3 min-h-[160px] max-h-[380px]">
+              <a
+                href={photoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="cursor-zoom-in flex items-center justify-center max-w-full"
+                title="Click to view full size photo"
+              >
+                <img
+                  src={photoUrl}
+                  alt={projectData.name}
+                  className="max-w-full max-h-[360px] w-auto h-auto object-contain rounded-lg shadow-xs"
+                />
+              </a>
+              <a
+                href={photoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="absolute bottom-2.5 right-2.5 z-20 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0F0F0F]/85 hover:bg-[#0F0F0F] text-white text-[11px] font-medium backdrop-blur-xs transition-colors"
+                title="Open full resolution photo in new tab"
+              >
+                <ExternalLink className="w-3 h-3" />
+                <span>Full Size</span>
+              </a>
+            </div>
           </div>
         )}
 

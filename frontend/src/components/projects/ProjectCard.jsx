@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock, Users, ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import Card from '../common/Card';
 import ProgressBar from '../common/ProgressBar';
@@ -9,6 +10,7 @@ import { API_ORIGIN } from '../../services/api';
 import { formatDate } from '../../utils/formatters';
 
 export const ProjectCard = ({ project, onOpenDetail }) => {
+  const navigate = useNavigate();
   const { user, applyToProject } = useWorkspace();
   const [isApplying, setIsApplying] = useState(false);
 
@@ -33,6 +35,14 @@ export const ProjectCard = ({ project, onOpenDetail }) => {
     }
   };
 
+  const handleCardClick = () => {
+    if (onOpenDetail) {
+      onOpenDetail(project);
+    } else {
+      navigate(`/app/projects/${project._id || project.id}`);
+    }
+  };
+
   const photoUrl = project.photo
     ? project.photo.startsWith('http')
       ? project.photo
@@ -43,16 +53,21 @@ export const ProjectCard = ({ project, onOpenDetail }) => {
     <Card
       className="group hover:border-[#888888] transition-all duration-200 flex flex-col justify-between cursor-pointer"
       bodyClassName="p-5 flex flex-col h-full justify-between"
-      onClick={() => onOpenDetail && onOpenDetail(project)}
+      onClick={handleCardClick}
     >
       <div>
-        {/* Cover Photo if present */}
+        {/* Cover Photo if present (Uncropped, responsive container) */}
         {photoUrl && (
-          <div className="w-full h-32 rounded-lg overflow-hidden mb-3 border border-[#E5E5E5] bg-[#0F0F0F]">
+          <div className="w-full h-36 sm:h-44 rounded-xl overflow-hidden mb-3 border border-[#E5E5E5] bg-[#F7F7F7] relative flex items-center justify-center p-1.5 group/photo">
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-15 blur-lg scale-110 pointer-events-none"
+              style={{ backgroundImage: `url(${photoUrl})` }}
+              aria-hidden="true"
+            />
             <img
               src={photoUrl}
               alt={project.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="relative z-10 max-w-full max-h-full w-auto h-auto object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         )}

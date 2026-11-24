@@ -3,7 +3,7 @@ import { useWorkspace } from '../../hooks/useWorkspace';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { Upload, FileText, Image as ImageIcon } from 'lucide-react';
+import { Upload, FileText, Image as ImageIcon, X } from 'lucide-react';
 
 export const ProjectModal = () => {
   const { isNewProjectModalOpen, setIsNewProjectModalOpen, addProject, user } = useWorkspace();
@@ -213,20 +213,42 @@ export const ProjectModal = () => {
             <label className="block text-xs font-semibold text-[#0F0F0F] mb-1.5 tracking-tight">
               Project Cover Photo (JPG/PNG/WEBP)
             </label>
-            <div className="relative border border-dashed border-[#D8D8D8] rounded-lg p-3 hover:border-[#0F0F0F] transition-colors">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => setPhotoFile(e.target.files[0] || null)}
-                className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-              />
-              <div className="flex items-center gap-2 text-xs text-[#5A5A5A]">
-                <ImageIcon className="w-4 h-4 text-[#0F0F0F] shrink-0" />
-                <span className="truncate">
-                  {photoFile ? photoFile.name : 'Choose cover image...'}
-                </span>
+            {!photoFile ? (
+              <div className="relative border border-dashed border-[#D8D8D8] rounded-lg p-3 hover:border-[#0F0F0F] transition-colors">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setPhotoFile(e.target.files[0] || null)}
+                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                />
+                <div className="flex items-center gap-2 text-xs text-[#5A5A5A]">
+                  <ImageIcon className="w-4 h-4 text-[#0F0F0F] shrink-0" />
+                  <span className="truncate">Choose cover image...</span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="relative rounded-lg border border-[#E5E5E5] bg-[#F7F7F7] p-2 overflow-hidden flex flex-col items-center">
+                <div className="relative w-full max-h-36 flex items-center justify-center overflow-hidden rounded bg-white border border-[#EBEBEB]">
+                  <img
+                    src={URL.createObjectURL(photoFile)}
+                    alt="Cover preview"
+                    className="max-h-32 max-w-full w-auto h-auto object-contain"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPhotoFile(null)}
+                    className="absolute top-1 right-1 p-1 rounded-full bg-[#0F0F0F]/80 hover:bg-[#0F0F0F] text-white transition-colors"
+                    title="Remove photo"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <div className="w-full flex items-center justify-between text-[11px] text-[#5A5A5A] pt-1.5 px-0.5">
+                  <span className="truncate max-w-[80%] font-medium">{photoFile.name}</span>
+                  <span>{(photoFile.size / 1024).toFixed(0)} KB</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Project PDF Documents */}

@@ -29,13 +29,14 @@ export const RecentProjectsCard = ({ projects = [] }) => {
         </div>
       ) : (
         projects.slice(0, 4).map((project) => (
-          <div
+          <Link
             key={project._id || project.id}
-            className="p-3.5 sm:p-4 hover:bg-[#F5F5F5] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+            to={`/app/projects/${project._id || project.id}`}
+            className="p-3.5 sm:p-4 hover:bg-[#F5F5F5] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 block no-underline group cursor-pointer"
           >
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span className="font-semibold text-xs sm:text-sm text-[#0F0F0F] truncate">
+                <span className="font-semibold text-xs sm:text-sm text-[#0F0F0F] group-hover:underline truncate">
                   {project.name}
                 </span>
                 <span className="text-xs text-[#5A5A5A] font-medium">
@@ -70,7 +71,7 @@ export const RecentProjectsCard = ({ projects = [] }) => {
                 ))}
               </div>
             </div>
-          </div>
+          </Link>
         ))
       )}
     </Card>
