@@ -182,13 +182,7 @@ export const LandingPage = () => {
             >
               Product Tour
             </a>
-            <a
-              href="#atelier"
-              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors flex items-center gap-1.5"
-            >
-              <span>Workflow Canvas</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0093A5] animate-pulse" />
-            </a>
+         
             <a
               href="#features"
               className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
