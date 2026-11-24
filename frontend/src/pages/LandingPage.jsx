@@ -889,17 +889,7 @@ export const LandingPage = () => {
 
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-        <ImageTrail
-          images={PROJX_WORKFLOW_IMAGES}
-          threshold={75}
-          minDelay={50}
-          duration={1000}
-          maxItems={6}
-          rotationRange={28}
-          desktopOnly={true}
-          imageClassName="w-28 sm:w-36 rounded-xl shadow-[0_20px_35px_-10px_rgba(0,0,0,0.6)] ring-1 ring-white/20"
-          className="bg-[#0F0F0F] border border-[#262626] rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden"
-        >
+        <div className="bg-[#0F0F0F] border border-[#262626] rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden">
           {/* Subtle ambient lighting */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-36 bg-gradient-to-b from-[#2A2A2A]/40 to-transparent blur-2xl pointer-events-none" />
 
@@ -939,7 +929,7 @@ export const LandingPage = () => {
               </span>
             </div>
           </div>
-        </ImageTrail>
+        </div>
       </section>
 
       {/* Modern Responsive Footer */}
