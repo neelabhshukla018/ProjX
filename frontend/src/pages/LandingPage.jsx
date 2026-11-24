@@ -19,6 +19,7 @@ import ContainerScroll from '../components/common/ContainerScroll';
 import GradientBars from '../components/common/GradientBars';
 import ImageTrail from '../components/common/ImageTrail';
 import TechnologiesSection from '../components/common/TechnologiesSection';
+import HorizontalBranchingWorkflow from '../components/common/HorizontalBranchingWorkflow';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -68,7 +69,7 @@ const PROJX_WORKFLOW_IMAGES = [
 
 export const LandingPage = () => {
   const heroRef = useRef(null);
-  const [activeTab, setActiveTab] = useState('kanban');
+  const [activeTab, setActiveTab] = useState('workflow');
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -308,7 +309,7 @@ export const LandingPage = () => {
         </div>
 
         {/* Product Preview Mockup with 3D Container Scroll Animation */}
-        <div id="preview" className="hidden md:block relative z-10 max-w-6xl mx-auto mt-10 sm:mt-16">
+        <div id="preview" className="relative z-10 max-w-6xl mx-auto mt-10 sm:mt-16">
           <ContainerScroll maxTilt={20}>
             {/* Mock Window Header */}
             <div className="flex items-center justify-between pb-3 px-3 sm:px-4 pt-3 border-b border-[#EFEFEF] bg-[#FFFFFF]">
@@ -316,26 +317,41 @@ export const LandingPage = () => {
                 <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/50 shadow-xs" />
                 <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/50 shadow-xs" />
                 <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/50 shadow-xs" />
-                <span className="ml-3 text-xs font-semibold text-[#5A5A5A] hidden sm:inline">
-                  app.projx.io/workspace/apollo-design-system
+                <span className="ml-3 text-xs font-semibold text-[#5A5A5A] hidden sm:inline font-mono">
+                  {activeTab === 'workflow'
+                    ? 'app.projx.io/workspace/apollo-workflow-pipeline'
+                    : activeTab === 'kanban'
+                    ? 'app.projx.io/workspace/apollo-kanban-board'
+                    : 'app.projx.io/workspace/apollo-throughput-telemetry'}
                 </span>
               </div>
 
               {/* Real-time Workspace Sync & View Switcher */}
               <div className="flex items-center gap-3">
-                <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#F5F5F5] border border-[#E5E5E5] text-[10px] font-medium text-[#5A5A5A]">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#27C93F] opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#27C93F]" />
-                  </span>
-                  <span>Live Sync</span>
+                <div className>
+               
+                   
+                   
+                  
+                
                 </div>
 
                 <div className="flex items-center gap-1.5 bg-[#F5F5F5] p-1 rounded-lg border border-[#E5E5E5]">
                   <button
                     type="button"
+                    onClick={() => setActiveTab('workflow')}
+                    className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                      activeTab === 'workflow'
+                        ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
+                        : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
+                    }`}
+                  >
+                    Workflow
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => setActiveTab('kanban')}
-                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                    className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                       activeTab === 'kanban'
                         ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
                         : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
@@ -346,13 +362,13 @@ export const LandingPage = () => {
                   <button
                     type="button"
                     onClick={() => setActiveTab('analytics')}
-                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
+                    className={`px-2.5 sm:px-3 py-1 text-xs font-semibold rounded-md transition-all ${
                       activeTab === 'analytics'
                         ? 'bg-[#0F0F0F] text-[#FFFFFF] shadow-xs'
                         : 'text-[#5A5A5A] hover:text-[#0F0F0F]'
                     }`}
                   >
-                    Throughput Metrics
+                    Throughput
                   </button>
                 </div>
               </div>
@@ -360,7 +376,9 @@ export const LandingPage = () => {
 
             {/* Mock Dashboard Preview Content */}
             <div className="p-3 sm:p-5 bg-[#FAFAFA]">
-              {activeTab === 'kanban' ? (
+              {activeTab === 'workflow' ? (
+                <HorizontalBranchingWorkflow />
+              ) : activeTab === 'kanban' ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Col 1 - To Do */}
                   <div className="bg-[#FFFFFF] p-3.5 rounded-xl border border-[#E5E5E5] shadow-xs">
