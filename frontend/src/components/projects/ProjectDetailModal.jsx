@@ -14,26 +14,58 @@ import {
   Sparkles,
   Layers,
   Trash2,
+  Edit3,
+  Save,
+  X,
 } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../common/SocialIcons';
 import { useWorkspace } from '../../hooks/useWorkspace';
 import api, { API_ORIGIN } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export const ProjectDetailModal = ({ project, isOpen, onClose }) => {
-  const { user, applyToProject, updateApplicationStatus, deleteProject } = useWorkspace();
+  const { user, applyToProject, updateApplicationStatus, deleteProject, updateProject } = useWorkspace();
   const [projectData, setProjectData] = useState(project);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedApplicantProfile, setSelectedApplicantProfile] = useState(null);
 
+  // Edit Mode state for Project Manager
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    description: '',
+    status: 'Planning',
+    requiredSkills: '',
+    requiredExperience: '',
+    requiredMembers: 1,
+    deadline: '',
+  });
+
+  const initEditData = (data = projectData) => {
+    setEditFormData({
+      name: data.name || '',
+      description: data.description || '',
+      status: data.status || 'Planning',
+      requiredSkills: Array.isArray(data.requiredSkills) ? data.requiredSkills.join(', ') : data.requiredSkills || '',
+      requiredExperience: data.requiredExperience || '',
+      requiredMembers: data.requiredMembers || 1,
+      deadline: data.deadline ? new Date(data.deadline).toISOString().split('T')[0] : '',
+    });
+  };
+
   useEffect(() => {
     if (project && isOpen) {
       setProjectData(project);
+      setIsEditing(false);
+      initEditData(project);
       // Fetch fresh detail with applications from backend
       const fetchDetail = async () => {
         try {
           const res = await api.get(`/projects/${project._id || project.id}`);
           if (res.project) {
             setProjectData(res.project);
+            initEditData(res.project);
           }
         } catch (err) {
           console.warn('Failed to fetch project details:', err.message);
@@ -42,6 +74,44 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }) => {
       fetchDetail();
     }
   }, [project, isOpen]);
+
+  const handleSaveProjectEdits = async (e) => {
+    e.preventDefault();
+    setIsSavingEdit(true);
+    try {
+      const skillsArray = editFormData.requiredSkills
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      const updated = await updateProject(projectData._id || projectData.id, {
+        name: editFormData.name.trim(),
+        description: editFormData.description.trim(),
+        status: editFormData.status,
+        requiredSkills: skillsArray,
+        requiredExperience: editFormData.requiredExperience.trim(),
+        requiredMembers: Number(editFormData.requiredMembers) || 1,
+        deadline: editFormData.deadline,
+      });
+
+      setProjectData((prev) => ({
+        ...prev,
+        ...updated,
+        name: editFormData.name.trim(),
+        description: editFormData.description.trim(),
+        status: editFormData.status,
+        requiredSkills: skillsArray,
+        requiredExperience: editFormData.requiredExperience.trim(),
+        requiredMembers: Number(editFormData.requiredMembers) || 1,
+        deadline: editFormData.deadline,
+      }));
+      setIsEditing(false);
+    } catch {
+      // handled in workspace context
+    } finally {
+      setIsSavingEdit(false);
+    }
+  };
 
   if (!projectData) return null;
 
@@ -103,7 +173,144 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }) => {
       maxWidth="max-w-3xl"
     >
       <div className="space-y-6 max-h-[80vh] overflow-y-auto pr-1">
-        {/* Cover Photo if uploaded */}
+        {isEditing ? (
+          <form onSubmit={handleSaveProjectEdits} className="space-y-4">
+            <div className="p-3 bg-[#F9F9F9] rounded-xl border border-[#E5E5E5] flex items-center justify-between">
+              <div>
+                <h4 className="text-xs font-bold text-[#0F0F0F] uppercase tracking-wider">
+                  Update Project Specifications
+                </h4>
+                <p className="text-[11px] text-[#5A5A5A]">
+                  Edit your initiative details, required stack, team capacity, and milestone phase.
+                </p>
+              </div>
+              <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#0F0F0F] text-white">
+                Project Manager
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                  Project Name <span className="text-[#0F0F0F] font-bold">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editFormData.name}
+                  onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+                  className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                  Description <span className="text-[#0F0F0F] font-bold">*</span>
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={editFormData.description}
+                  onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
+                  className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                    Project Status
+                  </label>
+                  <select
+                    value={editFormData.status}
+                    onChange={(e) => setEditFormData({ ...editFormData, status: e.target.value })}
+                    className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                  >
+                    <option value="Planning">Planning</option>
+                    <option value="Recruiting">Recruiting</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                    Deadline
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={editFormData.deadline}
+                    onChange={(e) => setEditFormData({ ...editFormData, deadline: e.target.value })}
+                    className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                    Required Skills (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. React, Node.js, MongoDB"
+                    value={editFormData.requiredSkills}
+                    onChange={(e) => setEditFormData({ ...editFormData, requiredSkills: e.target.value })}
+                    className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                    Required Team Members
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="50"
+                    value={editFormData.requiredMembers}
+                    onChange={(e) => setEditFormData({ ...editFormData, requiredMembers: e.target.value })}
+                    className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
+                  Experience Requirement
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Intermediate or 1+ years experience"
+                  value={editFormData.requiredExperience}
+                  onChange={(e) => setEditFormData({ ...editFormData, requiredExperience: e.target.value })}
+                  className="w-full text-xs sm:text-sm rounded-lg p-2.5 bg-white border border-[#D8D8D8] text-[#0F0F0F] outline-none focus:border-[#0F0F0F]"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-3 border-t border-[#EFEFEF]">
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                leftIcon={Save}
+                isLoading={isSavingEdit}
+              >
+                Save Project Changes
+              </Button>
+            </div>
+          </form>
+        ) : (
+          <>
+            {/* Cover Photo if uploaded */}
         {photoUrl && (
           <div className="w-full h-48 rounded-xl overflow-hidden border border-[#E5E5E5] bg-[#0F0F0F]">
             <img
@@ -307,6 +514,43 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }) => {
                             <span className="text-[10px] text-[#888888]">
                               Applied {new Date(app.appliedAt).toLocaleDateString()}
                             </span>
+                            {(applicant.socialLinks?.github || applicant.socialLinks?.linkedin || applicant.socialLinks?.instagram) && (
+                              <div className="flex items-center gap-1.5 mt-1">
+                                {applicant.socialLinks.github && (
+                                  <a
+                                    href={applicant.socialLinks.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1 rounded bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#5A5A5A] hover:text-white transition-colors"
+                                    title="GitHub"
+                                  >
+                                    <GithubIcon className="w-3 h-3" />
+                                  </a>
+                                )}
+                                {applicant.socialLinks.linkedin && (
+                                  <a
+                                    href={applicant.socialLinks.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1 rounded bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#5A5A5A] hover:text-white transition-colors"
+                                    title="LinkedIn"
+                                  >
+                                    <LinkedinIcon className="w-3 h-3" />
+                                  </a>
+                                )}
+                                {applicant.socialLinks.instagram && (
+                                  <a
+                                    href={applicant.socialLinks.instagram}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-1 rounded bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#5A5A5A] hover:text-white transition-colors"
+                                    title="Instagram"
+                                  >
+                                    <InstagramIcon className="w-3 h-3" />
+                                  </a>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -388,18 +632,38 @@ export const ProjectDetailModal = ({ project, isOpen, onClose }) => {
             )}
           </div>
         )}
+        </>
+        )}
 
         {/* Footer Actions */}
         <div className="pt-4 border-t border-[#EFEFEF] flex items-center justify-between">
           <div>
             {isPMOwner && (
-              <button
-                type="button"
-                onClick={handleDelete}
-                className="inline-flex items-center gap-1.5 text-xs text-red-600 hover:text-red-800 font-semibold transition-colors"
-              >
-                <Trash2 className="w-3.5 h-3.5" /> Delete Project
-              </button>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant={isEditing ? 'secondary' : 'primary'}
+                  leftIcon={isEditing ? X : Edit3}
+                  onClick={() => {
+                    if (!isEditing) {
+                      initEditData();
+                    }
+                    setIsEditing(!isEditing);
+                  }}
+                >
+                  {isEditing ? 'Cancel Edit' : 'Edit Project'}
+                </Button>
+
+                {!isEditing && (
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    className="inline-flex items-center gap-1.5 text-xs text-red-600 hover:text-red-800 font-semibold transition-colors ml-1"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> Delete Project
+                  </button>
+                )}
+              </div>
             )}
           </div>
 

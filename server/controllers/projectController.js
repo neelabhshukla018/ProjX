@@ -4,14 +4,24 @@ import Task from '../models/Task.js';
 import Comment from '../models/Comment.js';
 
 // Helper to compute dynamic project progress from tasks
-const computeProjectStats = async (projectId) => {
+const computeProjectStats = async (projectId, projectStatus = null) => {
   const tasks = await Task.find({ project: projectId }).select('status');
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((t) => t.status === 'Completed').length;
   const inProgressTasks = tasks.filter((t) => t.status === 'In Progress').length;
   const inReviewTasks = tasks.filter((t) => t.status === 'In Review').length;
   const todoTasks = tasks.filter((t) => t.status === 'To Do').length;
-  const progress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  // Project progress scaling:
+  // If project is marked 'Completed' by PM, progress is 100%
+  // Otherwise, progress scales proportionally with completed milestone tasks (e.g. 1 task = 10%)
+  let progress = 0;
+  if (projectStatus === 'Completed') {
+    progress = 100;
+  } else if (totalTasks > 0) {
+    const milestoneBenchmark = Math.max(totalTasks, 10);
+    progress = Math.min(100, Math.round((completedTasks / milestoneBenchmark) * 100));
+  }
 
   return {
     totalTasks,
@@ -133,7 +143,7 @@ export const getProjects = async (req, res, next) => {
     // Compute dynamic stats and user application status for each project
     const results = await Promise.all(
       projects.map(async (p) => {
-        const stats = await computeProjectStats(p._id);
+        const stats = await computeProjectStats(p._id, p.status);
         const pObj = p.toObject();
 
         let myApplicationStatus = null;
@@ -183,7 +193,7 @@ export const getMyProjects = async (req, res, next) => {
 
     const results = await Promise.all(
       projects.map(async (p) => {
-        const stats = await computeProjectStats(p._id);
+        const stats = await computeProjectStats(p._id, p.status);
         return {
           ...p.toObject(),
           ...stats,
@@ -214,7 +224,7 @@ export const getProjectById = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Project not found' });
     }
 
-    const stats = await computeProjectStats(project._id);
+    const stats = await computeProjectStats(project._id, project.status);
     const pObj = project.toObject();
 
     // If caller is the PM owner, also retrieve all applications for review
@@ -314,7 +324,7 @@ export const updateProject = async (req, res, next) => {
       .populate('owner', 'fullName email profilePhoto headline')
       .populate('members', 'fullName email profilePhoto headline skills');
 
-    const stats = await computeProjectStats(project._id);
+    const stats = await computeProjectStats(project._id, updated.status);
 
     res.status(200).json({
       success: true,

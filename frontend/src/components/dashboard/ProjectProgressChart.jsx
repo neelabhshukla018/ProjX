@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from 'recharts';
 import Card from '../common/Card';
-import { projectProgressChartData } from '../../utils/mockData';
+import { useWorkspace } from '../../hooks/useWorkspace';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -31,6 +31,16 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export const ProjectProgressChart = () => {
+  const { projects } = useWorkspace();
+
+  const chartData = projects.length > 0
+    ? projects.map((p) => ({
+        name: p.name.length > 15 ? p.name.slice(0, 15) + '…' : p.name,
+        progress: p.progress || 0,
+        target: 100,
+      }))
+    : [{ name: 'Initiatives', progress: 0, target: 100 }];
+
   return (
     <Card
       title="Project Velocity & Progress"
@@ -41,7 +51,7 @@ export const ProjectProgressChart = () => {
       <div className="w-full h-56 sm:h-64 md:h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={projectProgressChartData}
+            data={chartData}
             margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#EFEFEF" />

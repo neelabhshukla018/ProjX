@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 export const TaskModal = () => {
   const { isNewTaskModalOpen, setIsNewTaskModalOpen, addTask, projects, user } = useWorkspace();
 
+  if (user?.role !== 'project_manager') return null;
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',

@@ -3,10 +3,18 @@ import { Clock, ArrowRight, ArrowLeft, CheckSquare } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import { getPriorityBadge, getDaysRemaining } from '../../utils/formatters';
 import { API_ORIGIN } from '../../services/api';
+import { useWorkspace } from '../../hooks/useWorkspace';
 
 export const TaskCard = ({ task, onMoveStatus, onOpenDetail }) => {
+  const { user } = useWorkspace();
   const priorityInfo = getPriorityBadge(task.priority);
   const deadline = getDaysRemaining(task.dueDate);
+
+  const isAssignedToMe =
+    task.assignedTo?._id?.toString() === user?._id?.toString() ||
+    task.assignedTo?.toString() === user?._id?.toString();
+
+  const canMoveStatus = user?.role === 'team_member' && isAssignedToMe;
 
   const assigneeName = task.assignedTo?.fullName || task.assignee?.name || 'Assignee';
   const assigneeAvatar = task.assignedTo?.profilePhoto
@@ -76,49 +84,51 @@ export const TaskCard = ({ task, onMoveStatus, onOpenDetail }) => {
           </span>
         </div>
 
-        {/* Stage Mover Buttons */}
-        <div
-          className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {task.status !== 'To Do' && (
-            <button
-              type="button"
-              onClick={() => {
-                const prevStatus =
-                  task.status === 'Completed'
-                    ? 'In Review'
-                    : task.status === 'In Review'
-                    ? 'In Progress'
-                    : 'To Do';
-                onMoveStatus(task._id || task.id, prevStatus);
-              }}
-              className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
-              title="Move backward"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-            </button>
-          )}
+        {/* Stage Mover Buttons - Only for assigned Team Member */}
+        {canMoveStatus && (
+          <div
+            className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {task.status !== 'To Do' && (
+              <button
+                type="button"
+                onClick={() => {
+                  const prevStatus =
+                    task.status === 'Completed'
+                      ? 'In Review'
+                      : task.status === 'In Review'
+                      ? 'In Progress'
+                      : 'To Do';
+                  onMoveStatus(task._id || task.id, prevStatus);
+                }}
+                className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
+                title="Move backward"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </button>
+            )}
 
-          {task.status !== 'Completed' && (
-            <button
-              type="button"
-              onClick={() => {
-                const nextStatus =
-                  task.status === 'To Do'
-                    ? 'In Progress'
-                    : task.status === 'In Progress'
-                    ? 'In Review'
-                    : 'Completed';
-                onMoveStatus(task._id || task.id, nextStatus);
-              }}
-              className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
-              title="Advance stage"
-            >
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
+            {task.status !== 'Completed' && (
+              <button
+                type="button"
+                onClick={() => {
+                  const nextStatus =
+                    task.status === 'To Do'
+                      ? 'In Progress'
+                      : task.status === 'In Progress'
+                      ? 'In Review'
+                      : 'Completed';
+                  onMoveStatus(task._id || task.id, nextStatus);
+                }}
+                className="p-1 rounded text-[#5A5A5A] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] transition-colors"
+                title="Advance stage"
+              >
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

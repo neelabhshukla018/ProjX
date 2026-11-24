@@ -3,8 +3,10 @@ import { Check, Clock } from 'lucide-react';
 import Avatar from '../common/Avatar';
 import { getPriorityBadge, getStatusBadge, getDaysRemaining, formatDate } from '../../utils/formatters';
 import { API_ORIGIN } from '../../services/api';
+import { useWorkspace } from '../../hooks/useWorkspace';
 
 export const TaskList = ({ tasks = [], onMoveStatus, onOpenDetail }) => {
+  const { user } = useWorkspace();
   return (
     <div className="bg-[#FFFFFF] border border-[#E5E5E5] rounded-xl shadow-card overflow-hidden">
       <div className="overflow-x-auto">
@@ -43,6 +45,11 @@ export const TaskList = ({ tasks = [], onMoveStatus, onOpenDetail }) => {
 
                 const projectName = task.project?.name || task.projectName || 'General';
 
+                const isAssignedToMe =
+                  task.assignedTo?._id?.toString() === user?._id?.toString() ||
+                  task.assignedTo?.toString() === user?._id?.toString();
+                const canToggleDone = user?.role === 'team_member' && isAssignedToMe;
+
                 return (
                   <tr
                     key={task._id || task.id}
@@ -55,17 +62,20 @@ export const TaskList = ({ tasks = [], onMoveStatus, onOpenDetail }) => {
                     <td className="py-3 px-4" onClick={(e) => e.stopPropagation()}>
                       <button
                         type="button"
+                        disabled={!canToggleDone}
                         onClick={() =>
+                          canToggleDone &&
                           onMoveStatus(
                             task._id || task.id,
                             isDone ? 'To Do' : 'Completed'
                           )
                         }
+                        title={canToggleDone ? 'Toggle status' : 'Read-only: status managed by assigned team member'}
                         className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
                           isDone
                             ? 'bg-[#0F0F0F] border-[#0F0F0F] text-white'
-                            : 'border-[#B0B0B0] hover:border-[#0F0F0F]'
-                        }`}
+                            : 'border-[#B0B0B0]'
+                        } ${canToggleDone ? 'hover:border-[#0F0F0F] cursor-pointer' : 'cursor-default opacity-70'}`}
                       >
                         {isDone && <Check className="w-3 h-3 stroke-[3]" />}
                       </button>

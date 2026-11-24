@@ -18,29 +18,42 @@ export const Modal = ({
   showClose = true,
 }) => {
   const modalRef = useRef(null);
+  const prevOpenRef = useRef(false);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
+  // Run entrance animation strictly once on open transition
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !prevOpenRef.current) {
       document.body.style.overflow = 'hidden';
       if (modalRef.current) {
         modalEntrance(modalRef.current);
       }
-    } else {
+    } else if (!isOpen && prevOpenRef.current) {
       document.body.style.overflow = 'unset';
     }
+    prevOpenRef.current = isOpen;
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Handle escape key without causing modal re-animating/blinking on keystrokes
+  useEffect(() => {
+    if (!isOpen) return;
 
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
+      if (e.key === 'Escape') {
+        onCloseRef.current?.();
       }
     };
 
     window.addEventListener('keydown', handleEscape);
     return () => {
-      document.body.style.overflow = 'unset';
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -53,7 +66,7 @@ export const Modal = ({
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-[#0F0F0F]/60 backdrop-blur-xs transition-opacity duration-200"
+        className="fixed inset-0 bg-[#0F0F0F]/60 transition-opacity duration-200"
       />
 
       {/* Modal Dialog Content */}

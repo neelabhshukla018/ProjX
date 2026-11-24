@@ -13,10 +13,8 @@ import {
   Trash2,
   Download,
   ExternalLink,
-  Globe,
-  Link2,
-  Share2,
 } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../components/common/SocialIcons';
 import toast from 'react-hot-toast';
 import { API_ORIGIN } from '../services/api';
 
@@ -224,6 +222,43 @@ export const ProfilePage = () => {
             </div>
             <p className="text-xs text-[#5A5A5A] mt-0.5">{user.headline || 'Professional Member'}</p>
             <p className="text-[11px] text-[#B0B0B0] mt-0.5">{user.email}</p>
+            {(formData.github || formData.linkedin || formData.instagram) && (
+              <div className="flex items-center gap-1.5 mt-2">
+                {formData.github && (
+                  <a
+                    href={formData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1 rounded-md bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#2C2C2C] hover:text-white transition-colors"
+                    title="GitHub Profile"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {formData.linkedin && (
+                  <a
+                    href={formData.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1 rounded-md bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#2C2C2C] hover:text-white transition-colors"
+                    title="LinkedIn Profile"
+                  >
+                    <LinkedinIcon className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {formData.instagram && (
+                  <a
+                    href={formData.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1 rounded-md bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#2C2C2C] hover:text-white transition-colors"
+                    title="Instagram Profile"
+                  >
+                    <InstagramIcon className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -309,21 +344,21 @@ export const ProfilePage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <Input
                 label="GitHub URL"
-                leftIcon={Globe}
+                leftIcon={GithubIcon}
                 placeholder="https://github.com/username"
                 value={formData.github}
                 onChange={(e) => setFormData({ ...formData, github: e.target.value })}
               />
               <Input
                 label="LinkedIn URL"
-                leftIcon={Link2}
+                leftIcon={LinkedinIcon}
                 placeholder="https://linkedin.com/in/username"
                 value={formData.linkedin}
                 onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
               />
               <Input
                 label="Instagram URL"
-                leftIcon={Share2}
+                leftIcon={InstagramIcon}
                 placeholder="https://instagram.com/username"
                 value={formData.instagram}
                 onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}

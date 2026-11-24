@@ -135,17 +135,47 @@ export const TaskDetailModal = ({ task, isOpen, onClose }) => {
           </p>
         </div>
 
-        {/* Status & Progress Update Section */}
-        {(isAssignedToMe || isPM) && (
+        {/* Project Manager Read-Only Status Telemetry Display */}
+        {isPM && (
+          <div className="p-4 border border-[#E5E5E5] rounded-xl bg-[#FAFAFA] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-[#0F0F0F] uppercase tracking-wider">
+                Current Task Status
+              </span>
+              <span
+                className={`text-xs font-bold px-3 py-1 rounded-full border ${
+                  taskData.status === 'Completed'
+                    ? 'bg-[#0F0F0F] text-white border-[#0F0F0F]'
+                    : taskData.status === 'In Review'
+                    ? 'bg-amber-600 text-white border-amber-600'
+                    : taskData.status === 'In Progress'
+                    ? 'bg-[#2C2C2C] text-white border-[#2C2C2C]'
+                    : 'bg-[#F0F0F0] text-[#0F0F0F] border-[#D8D8D8]'
+                }`}
+              >
+                {taskData.status || 'To Do'}
+              </span>
+            </div>
+            <p className="text-[11px] text-[#5A5A5A]">
+              Task progression is managed exclusively by the assigned team member ({taskData.assignedTo?.fullName || 'Assignee'}).
+            </p>
+          </div>
+        )}
+
+        {/* Team Member Interactive Status & Progress Update Section */}
+        {user?.role === 'team_member' && isAssignedToMe && (
           <div className="p-4 border border-[#E5E5E5] rounded-xl bg-white space-y-3">
-            <h4 className="text-xs font-bold text-[#0F0F0F] uppercase tracking-wider">
-              Update Task Status & Progress
-            </h4>
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold text-[#0F0F0F] uppercase tracking-wider">
+                Update Task Status & Progress
+              </h4>
+              <span className="text-[11px] text-[#5A5A5A] font-medium">4 available status options</span>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
-                  Status
+                  Task Status (4 Options)
                 </label>
                 <select
                   value={selectedStatus}
@@ -162,7 +192,7 @@ export const TaskDetailModal = ({ task, isOpen, onClose }) => {
 
               <div>
                 <label className="block text-xs font-semibold text-[#0F0F0F] mb-1">
-                  Progress Note / Work Deliverable Link
+                  Progress Note / Deliverable Link
                 </label>
                 <input
                   type="text"

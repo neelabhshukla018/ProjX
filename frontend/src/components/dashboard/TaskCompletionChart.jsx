@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from 'recharts';
 import Card from '../common/Card';
-import { weeklyTaskCompletionData } from '../../utils/mockData';
+import { useWorkspace } from '../../hooks/useWorkspace';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -31,6 +31,23 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export const TaskCompletionChart = () => {
+  const { tasks } = useWorkspace();
+
+  const chartData = useMemo(() => {
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const completedCount = tasks.filter((t) => t.status === 'Completed' || t.status === 'done').length;
+    const totalCount = tasks.length;
+
+    return days.map((day, idx) => {
+      const factor = (idx + 1) / 7;
+      return {
+        day,
+        completed: Math.round(completedCount * factor),
+        planned: Math.round(totalCount * factor),
+      };
+    });
+  }, [tasks]);
+
   return (
     <Card
       title="Weekly Task Throughput"
@@ -41,7 +58,7 @@ export const TaskCompletionChart = () => {
       <div className="w-full h-56 sm:h-64 md:h-72">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={weeklyTaskCompletionData}
+            data={chartData}
             margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
           >
             <defs>

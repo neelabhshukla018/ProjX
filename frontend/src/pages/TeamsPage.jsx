@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { UserPlus, Users, FolderKanban, CheckCircle2, Mail, Shield, Award } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../components/common/SocialIcons';
 import { useWorkspace } from '../hooks/useWorkspace';
 import Avatar from '../components/common/Avatar';
 import Card from '../components/common/Card';
@@ -25,6 +26,7 @@ export const TeamsPage = () => {
           role: 'Project Manager',
           headline: p.owner.headline || 'Project Lead',
           skills: p.owner.skills || ['Leadership', 'Planning'],
+          socialLinks: p.owner.socialLinks || {},
           avatar: p.owner.profilePhoto ? (p.owner.profilePhoto.startsWith('http') ? p.owner.profilePhoto : `${API_ORIGIN}${p.owner.profilePhoto}`) : '',
           projectsCount: 1,
         });
@@ -45,6 +47,7 @@ export const TeamsPage = () => {
                 role: 'Team Member',
                 headline: m.headline || 'Collaborator',
                 skills: m.skills || ['Development'],
+                socialLinks: m.socialLinks || {},
                 avatar: m.profilePhoto ? (m.profilePhoto.startsWith('http') ? m.profilePhoto : `${API_ORIGIN}${m.profilePhoto}`) : '',
                 projectsCount: 1,
               });
@@ -65,6 +68,7 @@ export const TeamsPage = () => {
         role: user.role === 'project_manager' ? 'Project Manager' : 'Team Member',
         headline: user.headline || 'Active Member',
         skills: user.skills || [],
+        socialLinks: user.socialLinks || {},
         avatar: user.profilePhoto ? `${API_ORIGIN}${user.profilePhoto}` : '',
         projectsCount: projects.length,
       });
@@ -188,9 +192,48 @@ export const TeamsPage = () => {
                     {member.headline}
                   </p>
 
-                  <div className="text-[11px] text-[#777777] mb-3 truncate font-mono">
+                  <div className="text-[11px] text-[#777777] mb-2 truncate font-mono">
                     {member.email}
                   </div>
+
+                  {/* Social Links if present */}
+                  {(member.socialLinks?.github || member.socialLinks?.linkedin || member.socialLinks?.instagram) && (
+                    <div className="flex items-center gap-1.5 mb-3">
+                      {member.socialLinks.github && (
+                        <a
+                          href={member.socialLinks.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#5A5A5A] hover:text-white transition-colors"
+                          title="GitHub"
+                        >
+                          <GithubIcon className="w-3 h-3" />
+                        </a>
+                      )}
+                      {member.socialLinks.linkedin && (
+                        <a
+                          href={member.socialLinks.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#5A5A5A] hover:text-white transition-colors"
+                          title="LinkedIn"
+                        >
+                          <LinkedinIcon className="w-3 h-3" />
+                        </a>
+                      )}
+                      {member.socialLinks.instagram && (
+                        <a
+                          href={member.socialLinks.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded bg-[#F5F5F5] hover:bg-[#0F0F0F] text-[#5A5A5A] hover:text-white transition-colors"
+                          title="Instagram"
+                        >
+                          <InstagramIcon className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  )}
 
                   {/* Skills tags */}
                   {(member.skills || []).length > 0 && (

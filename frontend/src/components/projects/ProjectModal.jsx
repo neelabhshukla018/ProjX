@@ -8,6 +8,8 @@ import { Upload, FileText, Image as ImageIcon } from 'lucide-react';
 export const ProjectModal = () => {
   const { isNewProjectModalOpen, setIsNewProjectModalOpen, addProject, user } = useWorkspace();
 
+  if (user?.role !== 'project_manager') return null;
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',

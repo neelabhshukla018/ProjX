@@ -32,7 +32,8 @@ export const Input = React.forwardRef(
     const [showPassword, setShowPassword] = useState(false);
     const isPassword = type === 'password';
     const computedType = isPassword ? (showPassword ? 'text' : 'password') : type;
-    const inputId = id || name || `input-${Math.random().toString(36).substr(2, 9)}`;
+    const reactId = React.useId ? React.useId() : 'input';
+    const inputId = id || name || `input-${reactId}`;
 
     return (
       <div className={`w-full ${className}`}>
@@ -61,7 +62,7 @@ export const Input = React.forwardRef(
             placeholder={placeholder}
             className={`
               w-full rounded-lg text-xs sm:text-sm bg-[#FFFFFF] border text-[#0F0F0F] placeholder-[#B0B0B0]
-              transition-all duration-150 py-2 sm:py-2.5 outline-none
+              transition-colors duration-150 py-2 sm:py-2.5 outline-none
               ${LeftIcon ? 'pl-9' : 'pl-3 sm:pl-3.5'}
               ${isPassword || RightIcon ? 'pr-10' : 'pr-3 sm:pr-3.5'}
               ${

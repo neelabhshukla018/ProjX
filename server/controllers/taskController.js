@@ -214,14 +214,18 @@ export const updateTask = async (req, res, next) => {
       progressUpdate,
     } = req.body;
 
-    // PM can update all fields
+    // PM can update details, deadline, priority, assignee, but cannot change task status (status is updated only by assigned team member)
     if (isOwner) {
+      if (status && status !== task.status) {
+        return res.status(403).json({
+          success: false,
+          message: 'Forbidden: Only the assigned Team Member can update the status of this task. Project Managers can review status updates and provide feedback.',
+        });
+      }
       if (title) task.title = title.trim();
       if (description !== undefined) task.description = description.trim();
       if (priority) task.priority = priority;
-      if (status) task.status = status;
       if (dueDate) task.dueDate = new Date(dueDate);
-      if (progressUpdate !== undefined) task.progressUpdate = progressUpdate.trim();
 
       if (assignedTo && assignedTo !== task.assignedTo.toString()) {
         const isNewAssigneeMember = task.project.members.some(

@@ -282,6 +282,16 @@ async function runTests() {
   if (invalidTaskRes.status !== 400) throw new Error('Unaccepted member was assigned task');
   console.log('   ✅ Member validation verified: Only accepted members can be assigned tasks.');
 
+  // 12b. Security Check: PM tries to update task status directly -> MUST FAIL with 403
+  console.log('\n1️⃣2️⃣b Security Check: PM Alice tries to update task status directly...');
+  const pmStatusUpdateRes = await pm.request(`/tasks/${testTaskId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ status: 'Completed' }),
+  });
+  console.log(`   Status: ${pmStatusUpdateRes.status} (Expected: 403 Forbidden) - ${pmStatusUpdateRes.data?.message}`);
+  if (pmStatusUpdateRes.status !== 403) throw new Error('PM should not be allowed to change task status');
+  console.log('   ✅ PM Status Change Blocked: Only assigned Team Member can update task status.');
+
   // 13. Team Member Updates Task Status & Submits Progress
   console.log('\n1️⃣3️⃣ Testing Team Member Task Progress Submission...');
   const taskUpdateRes = await tm.request(`/tasks/${testTaskId}`, {
@@ -331,8 +341,24 @@ async function runTests() {
   console.log(`   Total Tasks: ${checkProgress.data?.project?.totalTasks}`);
   console.log(`   Completed Tasks: ${checkProgress.data?.project?.completedTasks}`);
   console.log(`   Calculated Progress: ${checkProgress.data?.project?.progress}%`);
-  if (checkProgress.data?.project?.progress !== 100) throw new Error('Progress calculation mismatch');
-  console.log('   ✅ Dynamic database progress formula verified: (Completed / Total) * 100');
+  if (checkProgress.data?.project?.progress !== 10) throw new Error(`Progress should be 10% after 1 task completed, got ${checkProgress.data?.project?.progress}%`);
+  console.log('   ✅ Realistic milestone benchmark verified: 1 task completed = 10% progress.');
+
+  // 15b. Testing PM Edit Project & Status Update
+  console.log('\n1️⃣5️⃣b Testing PM Edit Project (Updating name, status & description)...');
+  const editProjRes = await pm.request(`/projects/${testProjectId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      name: 'ProjX Distributed Engine (Updated)',
+      description: 'Updated sprint initiative roadmap and requirements.',
+      status: 'Completed',
+    }),
+  });
+  console.log(`   Status: ${editProjRes.status} - Updated Name: "${editProjRes.data?.project?.name}"`);
+  console.log(`   Updated Project Status: ${editProjRes.data?.project?.status}`);
+  console.log(`   Calculated Progress after PM marks Completed: ${editProjRes.data?.project?.progress}%`);
+  if (editProjRes.data?.project?.progress !== 100) throw new Error('Progress should be 100% when PM marks project Completed');
+  console.log('   ✅ PM Edit Project verified: Successfully updated project specifications and phase.');
 
   // 16. Complete Notification System Verification
   console.log('\n1️⃣6️⃣ Testing Notification Lifecycle & Verification...');
