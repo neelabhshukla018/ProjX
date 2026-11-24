@@ -201,12 +201,7 @@ export const LandingPage = () => {
             >
               Methodology
             </a>
-            <a
-              href="#security"
-              className="px-3 sm:px-3.5 py-1.5 rounded-full hover:text-[#0F0F0F] hover:bg-black/[0.05] transition-colors"
-            >
-              Enterprise
-            </a>
+       
           </nav>
 
           {/* Right CTA */}
