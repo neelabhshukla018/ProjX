@@ -25,11 +25,11 @@ import Button from '../common/Button';
 
 export const TopNav = () => {
   const {
+    user,
     isMobileNavOpen,
     setIsMobileNavOpen,
     setIsNewProjectModalOpen,
     setIsNewTaskModalOpen,
-    setIsInviteModalOpen,
   } = useWorkspace();
 
   const location = useLocation();
@@ -207,56 +207,47 @@ export const TopNav = () => {
 
           {/* Right: + New, Notifications, User */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-            {/* Quick Action "+ New" Dropdown List */}
-            <div className="relative" ref={quickMenuRef}>
-              <Button
-                size="sm"
-                variant="primary"
-                leftIcon={Plus}
-                onClick={() => setShowQuickMenu(!showQuickMenu)}
-                className="hidden sm:inline-flex"
-              >
-                New
-              </Button>
+            {/* Quick Action "+ New" Dropdown List - Strictly for Project Managers only */}
+            {user?.role === 'project_manager' && (
+              <div className="relative" ref={quickMenuRef}>
+                <Button
+                  size="sm"
+                  variant="primary"
+                  leftIcon={Plus}
+                  onClick={() => setShowQuickMenu(!showQuickMenu)}
+                  className="hidden sm:inline-flex"
+                >
+                  New
+                </Button>
 
-              {showQuickMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-[#FFFFFF] rounded-xl shadow-dropdown border border-[#E5E5E5] z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowQuickMenu(false);
-                      setIsNewProjectModalOpen(true);
-                    }}
-                    className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
-                  >
-                    <FolderPlus className="w-4 h-4 text-[#0F0F0F]" />
-                    <span>New Project</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowQuickMenu(false);
-                      setIsNewTaskModalOpen(true);
-                    }}
-                    className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-[#0F0F0F]" />
-                    <span>New Task</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowQuickMenu(false);
-                      setIsInviteModalOpen(true);
-                    }}
-                    className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
-                  >
-                    <UserPlus className="w-4 h-4 text-[#0F0F0F]" />
-                    <span>Invite Member</span>
-                  </button>
-                </div>
-              )}
-            </div>
+                {showQuickMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-[#FFFFFF] rounded-xl shadow-dropdown border border-[#E5E5E5] z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowQuickMenu(false);
+                        setIsNewProjectModalOpen(true);
+                      }}
+                      className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
+                    >
+                      <FolderPlus className="w-4 h-4 text-[#0F0F0F]" />
+                      <span>Create Project</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowQuickMenu(false);
+                        setIsNewTaskModalOpen(true);
+                      }}
+                      className="w-full px-3.5 py-2 text-left text-xs text-[#2C2C2C] hover:text-[#0F0F0F] hover:bg-[#F5F5F5] flex items-center gap-2.5 transition-colors font-medium"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[#0F0F0F]" />
+                      <span>Create Task</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Notifications & User Profile */}
             <NotificationDropdown />
@@ -342,33 +333,35 @@ export const TopNav = () => {
               ))}
             </div>
 
-            {/* Mobile Quick Action Footer */}
-            <div className="p-4 border-t border-[#E5E5E5] space-y-2 bg-[#F9F9F9]">
-              <Button
-                variant="primary"
-                size="sm"
-                leftIcon={Plus}
-                onClick={() => {
-                  setIsMobileNavOpen(false);
-                  setIsNewTaskModalOpen(true);
-                }}
-                className="w-full justify-center"
-              >
-                Create Task
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                leftIcon={FolderPlus}
-                onClick={() => {
-                  setIsMobileNavOpen(false);
-                  setIsNewProjectModalOpen(true);
-                }}
-                className="w-full justify-center"
-              >
-                Create Project
-              </Button>
-            </div>
+            {/* Mobile Quick Action Footer - PM Only */}
+            {user?.role === 'project_manager' && (
+              <div className="p-4 border-t border-[#E5E5E5] space-y-2 bg-[#F9F9F9]">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  leftIcon={Plus}
+                  onClick={() => {
+                    setIsMobileNavOpen(false);
+                    setIsNewTaskModalOpen(true);
+                  }}
+                  className="w-full justify-center"
+                >
+                  Create Task
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={FolderPlus}
+                  onClick={() => {
+                    setIsMobileNavOpen(false);
+                    setIsNewProjectModalOpen(true);
+                  }}
+                  className="w-full justify-center"
+                >
+                  Create Project
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}

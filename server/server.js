@@ -1,11 +1,19 @@
-import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables reliably from server directory
+dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config();
+
+import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
@@ -14,13 +22,12 @@ import projectRoutes from './routes/projectRoutes.js';
 import applicationRoutes from './routes/applicationRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Load environment variables
-dotenv.config();
+import { protect } from './middleware/authMiddleware.js';
+import User from './models/User.js';
+import Project from './models/Project.js';
+import Application from './models/Application.js';
 
 const app = express();
 
@@ -73,8 +80,52 @@ const authLimiter = rateLimit({
 app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 
-// Serve static uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Protected Resume Downloads / Views - Enforces authorization
+app.get('/uploads/resumes/:filename', protect, async (req, res) => {
+  try {
+    const filename = path.basename(req.params.filename);
+    const targetResumePath = `/uploads/resumes/${filename}`;
+
+    const resumeOwner = await User.findOne({ resume: targetResumePath });
+    if (!resumeOwner) {
+      return res.status(404).json({ success: false, message: 'Resume document not found' });
+    }
+
+    const isSelf = req.user._id.toString() === resumeOwner._id.toString();
+    let isAuthorizedPM = false;
+
+    if (req.user.role === 'project_manager') {
+      const ownedProjects = await Project.find({ owner: req.user._id }).select('_id');
+      const projectIds = ownedProjects.map((p) => p._id);
+      const hasApp = await Application.exists({
+        project: { $in: projectIds },
+        applicant: resumeOwner._id,
+      });
+      const isMember = await Project.exists({
+        _id: { $in: projectIds },
+        members: resumeOwner._id,
+      });
+      isAuthorizedPM = Boolean(hasApp || isMember);
+    }
+
+    if (!isSelf && !isAuthorizedPM) {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: You do not have permission to view or download this resume',
+      });
+    }
+
+    const fullPath = path.join(__dirname, 'uploads', 'resumes', filename);
+    return res.sendFile(fullPath);
+  } catch (err) {
+    return res.status(500).json({ success: false, message: 'Error retrieving resume' });
+  }
+});
+
+// Serve public static uploads (profiles, projects, documents)
+app.use('/uploads/profiles', express.static(path.join(__dirname, 'uploads', 'profiles')));
+app.use('/uploads/projects', express.static(path.join(__dirname, 'uploads', 'projects')));
+app.use('/uploads/documents', express.static(path.join(__dirname, 'uploads', 'documents')));
 
 // Root welcome endpoint
 app.get('/', (req, res) => {
@@ -90,6 +141,7 @@ app.get('/', (req, res) => {
       applications: '/api/applications',
       tasks: '/api/tasks',
       comments: '/api/comments',
+      notifications: '/api/notifications',
     },
   });
 });
@@ -110,6 +162,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Error Handling Middlewares
 app.use(notFound);
@@ -131,3 +184,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+export default app;

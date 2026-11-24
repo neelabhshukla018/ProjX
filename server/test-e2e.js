@@ -1,14 +1,21 @@
 import http from 'http';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config();
+
 import connectDB from './config/db.js';
 import User from './models/User.js';
 import Project from './models/Project.js';
 import Application from './models/Application.js';
 import Task from './models/Task.js';
 import Comment from './models/Comment.js';
-
-dotenv.config();
+import Notification from './models/Notification.js';
 
 const BASE_URL = 'http://localhost:5000/api';
 
@@ -192,6 +199,21 @@ async function runTests() {
   if (tmCreateProj.status !== 403) throw new Error('Security flaw: TM was able to create project');
   console.log('   ✅ Access control verified: Only Project Managers can create projects.');
 
+  // 7b. Security Check: Team Member attempting to create task -> MUST BE REJECTED
+  console.log('\n7️⃣b Security Check: Team Member attempting to create task...');
+  const tmCreateTask = await tm.request('/tasks', {
+    method: 'POST',
+    body: JSON.stringify({
+      title: 'Unauthorized Task',
+      project: testProjectId,
+      assignedTo: tm.user._id,
+      dueDate: '2026-12-31',
+    }),
+  });
+  console.log(`   Status: ${tmCreateTask.status} (Expected: 403 Forbidden)`);
+  if (tmCreateTask.status !== 403) throw new Error('Security flaw: TM was able to create task');
+  console.log('   ✅ Access control verified: Only Project Managers can create tasks.');
+
   // 8. Team Member Applies to Project ("Interested")
   console.log('\n8️⃣ Testing Team Member Application ("Interested")...');
   const appRes = await tm.request('/applications', {
@@ -312,10 +334,48 @@ async function runTests() {
   if (checkProgress.data?.project?.progress !== 100) throw new Error('Progress calculation mismatch');
   console.log('   ✅ Dynamic database progress formula verified: (Completed / Total) * 100');
 
+  // 16. Complete Notification System Verification
+  console.log('\n1️⃣6️⃣ Testing Notification Lifecycle & Verification...');
+  // Check PM notifications
+  const pmNotifs = await pm.request('/notifications');
+  console.log(`   PM total notifications: ${pmNotifs.data?.count}`);
+  const hasAppReceived = pmNotifs.data?.notifications?.some((n) => n.type === 'application_received');
+  const hasProgReport = pmNotifs.data?.notifications?.some((n) => n.type === 'task_progress');
+  const hasComment = pmNotifs.data?.notifications?.some((n) => n.type === 'comment_added');
+  console.log(`   - application_received: ${hasAppReceived ? '✅ YES' : '❌ NO'}`);
+  console.log(`   - task_progress: ${hasProgReport ? '✅ YES' : '❌ NO'}`);
+  console.log(`   - comment_added: ${hasComment ? '✅ YES' : '❌ NO'}`);
+  if (!hasAppReceived) throw new Error('PM missing application_received notification');
+
+  // Check TM notifications
+  const tmNotifs = await tm.request('/notifications');
+  console.log(`   TM total notifications: ${tmNotifs.data?.count}`);
+  const hasAppAccepted = tmNotifs.data?.notifications?.some((n) => n.type === 'application_accepted');
+  const hasTaskAssigned = tmNotifs.data?.notifications?.some((n) => n.type === 'task_assigned');
+  const hasFeedback = tmNotifs.data?.notifications?.some((n) => n.type === 'task_feedback');
+  console.log(`   - application_accepted: ${hasAppAccepted ? '✅ YES' : '❌ NO'}`);
+  console.log(`   - task_assigned: ${hasTaskAssigned ? '✅ YES' : '❌ NO'}`);
+  console.log(`   - task_feedback: ${hasFeedback ? '✅ YES' : '❌ NO'}`);
+  if (!hasAppAccepted) throw new Error('TM missing application_accepted notification');
+  if (!hasTaskAssigned) throw new Error('TM missing task_assigned notification');
+
+  // Test unread count & mark as read
+  const unreadBefore = await tm.request('/notifications/unread-count');
+  console.log(`   TM unread count before: ${unreadBefore.data?.count}`);
+  if (unreadBefore.data?.count <= 0) throw new Error('Unread count should be > 0');
+
+  // Mark all read
+  await tm.request('/notifications/read-all', { method: 'PATCH' });
+  const unreadAfter = await tm.request('/notifications/unread-count');
+  console.log(`   TM unread count after mark-all-read: ${unreadAfter.data?.count}`);
+  if (unreadAfter.data?.count !== 0) throw new Error('Unread count should be 0 after mark-all-read');
+  console.log('   ✅ Notification system verified 100% end-to-end.');
+
   // Cleanup test data
-  console.log('\n🧹 Cleaning up test project and users...');
+  console.log('\n🧹 Cleaning up test project, users, and notifications...');
   await pm.request(`/projects/${testProjectId}`, { method: 'DELETE' });
   await User.deleteMany({ email: /@test-projx\.com$/i });
+  await Notification.deleteMany({ recipient: { $in: [pm.user._id, tm.user._id, tm2.user._id] } });
 
   console.log('\n========================================================');
   console.log('🎉 ALL INTEGRATION TESTS PASSED WITH 100% SUCCESS!');

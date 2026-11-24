@@ -1,6 +1,7 @@
 import Task from '../models/Task.js';
 import Project from '../models/Project.js';
 import Comment from '../models/Comment.js';
+import { createNotification } from './notificationController.js';
 
 // @desc    Create a new task
 // @route   POST /api/tasks
@@ -47,6 +48,17 @@ export const createTask = async (req, res, next) => {
       priority: priority || 'Medium',
       dueDate: new Date(dueDate),
       status: status || 'To Do',
+    });
+
+    // Notify assigned team member
+    await createNotification({
+      recipient: assignedTo,
+      sender: req.user._id,
+      type: 'task_assigned',
+      title: 'New Task Assigned',
+      message: `You have been assigned "${task.title}" in project "${project.name}".`,
+      relatedProject: project._id,
+      relatedTask: task._id,
     });
 
     const populated = await Task.findById(task._id)
@@ -241,6 +253,30 @@ export const updateTask = async (req, res, next) => {
     }
 
     await task.save();
+
+    // Trigger notifications based on who updated the task
+    if (isOwner && task.assignedTo.toString() !== req.user._id.toString()) {
+      await createNotification({
+        recipient: task.assignedTo,
+        sender: req.user._id,
+        type: 'task_updated',
+        title: 'Assigned Task Updated',
+        message: `Project Manager updated task "${task.title}" (Status: ${task.status}).`,
+        relatedProject: task.project._id || task.project,
+        relatedTask: task._id,
+      });
+    } else if (isAssigned && task.project.owner.toString() !== req.user._id.toString()) {
+      const isReview = task.status === 'In Review';
+      await createNotification({
+        recipient: task.project.owner,
+        sender: req.user._id,
+        type: isReview ? 'task_submitted' : 'task_progress',
+        title: isReview ? 'Work Submitted for Review' : 'Task Progress Update',
+        message: `${req.user.fullName} updated task "${task.title}" to "${task.status}"${task.progressUpdate ? `: "${task.progressUpdate}"` : ''}`,
+        relatedProject: task.project._id || task.project,
+        relatedTask: task._id,
+      });
+    }
 
     const updated = await Task.findById(task._id)
       .populate('project', 'name status')

@@ -1,5 +1,6 @@
 import Application from '../models/Application.js';
 import Project from '../models/Project.js';
+import { createNotification } from './notificationController.js';
 
 // @desc    Apply / Express Interest in a project
 // @route   POST /api/applications
@@ -43,6 +44,17 @@ export const applyToProject = async (req, res, next) => {
       project: projectId,
       applicant: req.user._id,
       status: 'Pending',
+    });
+
+    // Notify Project Manager
+    await createNotification({
+      recipient: project.owner,
+      sender: req.user._id,
+      type: 'application_received',
+      title: 'New Project Application',
+      message: `${req.user.fullName} expressed interest in joining "${project.name}".`,
+      relatedProject: project._id,
+      relatedApplication: application._id,
     });
 
     const populated = await Application.findById(application._id)
@@ -152,10 +164,32 @@ export const updateApplicationStatus = async (req, res, next) => {
       await Project.findByIdAndUpdate(application.project._id, {
         $addToSet: { members: application.applicant },
       });
+
+      // Notify accepted Team Member
+      await createNotification({
+        recipient: application.applicant,
+        sender: req.user._id,
+        type: 'application_accepted',
+        title: 'Application Accepted! 🎉',
+        message: `Congratulations! Your application to collaborate on "${application.project.name}" has been accepted.`,
+        relatedProject: application.project._id,
+        relatedApplication: application._id,
+      });
     } else if (status === 'Rejected') {
       // If previously accepted and now rejected, remove from members
       await Project.findByIdAndUpdate(application.project._id, {
         $pull: { members: application.applicant },
+      });
+
+      // Notify rejected Team Member
+      await createNotification({
+        recipient: application.applicant,
+        sender: req.user._id,
+        type: 'application_rejected',
+        title: 'Application Update',
+        message: `Your application to join "${application.project.name}" was not accepted at this time.`,
+        relatedProject: application.project._id,
+        relatedApplication: application._id,
       });
     }
 

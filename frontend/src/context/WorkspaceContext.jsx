@@ -65,7 +65,19 @@ export const WorkspaceProvider = ({ children }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Fetch projects and tasks from API
+  // Fetch notifications
+  const fetchNotifications = useCallback(async () => {
+    try {
+      const res = await api.get('/notifications');
+      if (res && res.notifications) {
+        setNotifications(res.notifications);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  // Fetch projects, tasks, and notifications from API
   const fetchWorkspaceData = useCallback(async (currentUser = user) => {
     if (!currentUser) return;
     try {
@@ -89,6 +101,9 @@ export const WorkspaceProvider = ({ children }) => {
         const appRes = await api.get('/applications/my-applications').catch(() => ({ applications: [] }));
         setMyApplications(appRes?.applications || []);
       }
+
+      // 5. Fetch notifications
+      await fetchNotifications();
 
       // Generate activity items based on real project & task events
       const genActivities = [];
@@ -155,6 +170,15 @@ export const WorkspaceProvider = ({ children }) => {
     };
   }, []);
 
+  // Periodic notification polling every 15s
+  useEffect(() => {
+    if (!user) return;
+    const interval = setInterval(() => {
+      fetchNotifications();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [user, fetchNotifications]);
+
   // Authentication: Register
   const register = async ({ fullName, email, password, confirmPassword, role }) => {
     const res = await api.post('/auth/register', {
@@ -164,9 +188,6 @@ export const WorkspaceProvider = ({ children }) => {
       confirmPassword,
       role,
     });
-    if (res.token) {
-      localStorage.setItem('projx_token', res.token);
-    }
     setPersistedUser(res.user);
     toast.success(`Welcome to ProjX, ${res.user.fullName}!`);
     await fetchWorkspaceData(res.user);
@@ -176,9 +197,6 @@ export const WorkspaceProvider = ({ children }) => {
   // Authentication: Login
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
-    if (res.token) {
-      localStorage.setItem('projx_token', res.token);
-    }
     setPersistedUser(res.user);
     toast.success(`Welcome back, ${res.user.fullName}!`);
     await fetchWorkspaceData(res.user);
@@ -192,11 +210,11 @@ export const WorkspaceProvider = ({ children }) => {
     } catch {
       // ignore
     }
-    localStorage.removeItem('projx_token');
     setPersistedUser(null);
     setProjects([]);
     setTasks([]);
     setMyApplications([]);
+    setNotifications([]);
     toast.success('Signed out successfully');
   };
 
@@ -382,6 +400,39 @@ export const WorkspaceProvider = ({ children }) => {
     }
   };
 
+  // Notification management
+  const markNotificationAsRead = async (notificationId) => {
+    try {
+      await api.patch(`/notifications/${notificationId}/read`);
+      setNotifications((prev) =>
+        prev.map((n) => (n._id === notificationId ? { ...n, isRead: true } : n))
+      );
+    } catch (err) {
+      console.warn('Failed to mark notification read:', err.message);
+    }
+  };
+
+  const markAllNotificationsRead = async () => {
+    try {
+      await api.patch('/notifications/read-all');
+      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+      toast.success('All notifications marked as read');
+    } catch (err) {
+      toast.error('Failed to mark all notifications as read');
+    }
+  };
+
+  const clearNotification = async (notificationId) => {
+    try {
+      await api.delete(`/notifications/${notificationId}`);
+      setNotifications((prev) =>
+        prev.filter((n) => n._id !== notificationId && n.id !== notificationId)
+      );
+    } catch (err) {
+      console.warn('Failed to delete notification:', err.message);
+    }
+  };
+
   // Real database metrics computation
   const stats = useMemo(() => {
     const totalProjects = projects.length;
@@ -463,6 +514,10 @@ export const WorkspaceProvider = ({ children }) => {
         teams,
         activities,
         notifications,
+        fetchNotifications,
+        markNotificationAsRead,
+        markAllNotificationsRead,
+        clearNotification,
         updateProfile,
         uploadProfilePhoto,
         uploadResume,

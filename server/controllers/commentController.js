@@ -1,6 +1,7 @@
 import Comment from '../models/Comment.js';
 import Task from '../models/Task.js';
 import Project from '../models/Project.js';
+import { createNotification } from './notificationController.js';
 
 // @desc    Add comment to a task
 // @route   POST /api/comments
@@ -38,6 +39,29 @@ export const addComment = async (req, res, next) => {
       author: req.user._id,
       message: message.trim(),
     });
+
+    // Notify counterpart (PM -> Assignee, or Team Member -> PM)
+    if (isOwner && task.assignedTo.toString() !== req.user._id.toString()) {
+      await createNotification({
+        recipient: task.assignedTo,
+        sender: req.user._id,
+        type: 'task_feedback',
+        title: 'Project Manager Feedback',
+        message: `${req.user.fullName} commented on "${task.title}": "${message.trim().slice(0, 70)}"`,
+        relatedProject: task.project._id || task.project,
+        relatedTask: task._id,
+      });
+    } else if (!isOwner && task.project.owner.toString() !== req.user._id.toString()) {
+      await createNotification({
+        recipient: task.project.owner,
+        sender: req.user._id,
+        type: 'comment_added',
+        title: 'New Comment on Task',
+        message: `${req.user.fullName} commented on "${task.title}": "${message.trim().slice(0, 70)}"`,
+        relatedProject: task.project._id || task.project,
+        relatedTask: task._id,
+      });
+    }
 
     const populated = await Comment.findById(comment._id)
       .populate('author', 'fullName email profilePhoto role headline');
