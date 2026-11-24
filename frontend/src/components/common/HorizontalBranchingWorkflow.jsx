@@ -19,6 +19,36 @@ import {
 import { isReducedMotion } from '../../utils/animations';
 
 /**
+ * Real Icons for Design, Frontend, and Backend / Database
+ */
+const FigmaIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4" {...props}>
+    <path d="M5.5 5.5A3.5 3.5 0 0 1 9 2h3v7H9a3.5 3.5 0 0 1-3.5-3.5z" fill="currentColor" />
+    <path d="M12 2h3a3.5 3.5 0 1 1 0 7H12V2z" fill="currentColor" fillOpacity="0.8" />
+    <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z" fill="currentColor" fillOpacity="0.8" />
+    <path d="M5.5 12.5A3.5 3.5 0 0 1 9 9H12v7H9a3.5 3.5 0 0 1-3.5-3.5z" fill="currentColor" />
+    <path d="M5.5 19.5A3.5 3.5 0 0 1 9 16H12v3.5a3.5 3.5 0 1 1-7 0z" fill="currentColor" fillOpacity="0.85" />
+  </svg>
+);
+
+const ReactIcon = (props) => (
+  <svg viewBox="-11.5 -10.23174 23 20.46348" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-4 h-4" {...props}>
+    <circle cx="0" cy="0" r="2.05" fill="currentColor" stroke="none" />
+    <ellipse rx="11" ry="4.2" />
+    <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+    <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+  </svg>
+);
+
+const DatabaseIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" {...props}>
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
+    <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" />
+  </svg>
+);
+
+/**
  * 7-Stage Horizontal Branching Workflow with Unified Black & Cream Palette
  * Structure: PROJECT -> PLANNING -> 3 PARALLEL BRANCHES (DESIGN, FRONTEND, BACKEND) -> INTEGRATION -> TESTING -> DEPLOY -> COMPLETED
  */
@@ -68,7 +98,7 @@ const WORKFLOW_NODES = [
     title: 'Design',
     subtitle: 'Design System',
     code: '3A',
-    icon: Palette,
+    icon: FigmaIcon,
     x: 370,
     y: 44,
     w: 132,
@@ -87,7 +117,7 @@ const WORKFLOW_NODES = [
     title: 'Frontend',
     subtitle: 'Client Components',
     code: '3B',
-    icon: Code2,
+    icon: ReactIcon,
     x: 370,
     y: 142,
     w: 132,
@@ -106,7 +136,7 @@ const WORKFLOW_NODES = [
     title: 'Backend',
     subtitle: 'API & Services',
     code: '3C',
-    icon: Server,
+    icon: DatabaseIcon,
     x: 370,
     y: 240,
     w: 132,
@@ -332,13 +362,12 @@ export const HorizontalBranchingWorkflow = () => {
       const scrollSpeed = Math.abs(deltaY) / dt;
 
       if (deltaY < 0) {
-        // SCROLLING UP: High-velocity acceleration!
-        // Boost speed up to 8x - 12x depending on upward scroll intensity
-        const boostedSpeed = Math.min(2.5 + scrollSpeed * 18, 12.0);
+        // SCROLLING UP: Gentle acceleration, keeping it calm
+        const boostedSpeed = Math.min(1.3 + scrollSpeed * 3, 2.5);
         speedRef.current = Math.max(speedRef.current, boostedSpeed);
       } else if (deltaY > 0) {
-        // SCROLLING DOWN: Moderate acceleration
-        const boostedSpeed = Math.min(1.5 + scrollSpeed * 8, 5.0);
+        // SCROLLING DOWN: Subtle boost
+        const boostedSpeed = Math.min(1.1 + scrollSpeed * 1.5, 1.8);
         speedRef.current = Math.max(speedRef.current, boostedSpeed);
       }
 
@@ -350,7 +379,7 @@ export const HorizontalBranchingWorkflow = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 2. High-Performance 60FPS Continuous Animation Loop
+  // 2. High-Performance 60FPS Continuous Animation Loop (Calm, Slow Pace)
   // Updates CSS custom properties on the SVG container to drive continuous streaming flow
   useEffect(() => {
     if (isReduced.current) return;
@@ -361,18 +390,18 @@ export const HorizontalBranchingWorkflow = () => {
     const animateLoop = (time) => {
       // Smooth decay back to base 1.0x speed
       const targetBaseSpeed = 1.0;
-      speedRef.current += (targetBaseSpeed - speedRef.current) * 0.045;
+      speedRef.current += (targetBaseSpeed - speedRef.current) * 0.035;
 
-      // Advance dash offset based on dynamic speed
+      // Base advance factor tuned down from 1.4 to 0.35 for a truly slow, calm, elegant pace
       const speed = speedRef.current;
-      offsetRef.current = (offsetRef.current + 1.4 * speed) % 10000;
+      offsetRef.current = (offsetRef.current + 0.35 * speed) % 10000;
 
       // Update CSS custom properties directly on the container (zero React re-render overhead)
       if (svgContainerRef.current) {
         svgContainerRef.current.style.setProperty('--flow-offset', `${offsetRef.current}px`);
         svgContainerRef.current.style.setProperty(
           '--pulse-offset',
-          `${offsetRef.current * 1.85}px`
+          `${offsetRef.current * 1.25}px`
         );
       }
 
