@@ -19,7 +19,7 @@ import {
 import { isReducedMotion } from '../../utils/animations';
 
 /**
- * 7-Stage Horizontal Branching Workflow with Distinct Branch Colors
+ * 7-Stage Horizontal Branching Workflow with Unified Black & Cream Palette
  * Structure: PROJECT -> PLANNING -> 3 PARALLEL BRANCHES (DESIGN, FRONTEND, BACKEND) -> INTEGRATION -> TESTING -> DEPLOY -> COMPLETED
  */
 const WORKFLOW_NODES = [
@@ -30,17 +30,17 @@ const WORKFLOW_NODES = [
     subtitle: 'Init & Specs',
     code: '01',
     icon: Layers,
-    x: 26,
+    x: 20,
     y: 142,
-    w: 106,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'main',
     metric: 'Workspace Ready',
     stepIndex: 1,
-    color: '#F59E0B', // Amber
-    badgeBg: 'bg-amber-500/10 text-amber-600 border-amber-500/30',
-    hoverBorder: 'border-amber-500',
-    glowColor: 'rgba(245, 158, 11, 0.4)',
+    color: '#29251F', // Amber
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   {
     id: 'planning',
@@ -49,17 +49,17 @@ const WORKFLOW_NODES = [
     subtitle: 'Roadmap & PRD',
     code: '02',
     icon: Compass,
-    x: 168,
+    x: 180,
     y: 142,
-    w: 106,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'main',
     metric: 'Sprint S42',
     stepIndex: 2,
-    color: '#EAB308', // Yellow/Gold
-    badgeBg: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
-    hoverBorder: 'border-yellow-500',
-    glowColor: 'rgba(234, 179, 8, 0.4)',
+    color: '#29251F', // Yellow/Gold
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   // Three Parallel Branches with Distinct Colors
   {
@@ -69,17 +69,17 @@ const WORKFLOW_NODES = [
     subtitle: 'Design System',
     code: '3A',
     icon: Palette,
-    x: 328,
-    y: 46,
-    w: 112,
-    h: 56,
+    x: 370,
+    y: 44,
+    w: 132,
+    h: 76,
     branch: 'design',
     metric: 'Figma Tokens',
     stepIndex: 3,
-    color: '#EC4899', // Vibrant Fuchsia / Pink
-    badgeBg: 'bg-pink-500/10 text-pink-600 border-pink-500/30',
-    hoverBorder: 'border-pink-500',
-    glowColor: 'rgba(236, 72, 153, 0.45)',
+    color: '#29251F', // Vibrant Fuchsia / Pink
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   {
     id: 'frontend',
@@ -88,17 +88,17 @@ const WORKFLOW_NODES = [
     subtitle: 'Client Components',
     code: '3B',
     icon: Code2,
-    x: 328,
+    x: 370,
     y: 142,
-    w: 112,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'frontend',
     metric: 'Vite / React',
     stepIndex: 3,
-    color: '#06B6D4', // Cyber Cyan / Mint
-    badgeBg: 'bg-cyan-500/10 text-cyan-600 border-cyan-500/30',
-    hoverBorder: 'border-cyan-500',
-    glowColor: 'rgba(6, 182, 212, 0.45)',
+    color: '#29251F', // Cyber Cyan / Mint
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   {
     id: 'backend',
@@ -107,17 +107,17 @@ const WORKFLOW_NODES = [
     subtitle: 'API & Services',
     code: '3C',
     icon: Server,
-    x: 328,
-    y: 238,
-    w: 112,
-    h: 56,
+    x: 370,
+    y: 240,
+    w: 132,
+    h: 76,
     branch: 'backend',
     metric: 'GraphQL / SQL',
     stepIndex: 3,
-    color: '#8B5CF6', // Electric Purple / Violet
-    badgeBg: 'bg-purple-500/10 text-purple-600 border-purple-500/30',
-    hoverBorder: 'border-purple-500',
-    glowColor: 'rgba(139, 92, 246, 0.45)',
+    color: '#29251F', // Electric Purple / Violet
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   // Convergence into Integration
   {
@@ -127,17 +127,17 @@ const WORKFLOW_NODES = [
     subtitle: 'PR Convergence',
     code: '04',
     icon: GitMerge,
-    x: 494,
+    x: 560,
     y: 142,
-    w: 112,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'main',
     metric: '3 Branches Merged',
     stepIndex: 4,
-    color: '#6366F1', // Indigo Spectrum
-    badgeBg: 'bg-indigo-500/10 text-indigo-600 border-indigo-500/30',
-    hoverBorder: 'border-indigo-500',
-    glowColor: 'rgba(99, 102, 241, 0.45)',
+    color: '#29251F', // Indigo Spectrum
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   {
     id: 'testing',
@@ -146,17 +146,17 @@ const WORKFLOW_NODES = [
     subtitle: 'E2E & Security',
     code: '05',
     icon: ShieldCheck,
-    x: 642,
+    x: 720,
     y: 142,
-    w: 106,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'main',
     metric: '100% CI Passes',
     stepIndex: 5,
-    color: '#3B82F6', // Cobalt Blue
-    badgeBg: 'bg-blue-500/10 text-blue-600 border-blue-500/30',
-    hoverBorder: 'border-blue-500',
-    glowColor: 'rgba(59, 130, 246, 0.45)',
+    color: '#29251F', // Cobalt Blue
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   {
     id: 'deployment',
@@ -165,17 +165,17 @@ const WORKFLOW_NODES = [
     subtitle: 'Canary Release',
     code: '06',
     icon: Rocket,
-    x: 784,
+    x: 880,
     y: 142,
-    w: 106,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'main',
     metric: 'Multi-Region',
     stepIndex: 6,
-    color: '#0D9488', // Teal
-    badgeBg: 'bg-teal-500/10 text-teal-600 border-teal-500/30',
-    hoverBorder: 'border-teal-500',
-    glowColor: 'rgba(13, 148, 136, 0.45)',
+    color: '#29251F', // Teal
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
   {
     id: 'completed',
@@ -184,31 +184,31 @@ const WORKFLOW_NODES = [
     subtitle: 'Production Live',
     code: '✓',
     icon: CheckCircle2,
-    x: 926,
+    x: 1040,
     y: 142,
-    w: 108,
-    h: 56,
+    w: 132,
+    h: 76,
     branch: 'main',
     metric: 'Zero Downtime',
     stepIndex: 7,
-    color: '#10B981', // Emerald Green
-    badgeBg: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30',
-    hoverBorder: 'border-emerald-500',
-    glowColor: 'rgba(16, 185, 129, 0.5)',
+    color: '#29251F', // Emerald Green
+    badgeBg: 'bg-[#EDE5D8] text-[#29251F] border-[#D6CCBD]',
+    hoverBorder: 'border-[#29251F]',
+    glowColor: 'rgba(41, 37, 31, 0.16)',
   },
 ];
 
 /**
- * Connectors with Distinct Color Coding
+ * Connectors with a Unified Neutral Palette
  */
 const WORKFLOW_PATHS = [
   {
     id: 'path-project-planning',
     from: 'project',
     to: 'planning',
-    d: 'M 132 170 L 168 170',
-    color: '#F59E0B',
-    pulseColor: '#FDE68A',
+    d: 'M 152 180 L 180 180',
+    color: '#29251F',
+    pulseColor: '#B8AA96',
     gradientId: 'grad-project',
   },
   // Branching Out: Planning to 3 parallel colored branches
@@ -216,27 +216,27 @@ const WORKFLOW_PATHS = [
     id: 'path-planning-design',
     from: 'planning',
     to: 'design',
-    d: 'M 274 170 C 298 170, 304 74, 328 74',
-    color: '#EC4899', // Fuchsia / Pink
-    pulseColor: '#F472B6',
+    d: 'M 312 180 C 342 180, 340 82, 370 82',
+    color: '#29251F', // Fuchsia / Pink
+    pulseColor: '#B8AA96',
     gradientId: 'grad-design',
   },
   {
     id: 'path-planning-frontend',
     from: 'planning',
     to: 'frontend',
-    d: 'M 274 170 L 328 170',
-    color: '#06B6D4', // Cyan
-    pulseColor: '#67E8F9',
+    d: 'M 312 180 L 370 180',
+    color: '#29251F', // Cyan
+    pulseColor: '#B8AA96',
     gradientId: 'grad-frontend',
   },
   {
     id: 'path-planning-backend',
     from: 'planning',
     to: 'backend',
-    d: 'M 274 170 C 298 170, 304 266, 328 266',
-    color: '#8B5CF6', // Purple
-    pulseColor: '#C4B5FD',
+    d: 'M 312 180 C 342 180, 340 278, 370 278',
+    color: '#29251F', // Purple
+    pulseColor: '#B8AA96',
     gradientId: 'grad-backend',
   },
   // Merging In: 3 colored branches into Integration
@@ -244,27 +244,27 @@ const WORKFLOW_PATHS = [
     id: 'path-design-integration',
     from: 'design',
     to: 'integration',
-    d: 'M 440 74 C 464 74, 470 170, 494 170',
-    color: '#EC4899', // Fuchsia
-    pulseColor: '#F472B6',
+    d: 'M 502 82 C 532 82, 530 180, 560 180',
+    color: '#29251F', // Fuchsia
+    pulseColor: '#B8AA96',
     gradientId: 'grad-design',
   },
   {
     id: 'path-frontend-integration',
     from: 'frontend',
     to: 'integration',
-    d: 'M 440 170 L 494 170',
-    color: '#06B6D4', // Cyan
-    pulseColor: '#67E8F9',
+    d: 'M 502 180 L 560 180',
+    color: '#29251F', // Cyan
+    pulseColor: '#B8AA96',
     gradientId: 'grad-frontend',
   },
   {
     id: 'path-backend-integration',
     from: 'backend',
     to: 'integration',
-    d: 'M 440 266 C 464 266, 470 170, 494 170',
-    color: '#8B5CF6', // Purple
-    pulseColor: '#C4B5FD',
+    d: 'M 502 278 C 532 278, 530 180, 560 180',
+    color: '#29251F', // Purple
+    pulseColor: '#B8AA96',
     gradientId: 'grad-backend',
   },
   // Linear Convergence to Completed
@@ -272,27 +272,27 @@ const WORKFLOW_PATHS = [
     id: 'path-integration-testing',
     from: 'integration',
     to: 'testing',
-    d: 'M 606 170 L 642 170',
-    color: '#6366F1', // Indigo
-    pulseColor: '#A5B4FC',
+    d: 'M 692 180 L 720 180',
+    color: '#29251F', // Indigo
+    pulseColor: '#B8AA96',
     gradientId: 'grad-integration',
   },
   {
     id: 'path-testing-deployment',
     from: 'testing',
     to: 'deployment',
-    d: 'M 748 170 L 784 170',
-    color: '#3B82F6', // Blue
-    pulseColor: '#93C5FD',
+    d: 'M 852 180 L 880 180',
+    color: '#29251F', // Blue
+    pulseColor: '#B8AA96',
     gradientId: 'grad-testing',
   },
   {
     id: 'path-deployment-completed',
     from: 'deployment',
     to: 'completed',
-    d: 'M 890 170 L 926 170',
-    color: '#10B981', // Emerald
-    pulseColor: '#6EE7B7',
+    d: 'M 1012 180 L 1040 180',
+    color: '#29251F', // Emerald
+    pulseColor: '#B8AA96',
     gradientId: 'grad-completed',
   },
 ];
@@ -407,7 +407,7 @@ export const HorizontalBranchingWorkflow = () => {
       }}
     >
       {/* Top Header Bar: Real-time Velocity & Color Branch Indicator */}
-      <div className="flex items-center justify-between pb-2.5 mb-1 px-1 border-b border-[#EFEFEF] text-[11px] text-[#5A5A5A]">
+      <div className="flex items-center justify-between pb-2.5 mb-1 px-1 border-b border-[#D6CCBD] text-[11px] text-[#6F675D]">
         {/* Left: Active Branch & Live Running Speed */}
       
 
@@ -418,72 +418,72 @@ export const HorizontalBranchingWorkflow = () => {
       {/* Main Responsive SVG Canvas (1060 x 340) */}
       <div className="relative w-full max-w-full overflow-hidden flex items-center justify-center py-1">
         <svg
-          viewBox="0 0 1060 340"
+          viewBox="0 0 1200 340"
           preserveAspectRatio="xMidYMid meet"
-          className="w-full h-auto block max-h-[360px]"
+          className="w-full h-auto block max-h-[390px]"
         >
           <defs>
             {/* Color-specific glow filters */}
             <filter id="glow-pink" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#EC4899" floodOpacity="0.65" />
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#29251F" floodOpacity="0.65" />
             </filter>
             <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#06B6D4" floodOpacity="0.65" />
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#29251F" floodOpacity="0.65" />
             </filter>
             <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#8B5CF6" floodOpacity="0.65" />
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#29251F" floodOpacity="0.65" />
             </filter>
             <filter id="glow-gold" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#F59E0B" floodOpacity="0.65" />
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#29251F" floodOpacity="0.65" />
             </filter>
             <filter id="glow-emerald" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#10B981" floodOpacity="0.65" />
+              <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#29251F" floodOpacity="0.65" />
             </filter>
 
             {/* Linear Gradients for Connectors */}
             <linearGradient id="grad-project" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F59E0B" />
-              <stop offset="100%" stopColor="#EAB308" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             <linearGradient id="grad-design" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F43F5E" />
-              <stop offset="100%" stopColor="#EC4899" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             <linearGradient id="grad-frontend" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#06B6D4" />
-              <stop offset="100%" stopColor="#10B981" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             <linearGradient id="grad-backend" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8B5CF6" />
-              <stop offset="100%" stopColor="#6366F1" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             <linearGradient id="grad-integration" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#6366F1" />
-              <stop offset="100%" stopColor="#3B82F6" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             <linearGradient id="grad-testing" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3B82F6" />
-              <stop offset="100%" stopColor="#0D9488" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             <linearGradient id="grad-completed" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#0D9488" />
-              <stop offset="100%" stopColor="#10B981" />
+              <stop offset="0%" stopColor="#29251F" />
+              <stop offset="100%" stopColor="#29251F" />
             </linearGradient>
 
             {/* Dot Grid Background */}
             <pattern id="wfGridMulti" width="24" height="24" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="0.8" fill="#0F0F0F" fillOpacity="0.04" />
+              <circle cx="2" cy="2" r="0.8" fill="#6F675D" fillOpacity="0.10" />
             </pattern>
           </defs>
 
           {/* Background Grid */}
-          <rect width="1060" height="340" fill="url(#wfGridMulti)" rx="12" />
+          <rect width="1200" height="340" fill="url(#wfGridMulti)" rx="16" />
 
           {/* 1. Base Static Guide Traces */}
           <g className="base-guide-lines" opacity="0.3">
@@ -516,11 +516,11 @@ export const HorizontalBranchingWorkflow = () => {
                   style={{
                     strokeDashoffset: 'calc(-1 * var(--flow-offset, 0px))',
                     filter: highlighted
-                      ? p.color === '#EC4899'
+                      ? p.color === '#29251F'
                         ? 'url(#glow-pink)'
-                        : p.color === '#06B6D4'
+                        : p.color === '#29251F'
                         ? 'url(#glow-cyan)'
-                        : p.color === '#8B5CF6'
+                        : p.color === '#29251F'
                         ? 'url(#glow-purple)'
                         : 'url(#glow-gold)'
                       : undefined,
@@ -557,7 +557,7 @@ export const HorizontalBranchingWorkflow = () => {
             cx="274"
             cy="170"
             r={isFastScrolling ? 4.5 : 3.5}
-            fill="#F59E0B"
+            fill="#29251F"
             className="transition-all duration-300"
           />
           {/* Convergence Point at Integration input (494, 170) */}
@@ -565,14 +565,14 @@ export const HorizontalBranchingWorkflow = () => {
             cx="494"
             cy="170"
             r={isFastScrolling ? 4.5 : 3.5}
-            fill="#6366F1"
+            fill="#29251F"
             className="transition-all duration-300"
           />
 
           {/* 5. Parallel Branch Track Labels */}
         
 
-          {/* 6. Compact Rectangular Nodes */}
+          {/* 6. Larger Squarish Workflow Cards */}
           {WORKFLOW_NODES.map((node) => {
             const Icon = node.icon;
             const isHovered = hoveredNodeId === node.id;
@@ -597,12 +597,12 @@ export const HorizontalBranchingWorkflow = () => {
                   id={`card-${node.id}`}
                   onMouseEnter={() => setHoveredNodeId(node.id)}
                   onMouseLeave={() => setHoveredNodeId(null)}
-                  className={`w-full h-full rounded-lg border flex flex-col justify-between p-2 cursor-pointer transition-all duration-200 ease-out ${
+                  className={`w-full h-full rounded-[14px] border flex flex-col justify-between p-3 cursor-pointer transition-all duration-200 ease-out ${
                     isHovered
-                      ? `${node.hoverBorder} bg-[#FFFFFF] shadow-md -translate-y-0.5 z-30`
+                      ? `${node.hoverBorder} bg-[#FFFDF8] shadow-lg -translate-y-1 z-30`
                       : isConnected
-                      ? `${node.hoverBorder} bg-[#FFFFFF] shadow-xs z-20`
-                      : 'border-[#E5E5E5] bg-[#FFFFFF] shadow-2xs hover:border-[#0F0F0F]'
+                      ? `${node.hoverBorder} bg-[#F0E8DC] shadow-sm z-20`
+                      : 'border-[#D6CCBD] bg-[#F5F0E6] shadow-sm hover:border-[#29251F]'
                   }`}
                   style={{
                     boxShadow: isHovered
@@ -614,20 +614,20 @@ export const HorizontalBranchingWorkflow = () => {
                   {/* Top Bar inside Node: Colored Icon Box + Status Indicator */}
                   <div className="flex items-center justify-between pointer-events-none">
                     <div
-                      className={`w-5 h-5 rounded flex items-center justify-center transition-colors duration-200 ${
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-200 ${
                         isHovered
-                          ? 'bg-[#0F0F0F] text-[#FFFFFF]'
+                          ? 'bg-[#29251F] text-[#FFFDF8]'
                           : node.badgeBg
                       }`}
                     >
-                      <Icon className="w-3 h-3" />
+                      <Icon className="w-4 h-4" />
                     </div>
 
                     {/* Small Status Indicator */}
                     <div className="flex items-center gap-1">
                       {node.id === 'completed' ? (
-                        <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-emerald-500 text-[#FFFFFF] shadow-2xs">
-                          <Check className="w-2.5 h-2.5 text-[#FFFFFF]" strokeWidth={3} />
+                        <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-emerald-500 text-[#FFFDF8] shadow-2xs">
+                          <Check className="w-2.5 h-2.5 text-[#FFFDF8]" strokeWidth={3} />
                         </span>
                       ) : (
                         <span className="relative flex h-2 w-2">
@@ -647,14 +647,14 @@ export const HorizontalBranchingWorkflow = () => {
                   {/* Bottom Bar: Title & Code */}
                   <div className="flex items-baseline justify-between mt-1 pointer-events-none">
                     <span
-                      className={`text-[11px] font-bold tracking-tight truncate leading-none ${
-                        isHovered ? 'text-[#0F0F0F]' : 'text-[#2C2C2C]'
+                      className={`text-[13px] font-bold tracking-tight truncate leading-none ${
+                        isHovered ? 'text-[#29251F]' : 'text-[#29251F]'
                       }`}
                     >
                       {node.title}
                     </span>
                     <span
-                      className="text-[9px] font-mono font-bold"
+                      className="text-[10px] font-mono font-bold"
                       style={{ color: node.color }}
                     >
                       {node.code}
@@ -668,7 +668,7 @@ export const HorizontalBranchingWorkflow = () => {
       </div>
 
       {/* Dynamic Telemetry Strip */}
-      <div className="mt-1 pt-2 px-2 border-t border-[#EFEFEF] flex items-center justify-between text-[11px] text-[#5A5A5A]">
+      <div className="mt-1 pt-2 px-2 border-t border-[#D6CCBD] flex items-center justify-between text-[11px] text-[#6F675D]">
         {hoveredNode ? (
           <div className="flex items-center gap-2 animate-in fade-in duration-150">
             <span
@@ -677,10 +677,10 @@ export const HorizontalBranchingWorkflow = () => {
             >
               {hoveredNode.code}
             </span>
-            <span className="font-bold text-[#0F0F0F]">{hoveredNode.title} Stage:</span>
-            <span className="text-[#5A5A5A]">{hoveredNode.subtitle}</span>
-            <span className="text-[#8E8E8E]">({hoveredNode.metric})</span>
-            <span className="hidden sm:inline text-[#B0B0B0]">• Path illuminated</span>
+            <span className="font-bold text-[#29251F]">{hoveredNode.title} Stage:</span>
+            <span className="text-[#6F675D]">{hoveredNode.subtitle}</span>
+            <span className="text-[#8B8174]">({hoveredNode.metric})</span>
+            <span className="hidden sm:inline text-[#A69B8D]">• Path illuminated</span>
           </div>
         ) : (
           <div >
