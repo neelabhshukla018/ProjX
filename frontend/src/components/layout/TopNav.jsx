@@ -94,12 +94,15 @@ export const TopNav = () => {
 
   return (
     <>
-      <header
-        style={{ backgroundColor: '#ffffff' }}
-        className="sticky top-0 z-40 w-full bg-[#FFFFFF] bg-white border-b border-[#E5E5E5] shadow-xs"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-          {/* Left: Mobile Toggle, Logo & Workspace Switcher */}
+      <header className="sticky top-2 sm:top-3 z-40 w-full px-2.5 sm:px-5 lg:px-6 pointer-events-none transition-all duration-300">
+        <div className="max-w-7xl mx-auto pointer-events-auto relative rounded-2xl bg-white/92 backdrop-blur-md border border-[#E5E5E5] shadow-[0_12px_36px_-6px_rgba(15,15,15,0.14),0_20px_45px_-12px_rgba(15,15,15,0.08),0_0_0_1px_rgba(15,15,15,0.04)] hover:shadow-[0_18px_45px_-8px_rgba(15,15,15,0.18),0_28px_55px_-12px_rgba(15,15,15,0.12),0_0_0_1px_rgba(15,15,15,0.06)] hover:-translate-y-0.5 transition-all duration-300">
+          {/* Subtle top glossy highlight reflection */}
+          <div
+            className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent pointer-events-none"
+            aria-hidden="true"
+          />
+          <div className="px-3.5 sm:px-5 lg:px-6 h-16 flex items-center justify-between gap-4">
+            {/* Left: Mobile Toggle, Logo & Workspace Switcher */}
           <div className="flex items-center gap-3 shrink-0">
             {/* Mobile Hamburger Button */}
             <button
@@ -255,7 +258,8 @@ export const TopNav = () => {
             <UserDropdown />
           </div>
         </div>
-      </header>
+      </div>
+    </header>
 
       {/* Mobile Drawer Menu (On screens < lg) */}
       {isMobileNavOpen && (

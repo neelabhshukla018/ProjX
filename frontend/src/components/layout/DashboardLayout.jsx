@@ -33,7 +33,7 @@ export const DashboardLayout = () => {
       <TopNav />
 
       {/* Main Content Area - Full Width */}
-      <main className="flex-1 p-3.5 sm:p-5 lg:p-8 max-w-7xl w-full mx-auto animate-in fade-in duration-200 min-w-0">
+      <main className="flex-1 p-3.5 sm:p-5 lg:p-8 pt-2 sm:pt-4 max-w-7xl w-full mx-auto animate-in fade-in duration-200 min-w-0">
         <Outlet />
       </main>
 
