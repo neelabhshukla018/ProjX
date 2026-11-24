@@ -3,6 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { useWorkspace } from '../../hooks/useWorkspace';
 import TopNav from './TopNav';
 import GlobalSearchModal from './GlobalSearchModal';
+import AppBackground from '../common/AppBackground';
 
 // Interactive Modals
 import ProjectModal from '../projects/ProjectModal';
@@ -28,7 +29,7 @@ export const DashboardLayout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col antialiased text-[#0F0F0F] overflow-x-hidden w-full">
+    <AppBackground>
       {/* Top Navigation Bar */}
       <TopNav />
 
@@ -42,7 +43,7 @@ export const DashboardLayout = () => {
       <ProjectModal />
       <TaskModal />
       <InviteMemberModal />
-    </div>
+    </AppBackground>
   );
 };
 
