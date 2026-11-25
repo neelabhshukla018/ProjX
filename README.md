@@ -32,6 +32,7 @@
 
 Unlike traditional project management boards, ProjX seamlessly connects **Project Managers** who need specific talent with **Team Members** looking for high-impact opportunities. From skill-matched project applications and resume vetting to interactive Kanban boards, sprint analytics, and real-time activity feeds, ProjX delivers a cohesive, friction-free productivity suite.
 
+NOTE : Project Image can be uploaded must be under 1MB
 ---
 
 ## Showcase Gallery
