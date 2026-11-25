@@ -1,16 +1,15 @@
 # ProjX Screenshots & Media Directory
 
-Place your 4–5 showcase images in this directory to display them automatically in the root `README.md`.
+All showcase screenshots used in the root `README.md`:
 
-## Recommended File Names & Specifications
-
-| Slot | File Name | Suggested View | Recommended Resolution |
-| :--- | :--- | :--- | :--- |
-| **Slot 1** | `01-hero-landing.png` | Landing Page / Hero Banner or Main Workspace Dashboard | 1920 × 1080 (16:9) |
-| **Slot 2** | `02-project-showcase.png` | Project Discovery Grid & Project Detail Modal with Skills/Quotas | 1920 × 1080 or 1440 × 900 |
-| **Slot 3** | `03-kanban-board.png` | Interactive Kanban Task Board (To Do, In Progress, In Review, Done) | 1920 × 1080 or 1440 × 900 |
-| **Slot 4** | `04-analytics-dashboard.png` | Analytics Page (Sprint velocity, completion rates, task breakdown) | 1920 × 1080 or 1440 × 900 |
-| **Slot 5** | `05-team-collaboration.png` | Team Members, Profile View, or Application Review modal | 1920 × 1080 or 1440 × 900 |
+| Image | File Path | Feature Represented |
+| :--- | :--- | :--- |
+| **Dashboard** | `docs/images/dashboard.png` | Workspace Dashboard, Quick Stats & Tasks Overview |
+| **Kanban Board** | `docs/images/board.png` | Interactive Kanban Sprint Board (Multi-stage tasks) |
+| **Project Catalog** | `docs/images/Project.png` | Project Discovery, Recruitment & Initiative Cards |
+| **Management Panel** | `docs/images/Panel.png` | Project Detail Modal, Specifications & Applicant Review |
+| **User Profile** | `docs/images/Profile.png` | Member Profile, Technical Skills & Project Portfolio |
+| **Registration** | `docs/images/Register.png` | Secure Authentication & Role Selection (Manager / Member) |
 
 > [!TIP]
-> **Image Tip**: High-resolution PNGs or WebP format with 2x scale look crisp on retina screens. You can also use animated GIFs or WebM clips for the hero slot to show micro-interactions!
+> To update any screenshot in the future, simply replace the corresponding image file in this directory with the same filename. High-resolution PNGs at 1920 × 1080 or 1440 × 900 resolution are recommended.

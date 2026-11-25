@@ -36,81 +36,72 @@ Unlike traditional project management boards, ProjX seamlessly connects **Projec
 
 ## 📸 Showcase Gallery
 
-> *Add your 4–5 screenshots to [`docs/images/`](./docs/images/) using the filenames listed below to display your project preview.*
+A visual walkthrough of the ProjX collaborative workspace:
 
 <br/>
 
 ### 1. 🖥️ Workspace Dashboard & Command Center
-> The central mission control displaying recent projects, quick actions, sprint tasks, and upcoming deadlines.
+> The central command center displaying real-time project statistics, active sprints, recent tasks, and upcoming deadlines.
 
-<!-- ========================================== -->
-<!-- IMAGE SLOT 1: HERO / WORKSPACE DASHBOARD   -->
-<!-- Replace 'docs/images/01-hero-landing.png' with your screenshot -->
-<!-- ========================================== -->
 <p align="center">
-  <img src="docs/images/01-hero-landing.png" alt="ProjX Dashboard & Hero Overview" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" onerror="this.onerror=null;this.src='frontend/src/assets/hero.png';"/>
+  <img src="docs/images/dashboard.png" alt="ProjX Workspace Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
   <br/>
-  <em>Figure 1: Workspace Dashboard — Real-time project overview, stats, and quick navigation</em>
+  <em>Figure 1: Workspace Dashboard — Real-time project overview, quick actions, and sprint analytics</em>
 </p>
 
 <br/>
 
 ### 2. 📋 Interactive Kanban Sprint Board
-> Drag-and-drop workflow tracking across **To Do**, **In Progress**, **In Review**, and **Completed** with priority and deadline tags.
+> Real-time workflow tracking across **To Do**, **In Progress**, **In Review**, and **Completed** with priority and deadline badges.
 
-<!-- ========================================== -->
-<!-- IMAGE SLOT 2: KANBAN TASK MANAGEMENT       -->
-<!-- Replace 'docs/images/02-kanban-board.png' with your screenshot -->
-<!-- ========================================== -->
 <p align="center">
-  <img src="docs/images/02-kanban-board.png" alt="Interactive Kanban Board" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" onerror="this.onerror=null;this.parentElement.innerHTML='<div align=\'center\' style=\'border:2px dashed #4A5568;padding:40px;border-radius:12px;background:#1A202C;\'><b>📷 Image Slot 2: Kanban Board</b><br/>Drop screenshot into <code>docs/images/02-kanban-board.png</code></div>';"/>
+  <img src="docs/images/board.png" alt="Interactive Kanban Board" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
   <br/>
-  <em>Figure 2: Kanban Task Board — Multi-stage task lifecycle, assignee indicators, and status filtering</em>
+  <em>Figure 2: Kanban Sprint Board — Drag-and-drop workflow lifecycle, assignee indicators, and stage filtering</em>
 </p>
 
 <br/>
 
-### 3. 🚀 Project Discovery & Talent Application Flow
-> Explore open initiatives, filter by technical requirements, inspect member vacancies, and submit applications with resumes.
+### 3. 🚀 Project Discovery & Open Initiatives
+> Explore active initiatives, inspect technical requirements, review member vacancies, and track recruitment progress.
 
-<!-- ========================================== -->
-<!-- IMAGE SLOT 3: PROJECT SHOWCASE & DETAILS   -->
-<!-- Replace 'docs/images/03-project-showcase.png' with your screenshot -->
-<!-- ========================================== -->
 <p align="center">
-  <img src="docs/images/03-project-showcase.png" alt="Project Discovery & Detail View" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" onerror="this.onerror=null;this.parentElement.innerHTML='<div align=\'center\' style=\'border:2px dashed #4A5568;padding:40px;border-radius:12px;background:#1A202C;\'><b>📷 Image Slot 3: Project Detail & Application</b><br/>Drop screenshot into <code>docs/images/03-project-showcase.png</code></div>';"/>
+  <img src="docs/images/Project.png" alt="Project Discovery & Showcase" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
   <br/>
-  <em>Figure 3: Project Modal — Detailed requirements, document attachments, member quota, and application trigger</em>
+  <em>Figure 3: Project Catalog — Searchable directory of projects with required skill sets and member quotas</em>
 </p>
 
 <br/>
 
-### 4. 📊 Performance Analytics & Velocity Dashboard
-> High-fidelity visualizations powered by Recharts showing sprint velocities, task breakdown, completion ratios, and historical trends.
+### 4. 🎛️ Project Detail & Management Panel
+> Deep-dive project view featuring candidate evaluation, task dispatching, attached specification documents, and member roster.
 
-<!-- ========================================== -->
-<!-- IMAGE SLOT 4: ANALYTICS & VISUALIZATIONS   -->
-<!-- Replace 'docs/images/04-analytics-dashboard.png' with your screenshot -->
-<!-- ========================================== -->
 <p align="center">
-  <img src="docs/images/04-analytics-dashboard.png" alt="Analytics and Velocity Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" onerror="this.onerror=null;this.parentElement.innerHTML='<div align=\'center\' style=\'border:2px dashed #4A5568;padding:40px;border-radius:12px;background:#1A202C;\'><b>📷 Image Slot 4: Analytics & Metrics</b><br/>Drop screenshot into <code>docs/images/04-analytics-dashboard.png</code></div>';"/>
+  <img src="docs/images/Panel.png" alt="Project Detail and Management Panel" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
   <br/>
-  <em>Figure 4: Analytics View — Sprint progression, member contributions, and delivery velocity charts</em>
+  <em>Figure 4: Project Management Panel — In-depth overview, attached documentation, and application review</em>
 </p>
 
 <br/>
 
-### 5. 👥 Team Collaboration, Roster & User Profiles
-> Complete member directory with technical skills, experience records, role definitions, and instant invite capabilities.
+### 5. 👥 Member Profile & Skills Portfolio
+> Complete member profile showcasing technical skill badges, professional bio, portfolio links, and active project history.
 
-<!-- ========================================== -->
-<!-- IMAGE SLOT 5: TEAM COLLABORATION & ROSTER  -->
-<!-- Replace 'docs/images/05-team-collaboration.png' with your screenshot -->
-<!-- ========================================== -->
 <p align="center">
-  <img src="docs/images/05-team-collaboration.png" alt="Team Roster & Profile Page" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" onerror="this.onerror=null;this.parentElement.innerHTML='<div align=\'center\' style=\'border:2px dashed #4A5568;padding:40px;border-radius:12px;background:#1A202C;\'><b>📷 Image Slot 5: Team Roster & Member Profiles</b><br/>Drop screenshot into <code>docs/images/05-team-collaboration.png</code></div>';"/>
+  <img src="docs/images/Profile.png" alt="User Profile and Skills Portfolio" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
   <br/>
-  <em>Figure 5: Team Management — Member profiles, skill badges, role privileges, and activity timeline</em>
+  <em>Figure 5: Member Profile — Skill set badges, experience details, and account customization</em>
+</p>
+
+<br/>
+
+### 6. 🔐 Authentication & Role Selection
+> Secure onboarding with role assignment as **Project Manager** or **Team Member** to configure permissions from day one.
+
+<p align="center">
+  <img src="docs/images/Register.png" alt="User Registration and Role Selection" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
+  <br/>
+  <em>Figure 6: Onboarding Flow — Streamlined authentication with explicit role-based access control</em>
 </p>
 
 ---
@@ -247,8 +238,8 @@ flowchart TD
 ```
 ProjX/
 ├── 📂 docs/
-│   └── 📂 images/                     # 📸 Showcase images & screenshots (01 to 05)
-│       └── README.md                  # Image specifications and sizing guide
+│   └── 📂 images/                     # 📸 Showcase screenshots (dashboard, board, Project, Panel, Profile, Register)
+│       └── README.md                  # Image references and update guide
 │
 ├── 📂 frontend/                       # ⚛️ Client application (React 19 + Vite)
 │   ├── 📂 public/                     # Static assets (favicons, icons.svg)
