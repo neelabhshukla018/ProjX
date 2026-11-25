@@ -36,73 +36,60 @@ Unlike traditional project management boards, ProjX seamlessly connects **Projec
 
 ## 📸 Showcase Gallery
 
-A visual walkthrough of the ProjX collaborative workspace:
+A visual side-by-side walkthrough of the ProjX collaborative workspace:
 
 <br/>
 
-### 1. 🖥️ Workspace Dashboard & Command Center
-> The central command center displaying real-time project statistics, active sprints, recent tasks, and upcoming deadlines.
-
-<p align="center">
-  <img src="docs/images/dashboard.png" alt="ProjX Workspace Dashboard" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
-  <br/>
-  <em>Figure 1: Workspace Dashboard — Real-time project overview, quick actions, and sprint analytics</em>
-</p>
-
-<br/>
-
-### 2. 📋 Interactive Kanban Sprint Board
-> Real-time workflow tracking across **To Do**, **In Progress**, **In Review**, and **Completed** with priority and deadline badges.
-
-<p align="center">
-  <img src="docs/images/board.png" alt="Interactive Kanban Board" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
-  <br/>
-  <em>Figure 2: Kanban Sprint Board — Drag-and-drop workflow lifecycle, assignee indicators, and stage filtering</em>
-</p>
-
-<br/>
-
-### 3. 🚀 Project Discovery & Open Initiatives
-> Explore active initiatives, inspect technical requirements, review member vacancies, and track recruitment progress.
-
-<p align="center">
-  <img src="docs/images/Project.png" alt="Project Discovery & Showcase" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
-  <br/>
-  <em>Figure 3: Project Catalog — Searchable directory of projects with required skill sets and member quotas</em>
-</p>
-
-<br/>
-
-### 4. 🎛️ Project Detail & Management Panel
-> Deep-dive project view featuring candidate evaluation, task dispatching, attached specification documents, and member roster.
-
-<p align="center">
-  <img src="docs/images/Panel.png" alt="Project Detail and Management Panel" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
-  <br/>
-  <em>Figure 4: Project Management Panel — In-depth overview, attached documentation, and application review</em>
-</p>
-
-<br/>
-
-### 5. 👥 Member Profile & Skills Portfolio
-> Complete member profile showcasing technical skill badges, professional bio, portfolio links, and active project history.
-
-<p align="center">
-  <img src="docs/images/Profile.png" alt="User Profile and Skills Portfolio" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
-  <br/>
-  <em>Figure 5: Member Profile — Skill set badges, experience details, and account customization</em>
-</p>
-
-<br/>
-
-### 6. 🔐 Authentication & Role Selection
-> Secure onboarding with role assignment as **Project Manager** or **Team Member** to configure permissions from day one.
-
-<p align="center">
-  <img src="docs/images/Register.png" alt="User Registration and Role Selection" width="100%" style="border-radius: 12px; border: 1px solid #2d3748; box-shadow: 0 10px 30px rgba(0,0,0,0.4);" />
-  <br/>
-  <em>Figure 6: Onboarding Flow — Streamlined authentication with explicit role-based access control</em>
-</p>
+<table width="100%">
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <h3>🖥️ Workspace Dashboard</h3>
+      <p align="center">
+        <img src="docs/images/dashboard.png" alt="Workspace Dashboard" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
+      </p>
+      <p><sub><em>Real-time project statistics, active sprints, recent tasks, and deadlines</em></sub></p>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <h3>📋 Interactive Kanban Board</h3>
+      <p align="center">
+        <img src="docs/images/board.png" alt="Kanban Sprint Board" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
+      </p>
+      <p><sub><em>Multi-stage sprint lifecycle, assignee indicators, priority tags, and stage filtering</em></sub></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <h3>🚀 Project Discovery & Catalog</h3>
+      <p align="center">
+        <img src="docs/images/Project.png" alt="Project Catalog" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
+      </p>
+      <p><sub><em>Searchable directory of open initiatives with required skills and capacity quotas</em></sub></p>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <h3>🎛️ Project Detail & Management Panel</h3>
+      <p align="center">
+        <img src="docs/images/Panel.png" alt="Project Management Panel" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
+      </p>
+      <p><sub><em>Detailed project overview, specifications, and applicant review & vetting</em></sub></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <h3>👥 Member Profile & Skills Portfolio</h3>
+      <p align="center">
+        <img src="docs/images/Profile.png" alt="User Profile" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
+      </p>
+      <p><sub><em>Technical skill set badges, experience details, and active project history</em></sub></p>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <h3>🔐 Authentication & Role Selection</h3>
+      <p align="center">
+        <img src="docs/images/Register.png" alt="User Registration" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
+      </p>
+      <p><sub><em>Streamlined onboarding with explicit role-based access control (Manager vs Member)</em></sub></p>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -239,7 +226,8 @@ flowchart TD
 ProjX/
 ├── 📂 docs/
 │   └── 📂 images/                     # 📸 Showcase screenshots (dashboard, board, Project, Panel, Profile, Register)
-│       └── README.md                  # Image references and update guide
+│       ├── 📂 raw/                    # Original uncompressed captures
+│       └── README.md                  # Image references and optimization guide
 │
 ├── 📂 frontend/                       # ⚛️ Client application (React 19 + Vite)
 │   ├── 📂 public/                     # Static assets (favicons, icons.svg)
