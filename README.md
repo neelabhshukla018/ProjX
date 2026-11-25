@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ ProjX
+# ProjX
 
 ### **Next-Gen Project Collaboration & Team Management Platform**
 
@@ -18,7 +18,7 @@
 
 <br/>
 
-[Key Features](#-key-features) • [Showcase Gallery](#-showcase-gallery) • [System Workflow](#-system-workflow--architecture) • [Folder Structure](#-folder-structure) • [Tech Stack](#-tech-stack) • [Quick Start](#-getting-started) • [API Reference](#-api-endpoints)
+[Key Features](#key-features) • [Showcase Gallery](#showcase-gallery) • [System Workflow](#system-workflow--architecture) • [Folder Structure](#folder-structure) • [Tech Stack](#tech-stack) • [Quick Start](#getting-started) • [API Reference](#api-endpoints)
 
 ---
 
@@ -26,7 +26,7 @@
 
 <br/>
 
-## 📖 Overview
+## Overview
 
 **ProjX** is an end-to-end full-stack collaborative platform built to solve the modern challenge of team assembly and agile project execution. 
 
@@ -34,58 +34,58 @@ Unlike traditional project management boards, ProjX seamlessly connects **Projec
 
 ---
 
-## 📸 Showcase Gallery
+## Showcase Gallery
 
-A visual side-by-side walkthrough of the ProjX collaborative workspace:
+Visual side-by-side walkthrough of the ProjX collaborative workspace (click any preview to open full-resolution 1920px image):
 
 <br/>
 
 <table width="100%">
   <tr>
     <td width="50%" align="center" valign="top">
-      <h3>🖥️ Workspace Dashboard</h3>
-      <p align="center">
-        <img src="docs/images/dashboard.png" alt="Workspace Dashboard" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
-      </p>
+      <h4>Workspace Dashboard</h4>
+      <a href="docs/images/dashboard.png" target="_blank">
+        <img src="docs/images/dashboard.png" alt="Workspace Dashboard" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d; display: block;" />
+      </a>
       <p><sub><em>Real-time project statistics, active sprints, recent tasks, and deadlines</em></sub></p>
     </td>
     <td width="50%" align="center" valign="top">
-      <h3>📋 Interactive Kanban Board</h3>
-      <p align="center">
-        <img src="docs/images/board.png" alt="Kanban Sprint Board" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
-      </p>
+      <h4>Interactive Kanban Board</h4>
+      <a href="docs/images/board.png" target="_blank">
+        <img src="docs/images/board.png" alt="Kanban Sprint Board" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d; display: block;" />
+      </a>
       <p><sub><em>Multi-stage sprint lifecycle, assignee indicators, priority tags, and stage filtering</em></sub></p>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <h3>🚀 Project Discovery & Catalog</h3>
-      <p align="center">
-        <img src="docs/images/Project.png" alt="Project Catalog" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
-      </p>
+      <h4>Project Discovery & Catalog</h4>
+      <a href="docs/images/Project.png" target="_blank">
+        <img src="docs/images/Project.png" alt="Project Catalog" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d; display: block;" />
+      </a>
       <p><sub><em>Searchable directory of open initiatives with required skills and capacity quotas</em></sub></p>
     </td>
     <td width="50%" align="center" valign="top">
-      <h3>🎛️ Project Detail & Management Panel</h3>
-      <p align="center">
-        <img src="docs/images/Panel.png" alt="Project Management Panel" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
-      </p>
+      <h4>Project Detail & Management Panel</h4>
+      <a href="docs/images/Panel.png" target="_blank">
+        <img src="docs/images/Panel.png" alt="Project Management Panel" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d; display: block;" />
+      </a>
       <p><sub><em>Detailed project overview, specifications, and applicant review & vetting</em></sub></p>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <h3>👥 Member Profile & Skills Portfolio</h3>
-      <p align="center">
-        <img src="docs/images/Profile.png" alt="User Profile" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
-      </p>
+      <h4>Member Profile & Skills Portfolio</h4>
+      <a href="docs/images/Profile.png" target="_blank">
+        <img src="docs/images/Profile.png" alt="User Profile" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d; display: block;" />
+      </a>
       <p><sub><em>Technical skill set badges, experience details, and active project history</em></sub></p>
     </td>
     <td width="50%" align="center" valign="top">
-      <h3>🔐 Authentication & Role Selection</h3>
-      <p align="center">
-        <img src="docs/images/Register.png" alt="User Registration" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d;" />
-      </p>
+      <h4>Authentication & Role Selection</h4>
+      <a href="docs/images/Register.png" target="_blank">
+        <img src="docs/images/Register.png" alt="User Registration" width="100%" loading="eager" decoding="async" style="border-radius: 8px; border: 1px solid #30363d; display: block;" />
+      </a>
       <p><sub><em>Streamlined onboarding with explicit role-based access control (Manager vs Member)</em></sub></p>
     </td>
   </tr>
@@ -93,40 +93,40 @@ A visual side-by-side walkthrough of the ProjX collaborative workspace:
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🛡️ Role-Based Access Control (RBAC)
+### Role-Based Access Control (RBAC)
 - **Project Managers**: Author and configure projects, attach specification documents, review member applications (with resume access), invite members, assign tasks, and track team performance.
 - **Team Members**: Discover active projects, apply with customized resumes, update task execution stages, contribute comments, and manage portfolio profiles.
 
-### 💼 Project Discovery & Application Lifecycle
+### Project Discovery & Application Lifecycle
 - Comprehensive project definitions (Skills required, Experience level, Deadlines, Document attachments, Capacity quotas).
 - Multi-status project states: `Planning`, `Recruiting`, `In Progress`, and `Completed`.
-- In-app application workflow (`Pending` ➔ `Accepted` / `Rejected`) with instant automated notifications.
+- In-app application workflow (`Pending` -> `Accepted` / `Rejected`) with instant automated notifications.
 
-### 📌 Agile Kanban Task Management
+### Agile Kanban Task Management
 - Organized sprint columns: **To Do**, **In Progress**, **In Review**, and **Completed**.
 - Priority level tags (`Low`, `Medium`, `High`) with due-date alerts.
 - Dedicated modal view for task updates, status progression, and threaded discussion comments.
 
-### 📊 Deep Analytics & Visual Intelligence
+### Deep Analytics & Visual Intelligence
 - Interactive Recharts widgets:
   - **Project Progress Chart**: Real-time completion percentages per active initiative.
   - **Task Completion Trends**: Weekly output vs. planned deliverables.
   - **Workload Balance**: Distribution of responsibilities across members.
 
-### 🔔 Contextual Notifications & Activity Feeds
+### Contextual Notifications & Activity Feeds
 - Automated triggers on task assignments, progress submissions, comment additions, and application status decisions.
 - Dynamic global search for instant lookup across projects, tasks, and colleagues.
 
-### 🔐 Enterprise-Grade Security & File Storage
+### Enterprise-Grade Security & File Storage
 - **Authentication**: JWT authentication with HTTP-only cookies and Bearer token fallback.
 - **Protected File Access**: Sensitive files (such as applicant resumes) are served via an authorized streaming route that verifies owner or manager relationship before dispatch.
 - **API Hardening**: `helmet` headers, CORS whitelisting, and strict `express-rate-limit` protection on authentication routes.
 
 ---
 
-## 🔄 System Workflow & Architecture
+## System Workflow & Architecture
 
 ### 1. End-to-End User & Project Workflow
 
@@ -177,14 +177,14 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    subgraph Client["🖥️ Frontend Client (React 19 + Vite)"]
+    subgraph Client["Frontend Client (React 19 + Vite)"]
         UI["Tailwind CSS + Framer Motion"]
         State["WorkspaceContext & React Hooks"]
         Router["React Router v7 (AppRoutes)"]
         Views["Pages: Dashboard, Kanban, Projects, Analytics, Teams"]
     end
 
-    subgraph Gateway["🛡️ Security & API Middleware"]
+    subgraph Gateway["Security & API Middleware"]
         CORS["CORS Policy"]
         RateLimit["Rate Limiter (Brute-force protection)"]
         Helmet["Helmet Security Headers"]
@@ -192,7 +192,7 @@ flowchart TD
         Uploads["Multer Storage (Profiles, Projects, Resumes)"]
     end
 
-    subgraph Backend["⚙️ Express.js REST API (/api)"]
+    subgraph Backend["Express.js REST API (/api)"]
         AuthRoutes["/api/auth"]
         UserRoutes["/api/users"]
         ProjectRoutes["/api/projects"]
@@ -202,7 +202,7 @@ flowchart TD
         NotificationRoutes["/api/notifications"]
     end
 
-    subgraph DataStore["🗄️ Database & Storage Layer"]
+    subgraph DataStore["Database & Storage Layer"]
         Mongoose["Mongoose ODM Models"]
         MongoDB[(MongoDB Atlas)]
         Disk["Local / Protected Upload Storage"]
@@ -220,31 +220,31 @@ flowchart TD
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 ProjX/
-├── 📂 docs/
-│   └── 📂 images/                     # 📸 Showcase screenshots (dashboard, board, Project, Panel, Profile, Register)
-│       ├── 📂 raw/                    # Original uncompressed captures
+├── docs/
+│   └── images/                        # Showcase screenshots (dashboard, board, Project, Panel, Profile, Register)
+│       ├── raw/                       # Original captures
 │       └── README.md                  # Image references and optimization guide
 │
-├── 📂 frontend/                       # ⚛️ Client application (React 19 + Vite)
-│   ├── 📂 public/                     # Static assets (favicons, icons.svg)
-│   ├── 📂 src/
-│   │   ├── 📂 assets/                 # Brand assets & hero illustrations
-│   │   ├── 📂 components/
-│   │   │   ├── 📂 common/             # Reusable atomic UI (Button, Card, Modal, Input, Badge)
-│   │   │   ├── 📂 dashboard/          # Metric cards, velocity charts, recent activity
-│   │   │   ├── 📂 layout/             # Sidebar, TopNav, DashboardLayout, UserDropdown
-│   │   │   ├── 📂 projects/           # ProjectCard, ProjectModal, ProjectDetailModal
-│   │   │   ├── 📂 tasks/              # TaskKanban, TaskCard, TaskDetailModal, TaskFilters
-│   │   │   ├── 📂 teams/              # TeamCard, TeamMemberList, InviteMemberModal
-│   │   │   └── 📂 ui/                 # Animated components (ImageTrail, StackedLogos)
-│   │   ├── 📂 context/                # Global WorkspaceContext & state management
-│   │   ├── 📂 hooks/                  # Custom React hooks
-│   │   ├── 📂 lib/                    # Shared helper libraries & formatting
-│   │   ├── 📂 pages/                  # Top-level view routes
+├── frontend/                          # Client application (React 19 + Vite)
+│   ├── public/                        # Static assets (favicons, icons.svg)
+│   ├── src/
+│   │   ├── assets/                    # Brand assets & hero illustrations
+│   │   ├── components/
+│   │   │   ├── common/                # Reusable atomic UI (Button, Card, Modal, Input, Badge)
+│   │   │   ├── dashboard/             # Metric cards, velocity charts, recent activity
+│   │   │   ├── layout/                # Sidebar, TopNav, DashboardLayout, UserDropdown
+│   │   │   ├── projects/              # ProjectCard, ProjectModal, ProjectDetailModal
+│   │   │   ├── tasks/                 # TaskKanban, TaskCard, TaskDetailModal, TaskFilters
+│   │   │   ├── teams/                 # TeamCard, TeamMemberList, InviteMemberModal
+│   │   │   └── ui/                    # Animated components (ImageTrail, StackedLogos)
+│   │   ├── context/                   # Global WorkspaceContext & state management
+│   │   ├── hooks/                     # Custom React hooks
+│   │   ├── lib/                       # Shared helper libraries & formatting
+│   │   ├── pages/                     # Top-level view routes
 │   │   │   ├── LandingPage.jsx        # Public showcase & marketing landing page
 │   │   │   ├── LoginPage.jsx          # User authentication login
 │   │   │   ├── RegisterPage.jsx       # Account creation & role selector
@@ -258,9 +258,9 @@ ProjX/
 │   │   │   ├── ActivityPage.jsx       # Granular chronological audit log
 │   │   │   ├── ProfilePage.jsx        # Developer/Manager resume & portfolio
 │   │   │   └── NotFoundPage.jsx       # 404 error page
-│   │   ├── 📂 routes/                 # Central router definitions (AppRoutes.jsx)
-│   │   ├── 📂 services/               # Axios API service instances & interceptors
-│   │   ├── 📂 utils/                  # Date formatters, validation, helpers
+│   │   ├── routes/                    # Central router definitions (AppRoutes.jsx)
+│   │   ├── services/                  # Axios API service instances & interceptors
+│   │   ├── utils/                     # Date formatters, validation, helpers
 │   │   ├── App.jsx                    # Root app component with providers & Toaster
 │   │   ├── index.css                  # Tailwind styles & theme variables
 │   │   └── main.jsx                   # Vite React DOM entry point
@@ -269,9 +269,9 @@ ProjX/
 │   ├── tailwind.config.js             # Tailwind CSS theme extension
 │   └── vite.config.js                 # Vite bundler configuration
 │
-└── 📂 server/                         # 🛠️ Backend REST API (Node.js + Express)
-    ├── 📂 config/                     # Database connection (db.js)
-    ├── 📂 controllers/                # Business logic handlers
+└── server/                            # Backend REST API (Node.js + Express)
+    ├── config/                        # Database connection (db.js)
+    ├── controllers/                   # Business logic handlers
     │   ├── applicationController.js   # Application lifecycle (Apply, Accept, Reject)
     │   ├── authController.js          # Authentication (Register, Login, Logout, Session)
     │   ├── commentController.js       # Task commentary & messaging
@@ -279,19 +279,19 @@ ProjX/
     │   ├── projectController.js       # Project CRUD & recruitment status
     │   ├── taskController.js          # Task CRUD, status updates & assignments
     │   └── userController.js          # User profiles, skills & resume uploads
-    ├── 📂 middleware/                 # Middleware pipeline
+    ├── middleware/                    # Middleware pipeline
     │   ├── authMiddleware.js          # JWT verification & request hydration
     │   ├── errorMiddleware.js         # Centralized error handler & 404 catcher
     │   ├── roleMiddleware.js          # RBAC enforcement (isProjectManager, etc.)
     │   └── uploadMiddleware.js        # Multer disk configuration for files & resumes
-    ├── 📂 models/                     # Mongoose Schema definitions
+    ├── models/                        # Mongoose Schema definitions
     │   ├── Application.js             # Project application records
     │   ├── Comment.js                 # Threaded task discussions
     │   ├── Notification.js            # In-app event alerts
     │   ├── Project.js                 # Project entity & team memberships
     │   ├── Task.js                    # Sprint tasks, statuses & priorities
     │   └── User.js                    # User accounts, roles, skills & resumes
-    ├── 📂 routes/                     # Express REST route mounts
+    ├── routes/                        # Express REST route mounts
     │   ├── applicationRoutes.js       # /api/applications
     │   ├── authRoutes.js              # /api/auth
     │   ├── commentRoutes.js           # /api/comments
@@ -299,12 +299,12 @@ ProjX/
     │   ├── projectRoutes.js           # /api/projects
     │   ├── taskRoutes.js              # /api/tasks
     │   └── userRoutes.js              # /api/users
-    ├── 📂 uploads/                    # Local storage directories
-    │   ├── 📂 documents/              # Project specification documents
-    │   ├── 📂 profiles/               # User avatar images
-    │   ├── 📂 projects/               # Project cover images
-    │   └── 📂 resumes/                # 🔒 Protected applicant resume documents
-    ├── 📂 utils/                      # Helper utilities (token generator)
+    ├── uploads/                       # Local storage directories
+    │   ├── documents/                 # Project specification documents
+    │   ├── profiles/                  # User avatar images
+    │   ├── projects/                  # Project cover images
+    │   └── resumes/                   # Protected applicant resume documents
+    ├── utils/                         # Helper utilities (token generator)
     ├── .env.example                   # Backend environment template
     ├── package.json                   # Server dependencies & scripts
     └── server.js                      # Express server entry point & middleware bootstrap
@@ -312,7 +312,7 @@ ProjX/
 
 ---
 
-## 💻 Tech Stack
+## Tech Stack
 
 | Domain | Technology | Description |
 | :--- | :--- | :--- |
@@ -328,14 +328,14 @@ ProjX/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Follow the steps below to run both the backend server and frontend client locally.
 
-### 📋 Prerequisites
+### Prerequisites
 - **Node.js** v18.0.0 or higher
 - **npm** v9+ (or **pnpm** / **yarn**)
-- **MongoDB** instance (Local running daemon or free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster)
+- **MongoDB** instance (Local running daemon or free MongoDB Atlas cluster)
 
 ---
 
@@ -415,11 +415,11 @@ npm run dev
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 All application routes are prefixed with `/api`. Protected routes require a valid JWT token via an HTTP-only cookie or `Authorization: Bearer <token>` header.
 
-### 🔑 Authentication (`/api/auth`)
+### Authentication (`/api/auth`)
 | Method | Route | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `POST` | `/api/auth/register` | Public | Register new user as `project_manager` or `team_member` |
@@ -427,7 +427,7 @@ All application routes are prefixed with `/api`. Protected routes require a vali
 | `POST` | `/api/auth/logout` | Authenticated | Invalidate auth cookie |
 | `GET` | `/api/auth/me` | Authenticated | Fetch current authenticated user profile |
 
-### 📁 Projects (`/api/projects`)
+### Projects (`/api/projects`)
 | Method | Route | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/api/projects` | Authenticated | List all active/recruiting projects with filters |
@@ -437,7 +437,7 @@ All application routes are prefixed with `/api`. Protected routes require a vali
 | `PUT` | `/api/projects/:id` | **Manager Only** | Update project settings, deadline, or required skills |
 | `DELETE`| `/api/projects/:id` | **Manager Only** | Delete project and associated records |
 
-### 📝 Applications (`/api/applications`)
+### Applications (`/api/applications`)
 | Method | Route | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `POST` | `/api/applications` | **Member Only** | Apply to an open project |
@@ -445,16 +445,16 @@ All application routes are prefixed with `/api`. Protected routes require a vali
 | `GET` | `/api/applications/project/:projectId` | **Manager Only** | Review applicants for a managed project |
 | `PUT` | `/api/applications/:id/status` | **Manager Only** | Accept or Reject application |
 
-### 📌 Tasks (`/api/tasks`)
+### Tasks (`/api/tasks`)
 | Method | Route | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/api/tasks` | Authenticated | List tasks filtered by project, status, or assignee |
 | `POST` | `/api/tasks` | **Manager Only** | Create and assign a task with due date & priority |
 | `GET` | `/api/tasks/:id` | Authenticated | Fetch specific task with comment thread |
-| `PUT` | `/api/tasks/:id` | Authenticated | Update task stage (`To Do` ➔ `In Progress` ➔ `In Review` ➔ `Completed`) |
+| `PUT` | `/api/tasks/:id` | Authenticated | Update task stage (`To Do` -> `In Progress` -> `In Review` -> `Completed`) |
 | `DELETE`| `/api/tasks/:id` | **Manager Only** | Remove task |
 
-### 💬 Comments & Notifications
+### Comments & Notifications
 | Method | Route | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `POST` | `/api/comments` | Authenticated | Post comment on a task thread |
@@ -462,30 +462,30 @@ All application routes are prefixed with `/api`. Protected routes require a vali
 | `GET` | `/api/notifications` | Authenticated | Get user notifications |
 | `PUT` | `/api/notifications/:id/read`| Authenticated | Mark notification as read |
 
-### 🔒 Protected Media Access
+### Protected Media Access
 | Method | Route | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/uploads/resumes/:filename` | **Authorized Only** | Stream resume PDF (Restricted to resume owner or evaluating PM) |
 
 ---
 
-## 👥 Role Permissions Matrix
+## Role Permissions Matrix
 
 | Capability | Project Manager | Team Member | Guest |
 | :--- | :---: | :---: | :---: |
-| Browse Projects & Public Profiles | ✅ | ✅ | ✅ |
-| Apply to Projects with Resume | ❌ | ✅ | ❌ |
-| Create New Projects & Upload Docs | ✅ | ❌ | ❌ |
-| Accept / Reject Project Applicants | ✅ | ❌ | ❌ |
-| View Applicant Resumes | ✅ (Evaluating PM) | ✅ (Self Only) | ❌ |
-| Create & Assign Tasks | ✅ | ❌ | ❌ |
-| Update Task Progress & Status | ✅ | ✅ (Assigned) | ❌ |
-| Post Comments & Participate in Threads | ✅ | ✅ | ❌ |
-| Access Workspace Analytics & Velocity | ✅ | ✅ | ❌ |
+| Browse Projects & Public Profiles | Yes | Yes | Yes |
+| Apply to Projects with Resume | No | Yes | No |
+| Create New Projects & Upload Docs | Yes | No | No |
+| Accept / Reject Project Applicants | Yes | No | No |
+| View Applicant Resumes | Yes (Evaluating PM) | Yes (Self Only) | No |
+| Create & Assign Tasks | Yes | No | No |
+| Update Task Progress & Status | Yes | Yes (Assigned) | No |
+| Post Comments & Participate in Threads | Yes | Yes | No |
+| Access Workspace Analytics & Velocity | Yes | Yes | No |
 
 ---
 
-## 🛠️ Available Scripts
+## Available Scripts
 
 ### In `/server`
 - `npm run dev`: Starts Express server with live reload via `nodemon`
@@ -499,7 +499,7 @@ All application routes are prefixed with `/api`. Protected routes require a vali
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions make the open-source community an inspiring place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -511,10 +511,10 @@ Contributions make the open-source community an inspiring place to learn, inspir
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
 
 <div align="center">
-  <sub>Built with ❤️ for high-performance engineering teams.</sub>
+  <sub>Built for high-performance engineering teams.</sub>
 </div>
